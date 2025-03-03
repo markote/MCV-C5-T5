@@ -5,6 +5,7 @@ from transformers import DetrImageProcessor, DetrForObjectDetection
 from PIL import Image
 from pycocotools.coco import COCO
 from pycocotools import mask
+from pycocotools.cocoeval import COCOeval
 
 import argparse
 import sys
@@ -40,14 +41,16 @@ def increase_json(json_predict, path_im, predictions, id2id_map, remove=True):
     video_id = int ((path_im.split("/")[-2])) * 10000
     image_id = frame_id + video_id
     for i, score in enumerate(scores):
-        label = id2id_map[labels[i]]
+        label = id2id_map[labels[i].item()]
         if not remove or label != 252:
             box = boxes[i]
             x_min, y_min, x_max, y_max = box
             w = x_max - x_min
             h = y_max - y_min
-            bbox = [x, y, w, h]
-            json_predict.append({ "image_id":image_id, "category_id": label, "bbox": bbox, "score": score }) # scores need to be modified at each shufle    
+            bbox = [x_min.item(), y_min.item(), w.item(), h.item()]
+            # print(f"boxes x,y,w,h {type(bbox[0]),type(bbox[1]),type(bbox[2]),type(bbox[3])}")
+            # print(f"score: {type(score)}")
+            json_predict.append({ "image_id":image_id, "category_id": label, "bbox": bbox, "score": score.item() })
 
 def draw_predictions(image_path, predictions, output_path, id2label):
     
@@ -67,11 +70,11 @@ def draw_predictions(image_path, predictions, output_path, id2label):
 
         # Get the bounding box and class label
         box = boxes[i]
-        label = labels[i]
+        label = labels[i].item()
         
         # Convert bounding box to integer
         x_min, y_min, x_max, y_max = box
-        if label.item() in id2label:
+        if label in id2label:
             # Draw the bounding box (blue color)
             cv2.rectangle(image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
 
@@ -141,11 +144,10 @@ def create_mapping(org_mapping):
     return id2label_mapping,id2id_mapping
 
 def compute_metric(gt_json, pred_json):
-    COCO_gt = COCO(gt_path)
-    coco_pred = gt.loadRes(temp_pred_path)
+    COCO_gt = COCO(gt_json)
+    coco_pred = COCO_gt.loadRes(pred_json)
 
-    coco_eval = COCOeval(gt, coco_pred, "bbox")
-    coco_eval.params.imgIds = [image_id]  # Evaluate only this image
+    coco_eval = COCOeval(COCO_gt, coco_pred, "bbox")
 
     coco_eval.evaluate()
     coco_eval.accumulate()
@@ -157,7 +159,7 @@ if __name__ == "__main__" :
     parser.add_argument('--test_path', required=False, default="../../team5_split_KITTI-MOTS/eval/", help='Testing images')
     parser.add_argument('--gt_path', required=False, default="../../team5_split_KITTI-MOTS/instances_txt/eval/", help='GT of testing image')
     parser.add_argument('--json_output', required=False, default="./inference_pretrain_DETR.json", help='Output xml')
-    parser.add_argument('--gt_json_path', required=False, default="./gt.json", help='gt json path')
+    parser.add_argument('--gt_json_path', required=False, default="./eval_gt.json", help='gt json path')
     parser.add_argument('--draw', action='store_true', help="Enable drawing predictions")
     parser.add_argument('--metric', action='store_true', help="Enable metric computation")
     parser.add_argument('--charge_gt', action='store_true', help="Enable metric computation")
@@ -175,12 +177,11 @@ if __name__ == "__main__" :
     j = 0
     if args.metric:
         map_label = id2label_kitti_motts_mapping
-        if charge_gt:
+        if args.charge_gt:
            load_gt(args.gt_path, args.gt_json_path)
     else:
         map_label = model.config.id2label
 
-    sys.exit(1)
     json_predict = []
     for i, split in enumerate(split_images):
         print(f"Begin split {i}")
@@ -203,9 +204,9 @@ if __name__ == "__main__" :
                 draw_predictions(array_images[j], im_result, new_path, map_label)
             j += 1
         
-        if args.metric:
-            with open(args.json_output, 'w') as json_file:
-                json.dump(json_predict, json_file, indent=4) 
-            compute_metric(args.gt_json_path, args.json_output)
-        
         print(f"End split {i}")
+    
+    if args.metric:
+        with open(args.json_output, 'w') as json_file:
+            json.dump(json_predict, json_file, indent=4) 
+        compute_metric(args.gt_json_path, args.json_output)
