@@ -154,8 +154,8 @@ def compute_metric(gt_json, pred_json):
 
 if __name__ == "__main__" :
     parser = argparse.ArgumentParser()
-    parser.add_argument('--test_path', required=False, default="../datasets/KITTI-MOTS/training/image_02/", help='Testing images')
-    parser.add_argument('--gt_path', required=False, default="../datasets/KITTI-MOTS/instances_txt/", help='GT of testing image')
+    parser.add_argument('--test_path', required=False, default="../../team5_split_KITTI-MOTS/eval/", help='Testing images')
+    parser.add_argument('--gt_path', required=False, default="../../team5_split_KITTI-MOTS/instances_txt/eval/", help='GT of testing image')
     parser.add_argument('--json_output', required=False, default="./inference_pretrain_DETR.json", help='Output xml')
     parser.add_argument('--gt_json_path', required=False, default="./gt.json", help='gt json path')
     parser.add_argument('--draw', action='store_true', help="Enable drawing predictions")
