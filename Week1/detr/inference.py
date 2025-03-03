@@ -140,13 +140,27 @@ def create_mapping(org_mapping):
 
     return id2label_mapping,id2id_mapping
 
+def compute_metric(gt_json, pred_json):
+    COCO_gt = COCO(gt_path)
+    coco_pred = gt.loadRes(temp_pred_path)
+
+    coco_eval = COCOeval(gt, coco_pred, "bbox")
+    coco_eval.params.imgIds = [image_id]  # Evaluate only this image
+
+    coco_eval.evaluate()
+    coco_eval.accumulate()
+    coco_eval.summarize() 
+
+
 if __name__ == "__main__" :
     parser = argparse.ArgumentParser()
     parser.add_argument('--test_path', required=False, default="../datasets/KITTI-MOTS/training/image_02/", help='Testing images')
     parser.add_argument('--gt_path', required=False, default="../datasets/KITTI-MOTS/instances_txt/", help='GT of testing image')
     parser.add_argument('--json_output', required=False, default="./inference_pretrain_DETR.json", help='Output xml')
+    parser.add_argument('--gt_json_path', required=False, default="./gt.json", help='gt json path')
     parser.add_argument('--draw', action='store_true', help="Enable drawing predictions")
     parser.add_argument('--metric', action='store_true', help="Enable metric computation")
+    parser.add_argument('--charge_gt', action='store_true', help="Enable metric computation")
     args = parser.parse_args()
 
     array_images = subimage_gen(args.test_path)
@@ -161,7 +175,8 @@ if __name__ == "__main__" :
     j = 0
     if args.metric:
         map_label = id2label_kitti_motts_mapping
-        gt_json_path = load_gt(args.gt_path)
+        if charge_gt:
+           load_gt(args.gt_path, args.gt_json_path)
     else:
         map_label = model.config.id2label
 
@@ -191,6 +206,6 @@ if __name__ == "__main__" :
         if args.metric:
             with open(args.json_output, 'w') as json_file:
                 json.dump(json_predict, json_file, indent=4) 
-            #compute_metric(gt_json_path, args.json_output)
+            compute_metric(args.gt_json_path, args.json_output)
         
         print(f"End split {i}")
