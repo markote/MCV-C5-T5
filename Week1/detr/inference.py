@@ -144,6 +144,7 @@ def create_mapping(org_mapping):
     return id2label_mapping,id2id_mapping
 
 def compute_metric(gt_json, pred_json):
+    print("Final metric result: ")
     COCO_gt = COCO(gt_json)
     coco_pred = COCO_gt.loadRes(pred_json)
 
