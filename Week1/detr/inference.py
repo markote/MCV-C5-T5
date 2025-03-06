@@ -79,7 +79,7 @@ def draw_predictions(image_path, predictions, output_path, id2label):
             cv2.rectangle(image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
 
             # Display the label (class) and confidence score
-            label_text = f"Class {id2label[label.item()]} {score:.2f}"
+            label_text = f"Class {id2label[label]} {score:.2f}"
             cv2.putText(image, label_text, (int(x_min), int(y_min) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     
     # Save the output image
@@ -201,7 +201,7 @@ if __name__ == "__main__" :
                 increase_json(json_predict, array_images[j], im_result, id2id_kitti_motts_mapping)
             if args.draw:
                 new_path = array_images[j]
-                new_path.replace(args.test_path, "./prediction_pretrain_DETR/", 1) 
+                new_path = new_path.replace(args.test_path, "./prediction_pretrain_DETR/", 1) 
                 draw_predictions(array_images[j], im_result, new_path, map_label)
             j += 1
         
