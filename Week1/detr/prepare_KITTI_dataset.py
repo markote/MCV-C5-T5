@@ -66,7 +66,7 @@ def load_gt(gt_path, output_json_path="./gt.json", path_images="./eval/"):
     json_dict = {}
     json_dict["images"] = []
     json_dict["annotations"] = []
-    json_dict["categories"] = [{ "id": 1, "name": "car" }, { "id": 2, "name": "pedestrian" }, { "id": 3, "name": "van" }, { "id":252 , "name": "miscelaneous" } ]
+    json_dict["categories"] = [{ "id": 0, "name": "car" }, { "id": 1, "name": "pedestrian" }, { "id": 2, "name": "van" }]
     seen_images = set()
     counter = 0
     for txt_file in txt_files:
@@ -94,6 +94,9 @@ def load_gt(gt_path, output_json_path="./gt.json", path_images="./eval/"):
     
                 x, y, w, h = cv2.boundingRect(contours[0])
                 class_id = class_id if class_id != 10 else 3
+                if class_id > 3:
+                    print(f"Error!: class no 1,2 or 3: {class_id}")
+                class_id = class_id - 1 
                 bbox = [x, y, w, h]
                 json_dict["annotations"].append({ "id": counter, "image_id": image_id, "category_id": class_id, "bbox": bbox, "area": w*h, "iscrowd": 0 })
                 if not image_id in seen_images:

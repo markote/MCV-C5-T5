@@ -52,7 +52,7 @@ def increase_json(json_predict, path_im, predictions, id2id_map, remove=True):
             # print(f"score: {type(score)}")
             json_predict.append({ "image_id":image_id, "category_id": label, "bbox": bbox, "score": score.item() })
 
-def draw_predictions(image_path, predictions, output_path, id2label):
+def draw_predictions(image_path, predictions, output_path, id2label, remove=True):
     
     # Load the image
     image = cv2.imread(image_path)
@@ -74,7 +74,7 @@ def draw_predictions(image_path, predictions, output_path, id2label):
         
         # Convert bounding box to integer
         x_min, y_min, x_max, y_max = box
-        if label in id2label:
+        if label in id2label and (not remove or label != 252):
             # Draw the bounding box (blue color)
             cv2.rectangle(image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
 
@@ -138,8 +138,8 @@ def load_gt(gt_path, output_json_path="./gt.json"):
 def create_mapping(org_mapping):
     # map coco classes to KITTI-MOTTS 1 Car, 2 Pedestrian, 10 Van and 252 Misc.
     #id2label_mapping = {0: 'N/A', 1: 'person', 10: 'traffic light', 11: 'fire hydrant', 12: 'street sign', 13: 'stop sign', 14: 'parking meter', 15: 'bench', 16: 'bird', 17: 'cat', 18: 'dog', 19: 'horse', 2: 'bicycle', 20: 'sheep', 21: 'cow', 22: 'elephant', 23: 'bear', 24: 'zebra', 25: 'giraffe', 26: 'hat', 27: 'backpack', 28: 'umbrella', 29: 'shoe', 3: 'car', 30: 'eye glasses', 31: 'handbag', 32: 'tie', 33: 'suitcase', 34: 'frisbee', 35: 'skis', 36: 'snowboard', 37: 'sports ball', 38: 'kite', 39: 'baseball bat', 4: 'motorcycle', 40: 'baseball glove', 41: 'skateboard', 42: 'surfboard', 43: 'tennis racket', 44: 'bottle', 45: 'plate', 46: 'wine glass', 47: 'cup', 48: 'fork', 49: 'knife', 5: 'airplane', 50: 'spoon', 51: 'bowl', 52: 'banana', 53: 'apple', 54: 'sandwich', 55: 'orange', 56: 'broccoli', 57: 'carrot', 58: 'hot dog', 59: 'pizza', 6: 'bus', 60: 'donut', 61: 'cake', 62: 'chair', 63: 'couch', 64: 'potted plant', 65: 'bed', 66: 'mirror', 67: 'dining table', 68: 'window', 69: 'desk', 7: 'train', 70: 'toilet', 71: 'door', 72: 'tv', 73: 'laptop', 74: 'mouse', 75: 'remote', 76: 'keyboard', 77: 'cell phone', 78: 'microwave', 79: 'oven', 8: 'truck', 80: 'toaster', 81: 'sink', 82: 'refrigerator', 83: 'blender', 84: 'book', 85: 'clock', 86: 'vase', 87: 'scissors', 88: 'teddy bear', 89: 'hair drier', 9: 'boat', 90: 'toothbrush'}
-    id2label_mapping = {x:'Misc.' if x!=1 and x!=3 else 'pedestrian' if x==1 else 'car' for x in sorted(org_mapping.keys())}
-    id2id_mapping =  {x:252 if x!=1 and x!=3 else 2 if x==1 else 1 for x in sorted(org_mapping.keys())}
+    id2label_mapping = {x:'Misc.' if x!=1 and x!=3 and x!=6 and x!=8 else 'pedestrian' if x==1 else 'car' for x in sorted(org_mapping.keys())}
+    id2id_mapping =  {x:252 if x!=1 and x!=3 and x!=6 and x!=8 else 2 if x==1 else 1 for x in sorted(org_mapping.keys())}
 
     return id2label_mapping,id2id_mapping
 
@@ -160,7 +160,7 @@ if __name__ == "__main__" :
     parser.add_argument('--test_path', required=False, default="../../team5_split_KITTI-MOTS/eval/", help='Testing images')
     parser.add_argument('--gt_path', required=False, default="../../team5_split_KITTI-MOTS/instances_txt/eval/", help='GT of testing image')
     parser.add_argument('--json_output', required=False, default="./inference_pretrain_DETR.json", help='Output xml')
-    parser.add_argument('--gt_json_path', required=False, default="./eval_gt.json", help='gt json path')
+    parser.add_argument('--gt_json_path', required=False, default="./NO_VAN_eval_gt.json", help='gt json path')
     parser.add_argument('--draw', action='store_true', help="Enable drawing predictions")
     parser.add_argument('--metric', action='store_true', help="Enable metric computation")
     parser.add_argument('--charge_gt', action='store_true', help="Enable metric computation")
