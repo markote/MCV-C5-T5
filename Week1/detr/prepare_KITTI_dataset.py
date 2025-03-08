@@ -66,9 +66,10 @@ def load_gt(gt_path, output_json_path="./gt.json", path_images="./eval/"):
     json_dict = {}
     json_dict["images"] = []
     json_dict["annotations"] = []
-    json_dict["categories"] = [{ "id": 0, "name": "car" }, { "id": 1, "name": "pedestrian" }, { "id": 2, "name": "van" }]
+    json_dict["categories"] = [{ "id": 0, "name": "car" }, { "id": 1, "name": "pedestrian" }]
     seen_images = set()
     counter = 0
+    count_detections = dict()
     for txt_file in txt_files:
         str_video_id = (txt_file.split("/")[-1]).split(".")[0]
         video_id = int(str_video_id) * 10000
@@ -84,7 +85,7 @@ def load_gt(gt_path, output_json_path="./gt.json", path_images="./eval/"):
                 width = int(fields[4])
                 bin_rle = fields[5]
                 image_path = path_images + str_video_id + "/" + image_str_gen(int(fields[0]))
-                print(f"Image path {image_path}")
+                # print(f"Image path {image_path}")
                 rle = {
                     'counts': bin_rle,  # The RLE counts
                     'size': [height, width]  # Size of the mask (height, width)
@@ -94,16 +95,19 @@ def load_gt(gt_path, output_json_path="./gt.json", path_images="./eval/"):
     
                 x, y, w, h = cv2.boundingRect(contours[0])
                 class_id = class_id if class_id != 10 else 3
-                if class_id > 3:
-                    print(f"Error!: class no 1,2 or 3: {class_id}")
-                class_id = class_id - 1 
-                bbox = [x, y, w, h]
-                json_dict["annotations"].append({ "id": counter, "image_id": image_id, "category_id": class_id, "bbox": bbox, "area": w*h, "iscrowd": 0 })
-                if not image_id in seen_images:
-                    json_dict["images"].append({ "id": image_id, "width": width, "height": height, "image":image_path })
-                    seen_images.add(image_id)
-                counter += 1
+                if class_id < 3:
+                    class_id = class_id - 1 
+                    bbox = [x, y, w, h]
+                    if not image_id in count_detections:
+                        count_detections[image_id] = 0
+                    count_detections[image_id] += 1
+                    json_dict["annotations"].append({ "id": counter, "image_id": image_id, "category_id": class_id, "bbox": bbox, "area": w*h, "iscrowd": 0 })
+                    if not image_id in seen_images:
+                        json_dict["images"].append({ "id": image_id, "width": width, "height": height, "image":image_path })
+                        seen_images.add(image_id)
+                    counter += 1
     
+    print(f"Max detection: {max(count_detections.values())}")
     with open(output_json_path, "w") as json_file:
         json.dump(json_dict, json_file, indent=4)
     
