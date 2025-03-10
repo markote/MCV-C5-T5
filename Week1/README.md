@@ -36,6 +36,10 @@ python eval_pretrain.py
 ```
 python finetune.py
 ```
+or we can run the hyperparameter tuning by:
+```
+python hyperparam_tuning.py
+```
 
 * Once fine tuned we can execute the following script to compute metrics:
 
