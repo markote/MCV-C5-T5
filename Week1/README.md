@@ -70,3 +70,6 @@ python finetune.py --metric --draw
 python inference_from_finetune_drawings.py --metric #metric flag for bb of the gt
 python inference_from_finetune_metric.py
 ```
+## Domain shift finetuning
+Domain Shift Fine-tuning for Week 1 was done at the following [colab] (https://colab.research.google.com/drive/1Q5p8f6BDDYjekYZfyUAoHYOYUSBzHeYD#scrollTo=EU2kC_VEli1E)
+
