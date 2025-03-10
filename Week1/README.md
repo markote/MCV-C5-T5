@@ -1,13 +1,14 @@
 # Week 1
-
+## Presentation
+* The slides of the project can be found [here](https://docs.google.com/presentation/d/1SPHVbv9CpBlOdyE1i5LMe4Scj5LjWOr8vCCc4I8aot4/edit?usp=sharing).
 ## Object detection
 ### Fast R CNN
 
-finetune.py: Fine-tunes the model without augmentation.
+* finetune.py: Fine-tunes the model without augmentation.
 
-finetune_aug.py: Fine-tunes the model with configurable augmentation.
+* finetune_aug.py: Fine-tunes the model with configurable augmentation.
 
-coco_format_inference.py: Runs inference using a fine-tuned model and maps the classes to custom dataset labels.
+* coco_format_inference.py: Runs inference using a fine-tuned model and maps the classes to custom dataset labels.
 
 
 ### YOLO
