@@ -1,0 +1,7 @@
+path: /mnt/home/MCV-C5/yolo/my_datasets/KITTI_MOTS_YOLO
+train: train/images
+val: eval/images
+
+names:
+  0: person
+  1: car
