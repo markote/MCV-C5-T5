@@ -11,6 +11,44 @@ coco_format_inference.py: Runs inference using a fine-tuned model and maps the c
 
 
 ### YOLO
+Go to the folder "yolo" and use the following command.
+
+* Prepare dataset format for YOLO
+
+```
+python prepare_yolo_dataset.py
+```
+
+* To execute the YOLO inference, from the pretrained COCO dataset, execute this command:
+```
+python inference_pretrain.py # 1 image
+or
+python inference_pretrain_gif.py # produce GIF
+```
+
+* Eval the pretrained model:
+
+```
+python eval_pretrain.py
+```
+
+* The finetuning is done exectuing this script:
+```
+python finetune.py
+```
+
+* Once fine tuned we can execute the following script to compute metrics:
+
+```
+python eval_finetune.py
+```
+
+* We also can run inference on finetuned model to produce GIF
+
+```
+python inference_finetune_gif.py # produce GIF
+```  
+
 ### DETR
 * To execute the DETR inference, from the pretrained COCO dataset, execute this command:
 ```
