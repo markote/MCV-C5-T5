@@ -1,0 +1,7 @@
+path: /home/msiau/data/tmp/ptruong/data/KITTI_MOTS_YOLO_seg
+train: train/images
+val: eval/images
+
+names:
+  0: person
+  1: car

@@ -206,6 +206,6 @@ def main(mode):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Prepare segmentation annotations for YOLO')
-    parser.add_argument('--mode', type=str, default='pretrain', help='finetune or pretrain')
+    parser.add_argument('--mode', type=str, default='finetune', help='finetune or pretrain')
     args = parser.parse_args()
     main(mode=args.mode)

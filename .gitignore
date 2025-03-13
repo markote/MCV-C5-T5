@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 *my_datasets
 *check_annot*
+*runs
+*wandb

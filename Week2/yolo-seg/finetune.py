@@ -1,7 +1,10 @@
 from ultralytics import YOLO
 import wandb
-wandb.login(key="")
-wandb.init(project="YOLO")
+import os
+# os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+# os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2"
+
+# wandb.init(project="YOLO")
 # Load a pretrained YOLO model
 model = YOLO("yolo11l-seg.pt")
 
@@ -11,9 +14,9 @@ model.train(
     pretrained = True,
     epochs=30,
     imgsz=640,
-    workers=32,
-    batch= 8*3,
+    workers=64,
+    batch= 32*8,
     name='kitti_mots_finetune',
     plots = True,
-    device = [0,1,2]
+    device = [0,1,2,3,4,5,6,7]
 )
