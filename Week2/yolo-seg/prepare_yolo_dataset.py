@@ -145,10 +145,10 @@ def process_sequence(
 
 def main(mode):
     # Base directory for your dataset with the new folder structure
-    src_base = "/home/msiau/data/tmp/ptruong/data/team5_split_KITTI-MOTS"
+    src_base = "/mnt/dataset/team5_split_KITTI-MOTS"
 
     # Destination directory for your YOLO formatted segmentation dataset
-    dest_dir = f"/home/msiau/data/tmp/ptruong/data/KITTI_MOTS_YOLO_seg"
+    dest_dir = f"/mnt/dataset/KITTI_MOTS_YOLO_seg"
 
     # Create YOLO folder structures for train and eval
     train_images_dir, train_labels_dir = create_yolo_substructure(dest_dir, subset="train")

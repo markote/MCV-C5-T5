@@ -1,4 +1,4 @@
-path: /home/msiau/data/tmp/ptruong/data/KITTI_MOTS_YOLO_seg
+path: /mnt/dataset/KITTI_MOTS_YOLO_seg
 train: train/images
 val: eval/images
 
