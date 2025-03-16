@@ -321,6 +321,15 @@ if __name__ == "__main__" :
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
 
+    # Count total parameters
+    total_params = sum(p.numel() for p in model.parameters())
+    
+    # Count trainable parameters
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    
+    print(f"Total parameters: {total_params:,}")
+    print(f"Trainable parameters: {trainable_params:,}")
+
     # id2label_kitti_motts_mapping, id2id_kitti_motts_mapping = create_mapping(model.config.id2label)
 
     # # print(f"id2label_kitti_motts_mapping: {id2label_kitti_motts_mapping}")
@@ -391,7 +400,7 @@ if __name__ == "__main__" :
                     colors.append((0,0,255) if label == 0 else (0,255,255) )
 
             if args.draw:
-                draw_segments(im_path, masks, colors, output=args.output_drawings, masks_gt=gt[image_id] if image_id in gt else None)
+                draw_segments(im_path, masks, colors, output=args.output_drawings, masks_gt=gt[image_id] if gt is not None and image_id in gt else None)
         
         print(f"End split {i}")
         # if i > 3:
@@ -404,3 +413,5 @@ if __name__ == "__main__" :
     
     times = np.array(times)
     print(f"Time per image, avg: ",np.mean(times) ,"std: ",np.std(times))
+
+    

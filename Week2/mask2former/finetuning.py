@@ -7,6 +7,7 @@ import cv2
 import sys
 import glob
 import os
+import time
 
 from transformers import Mask2FormerImageProcessor, Mask2FormerForUniversalSegmentation
 
@@ -205,13 +206,14 @@ def train(model, train_dataloader, eval_dataloader, lr=5e-5, weight_decay=1e-4, 
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
 
-    
+    times = []
     for epoch in range(numb_epoch):
         running_loss = 0.0
         num_samples = 0
         print("Epoch:", epoch)
         model.train()
         for idx, batch in enumerate(tqdm(train_dataloader)):
+            start_time = time.time()  # Start time
             # Reset the parameter gradients
             optimizer.zero_grad()
 
@@ -240,9 +242,14 @@ def train(model, train_dataloader, eval_dataloader, lr=5e-5, weight_decay=1e-4, 
             #print(f"AVG train batch loss: {loss.item()}")
             # Optimization
             optimizer.step()
+            end_time = time.time()  # End time
+            execution_time = (end_time - start_time)
+            times.append(execution_time)
 
-        print("AVG Train loss:", running_loss/ num_samples)    
+        print("AVG Train loss:", running_loss/ num_samples)
+        break    
         #test(model, eval_dataloader, device)
+    print("Time training:", np.mean(np.array(times)))
 
      
 def debug1(dt):
