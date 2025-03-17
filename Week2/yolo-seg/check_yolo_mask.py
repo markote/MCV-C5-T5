@@ -72,10 +72,10 @@ def parse_original_annotation_line(line):
 def main(mode="train"):
     # --- CONFIGURATION ---
     # Processed images and annotations (polygon-based, normalized) from the converted dataset.
-    proc_images_dir = "/home/msiau/data/tmp/ptruong/data/KITTI_MOTS_YOLO_seg/{}/images".format(mode)
-    proc_labels_dir = "/home/msiau/data/tmp/ptruong/data/KITTI_MOTS_YOLO_seg/{}/labels".format(mode)
+    proc_images_dir = "/mnt/dataset/KITTI_MOTS_YOLO_seg/{}/images".format(mode)
+    proc_labels_dir = "/mnt/dataset/KITTI_MOTS_YOLO_seg/{}/labels".format(mode)
     # Original KITTI MOTS annotation files (raw RLE format)
-    orig_ann_dir = os.path.join("/home/msiau/data/tmp/ptruong/data", "team5_split_KITTI-MOTS", "instances_txt", mode)
+    orig_ann_dir = os.path.join("/mnt/dataset", "team5_split_KITTI-MOTS", "instances_txt", mode)
     # Output directory for visualization results
     output_dir = "check_annot_{}".format(mode)
     os.makedirs(output_dir, exist_ok=True)

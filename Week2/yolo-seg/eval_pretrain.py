@@ -38,5 +38,13 @@ model.model.names = {
     **{i: f"class_{i}" for i in range(2, 80)}
 }
 
-metrics = model.val(data="kitti_mots.yaml", validator = ModifiedYOLOSegValidator)
-print(metrics.mask.map)  # map50-95
+# metrics = model.val(data="kitti_mots.yaml", validator = ModifiedYOLOSegValidator)
+metrics = model.val(data="kitti_mots.yaml", validator = ModifiedYOLOSegValidator, workers=64, batch= 32*8, device = [0,1,2,3,4,5,6,7])
+print(metrics.box.map)  # map50-95(B)
+print(metrics.box.map50)  # map50(B)
+print(metrics.box.map75)  # map75(B)
+print(metrics.box.maps)  # a list contains map50-95(B) of each category
+print(metrics.seg.map)  # map50-95(M)
+print(metrics.seg.map50)  # map50(M)
+print(metrics.seg.map75)  # map75(M)
+print(metrics.seg.maps)  # a list contains map50-95(M) of each category
