@@ -33,3 +33,5 @@ python inference.py --draw --metric --finetune --json_output "inference_finetune
 ## Domain shift finetuning
 
 Domain Shift Fine-tuning for Week 2 was done at the following [colab](https://colab.research.google.com/drive/19s8xXQVHBhcCaD2LrAUYnrAQzIym8kEJ?usp=sharing)
+
+- [Drive Folder](https://drive.google.com/drive/folders/1vQn0S-rXAk5gnBBx8cXdHkwzjXkMJdLE?usp=sharing)
