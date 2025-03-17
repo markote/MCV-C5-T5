@@ -1,6 +1,6 @@
-# Week 1
+# Week 2
 ## Presentation
-* The slides of the project can be found [here](https://docs.google.com/presentation/d/1_Z6B1suaqjK-kdclQK2QIehBfXtvoAQn_MPRYKhfwC4/edit#slide=id.g33e8f63fe75_0_1026).
+* The slides of the project can be found [here](https://docs.google.com/presentation/d/1_Z6B1suaqjK-kdclQK2QIehBfXtvoAQn_MPRYKhfwC4/edit#slide=id.g33e8f63fe75_0_826).
 ## Object detection
 ### Fast R CNN
 
