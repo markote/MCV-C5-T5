@@ -131,7 +131,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     model = Model(encoder_type=encoder_type, decoder_type=decoder_type).to(DEVICE)
     model.train()
-    optimizer = optimizer_chooser(model, config["optimizer_type"])
+    optimizer = optimizer_chooser(model, config["optimizer_type"],config)
     crit = nn.CrossEntropyLoss()
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
@@ -149,8 +149,8 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
     total = 0
     gts = []
     preds = []
-    # for images, titles in dataloader:
-    for images, titles in tqdm.tqdm(dataloader, desc="Training"):
+    for images, titles in dataloader:
+    # for images, titles in tqdm.tqdm(dataloader, desc="Training"):
 
         images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
         
