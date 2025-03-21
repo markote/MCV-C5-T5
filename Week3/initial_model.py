@@ -126,10 +126,9 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
     model.train()    
     # Training loop
     train_loss = 0.0
-    correct = 0.0
     total = 0
-    b1,b2,rl,mt = 0.0, 0.0, 0.0, 0.0
-    total_batches = 0
+    gts = []
+    preds = []
     for images, titles in dataloader:
         # print("images shape: ", images.shape)
         # print("titles shape: ", titles.shape)
@@ -155,52 +154,32 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
 
         # print("title shape: ", titles.shape)
         # print("pred shape: ", predicted.shape)
-        gt = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in titles]
+        gt = [["".join([IDX2CHAR[idx.item()] for idx in seq])] for seq in titles] # gt muyst be [gt_ref1, gtref2,] for each prediction
         pred = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in predicted]
-        # concat gt and pred and do the val after the whole training? Instead of computing by batch
-        
-        # print(f"GT: {gt}, Pred: {pred}")
-        # sys.exit(1)
-        
-        bleue, rouge, meteor = metric
-        bleu1 = bleu.compute(predictions=pred, references=gt, max_order=1)
-        bleu2 = bleu.compute(predictions=pred, references=gt, max_order=2)
-        res_r = rouge.compute(predictions=pred, references=gt)
-        res_m = meteor.compute(predictions=pred, references=gt)
-        
-        b1 += bleu1['bleu']
-        b2 += bleu2['bleu']
-        rl += res_r['rougeL']
-        mt += res_m['meteor']
-       
+        gts = gts + gt
+        preds = preds + pred
         train_loss += loss.item() * b # compute the avg loss by sum of all seq chars
         total += b
-        total_batches += 1
-        print("Batch completed!")
-        break
-
+        
+    bleue, rouge, meteor = metric
+    bleu1 = bleu.compute(predictions=preds, references=gts, max_order=1)["bleu"]
+    bleu2 = bleu.compute(predictions=preds, references=gts, max_order=2)["bleu"]
+    res_r = rouge.compute(predictions=preds, references=gts)['rougeL']
+    res_m = meteor.compute(predictions=preds, references=gts)['meteor']
+    
     # Calculate training metrics
     avg_train_loss = train_loss / total
-    b1 = b1 / total_batches
-    b2 = b2 / total_batches
-    rl = rl / total_batches
-    mt = mt / total_batches
-
-    result = f"BLEU-1:{b1*100:.1f}%, BLEU2:{b2*100:.1f}%, ROUGE-L:{rl*100:.1f}%, METEOR:{mt*100:.1f}%"
+    result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
 
     return avg_train_loss, result
 
 def eval_epoch(model, crit, metric, dataloader):
-
     model.eval()
-
     total = 0
-    b1,b2,rl,mt = 0.0, 0.0, 0.0, 0.0
-    total_batches = 0
     eval_loss = 0.0
-    correct = 0.0
     total = 0
-
+    gts = []
+    preds = []
     with torch.no_grad():
         for images, titles in dataloader:
             images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
@@ -214,34 +193,25 @@ def eval_epoch(model, crit, metric, dataloader):
 
             _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char (batch, num_seq vector) with each element being between [0, NUM_CHAR-1] 
 
-            gt = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in titles]
+            gt = [["".join([IDX2CHAR[idx.item()] for idx in seq])] for seq in titles]
             pred = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in predicted]
-
-            bleue, rouge, meteor = metric
-            bleu1 = bleu.compute(predictions=pred, references=gt, max_order=1)
-            bleu2 = bleu.compute(predictions=pred, references=gt, max_order=2)
-            res_r = rouge.compute(predictions=pred, references=gt)
-            res_m = meteor.compute(predictions=pred, references=gt)
-
-            b1 += bleu1['bleu']
-            b2 += bleu2['bleu']
-            rl += res_r['rougeL']
-            mt += res_m['meteor']
-
+            
+            gts = gts + gt
+            preds = preds + pred
             eval_loss += loss.item() * b # compute the avg loss by sum of all seq chars
             total += b
-            total_batches += 1
-            print("Batch completed!")
-            break
 
+    bleue, rouge, meteor = metric
+    bleu1 = bleu.compute(predictions=preds, references=gts, max_order=1)["bleu"]
+    bleu2 = bleu.compute(predictions=preds, references=gts, max_order=2)["bleu"]
+    res_r = rouge.compute(predictions=preds, references=gts)['rougeL']
+    res_m = meteor.compute(predictions=preds, references=gts)['meteor']
+    
     # Calculate training metrics
     avg_eval_loss = eval_loss / total
-    b1 = b1 / total_batches
-    b2 = b2 / total_batches
-    rl = rl / total_batches
-    mt = mt / total_batches
-
-    result = f"BLEU-1:{b1*100:.1f}%, BLEU2:{b2*100:.1f}%, ROUGE-L:{rl*100:.1f}%, METEOR:{mt*100:.1f}%"
+    print("Eval preds: ", preds)
+    print("Eval gts: ", gts)
+    result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
 
     return avg_eval_loss, result
 
@@ -254,7 +224,7 @@ if __name__ == "__main__":
     config = {
             "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
-            "batch_size": 2, #32,
+            "batch_size": 32,
             "optimizer_type": "SGD",
             "num_epochs": 1,
         }
