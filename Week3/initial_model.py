@@ -191,8 +191,12 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
     return avg_train_loss, result
 
 def eval_epoch(model, crit, metric, dataloader):
-    model.eval()    
-    # Training loop
+
+    model.eval()
+
+    total = 0
+    b1,b2,rl,mt = 0.0, 0.0, 0.0, 0.0
+    total_batches = 0
     eval_loss = 0.0
     correct = 0.0
     total = 0
@@ -203,25 +207,43 @@ def eval_epoch(model, crit, metric, dataloader):
 
             # Forward pass
             outputs = model(images) # batch, NUM_CHAR, seq
-
-            loss = 0.0
             loss = crit(outputs, titles).sum() 
-            # print(loss)
-            
 
-            # Track loss and accuracy
+            # Track loss and metrics
             b,_,seq_size = outputs.shape
-            eval_loss += loss.item() * b * seq_size # total loss avg for each char
-            _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char
-            correct += (predicted == titles).sum().item() # avg accuracy for each char
-            total += titles.shape[0]*titles.shape[1]
 
-    # Calculate eval metrics
+            _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char (batch, num_seq vector) with each element being between [0, NUM_CHAR-1] 
+
+            gt = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in titles]
+            pred = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in predicted]
+
+            bleue, rouge, meteor = metric
+            bleu1 = bleu.compute(predictions=pred, references=gt, max_order=1)
+            bleu2 = bleu.compute(predictions=pred, references=gt, max_order=2)
+            res_r = rouge.compute(predictions=pred, references=gt)
+            res_m = meteor.compute(predictions=pred, references=gt)
+
+            b1 += bleu1['bleu']
+            b2 += bleu2['bleu']
+            rl += res_r['rougeL']
+            mt += res_m['meteor']
+
+            eval_loss += loss.item() * b # compute the avg loss by sum of all seq chars
+            total += b
+            total_batches += 1
+            print("Batch completed!")
+            break
+
+    # Calculate training metrics
     avg_eval_loss = eval_loss / total
-    train_accuracy = correct / total
-    
-    return avg_eval_loss, train_accuracy
+    b1 = b1 / total_batches
+    b2 = b2 / total_batches
+    rl = rl / total_batches
+    mt = mt / total_batches
 
+    result = f"BLEU-1:{b1*100:.1f}%, BLEU2:{b2*100:.1f}%, ROUGE-L:{rl*100:.1f}%, METEOR:{mt*100:.1f}%"
+
+    return avg_eval_loss, result
 
 if __name__ == "__main__":
 
