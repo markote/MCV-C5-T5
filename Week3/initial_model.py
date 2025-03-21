@@ -66,10 +66,25 @@ class Data(Dataset):
         return img, torch.tensor(cap_idx, dtype=torch.long)
 
 class Model(nn.Module):
-    def __init__(self):
+    def __init__(self, encoder_type='resnet18', decoder_type='gru'):
         super().__init__()
-        self.resnet = ResNetModel.from_pretrained('microsoft/resnet-18').to(DEVICE)
-        self.gru = nn.GRU(512, 512, num_layers=1)
+        if encoder_type == "resnet18":
+            print("resnet18 encoder")
+            self.resnet = ResNetModel.from_pretrained('microsoft/resnet-18').to(DEVICE)
+        elif encoder_type == 'resnet34':
+            self.resnet = ResNetModel.from_pretrained('microsoft/resnet-34').to(DEVICE)
+        else:
+            raise ValueError("Unsupported encoder. Choose 'resnet18' or 'resnet34'.")
+
+        if decoder_type == "gru":
+            print("gru decoder")
+            self.decoder = nn.GRU(512, 512, num_layers=1)
+        elif decoder_type == 'lstm':
+            print("lstm decoder")
+            self.decoder = nn.LSTM(512, 512, num_layers=1)
+        else:
+            raise ValueError("Unsupported decoder. Choose 'gru' or 'lstm'.")
+           
         self.proj = nn.Linear(512, NUM_CHAR)
         self.embed = nn.Embedding(NUM_CHAR, 512)
 
@@ -83,7 +98,10 @@ class Model(nn.Module):
         inp = start_embeds
         hidden = feat
         for t in range(TEXT_MAX_LEN-1): # rm <SOS>
-            out, hidden = self.gru(inp, hidden)
+            if isinstance(self.decoder, nn.LSTM):
+                out, (hidden, cell) = self.decoder(inp, (hidden, torch.zeros_like(hidden)))
+            else:  # GRU
+                out, hidden = self.decoder(inp, hidden)
             inp = torch.cat((inp, out[-1:]), dim=0) # N, batch, 512
     
         res = inp.permute(1, 0, 2) # batch, seq, 512
@@ -103,15 +121,17 @@ def optimizer_chooser(model, type_opt, config):
         sys.exit(1)
 
 def train(epochs, prefix, partitions, metric, config=None):
+    encoder_type = config.get("encoder_type", "resnet18")
+    decoder_type = config.get("decoder_type", "gru")
     data_train = Data(prefix, partitions['train'])
     data_valid = Data(prefix, partitions['eval'])
     data_test = Data(prefix, partitions['test'])
     dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
     dataloader_valid = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    model = Model().to(DEVICE)
+    model = Model(encoder_type=encoder_type, decoder_type=decoder_type).to(DEVICE)
     model.train()
-    optimizer = optimizer_chooser(model, config["optimizer_type"], config)
+    optimizer = optimizer_chooser(model, config["optimizer_type"])
     crit = nn.CrossEntropyLoss()
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
@@ -129,11 +149,9 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
     total = 0
     gts = []
     preds = []
-    for images, titles in dataloader:
-        # print("images shape: ", images.shape)
-        # print("titles shape: ", titles.shape)
-        # print("titles: ", titles)
-        # sys.exit(1)
+    # for images, titles in dataloader:
+    for images, titles in tqdm.tqdm(dataloader, desc="Training"):
+
         images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
         
         # Forward pass
@@ -222,6 +240,8 @@ if __name__ == "__main__":
     splits_path = f'{base_path}DataSplit.npy'
 
     config = {
+            "encoder_type": "resnet18",  # 'resnet18' or 'resnet34'
+            "decoder_type": "lstm",  # 'gru' or 'lstm'
             "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
             "batch_size": 32,
