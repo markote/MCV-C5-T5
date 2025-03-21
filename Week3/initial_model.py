@@ -91,9 +91,9 @@ class Model(nn.Module):
         res = res.permute(0, 2, 1) # batch, 81, seq
         return res
 
-def optimizer_chooser(model, type_opt):
+def optimizer_chooser(model, type_opt, config):
     if type_opt == "AdamW":
-        return optim.AdamW(model.parameters())
+        return optim.AdamW(model.parameters(), lr=config["lr"], weight_decay=config["weight_decay"])
     elif type_opt == "Adam":
         return optim.Adam(model.parameters())
     elif type_opt == "SGD":
@@ -111,7 +111,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     model = Model().to(DEVICE)
     model.train()
-    optimizer = optimizer_chooser(model, config["optimizer_type"])
+    optimizer = optimizer_chooser(model, config["optimizer_type"], config)
     crit = nn.CrossEntropyLoss()
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
@@ -225,8 +225,10 @@ if __name__ == "__main__":
             "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
             "batch_size": 32,
-            "optimizer_type": "SGD",
-            "num_epochs": 1,
+            "optimizer_type": "AdamW",
+            "lr": 1e-3,
+            "weight_decay": 0.01,
+            "num_epochs": 30,
         }
 
     partitions = np.load(splits_path, allow_pickle=True).item()
