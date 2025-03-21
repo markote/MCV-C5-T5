@@ -115,43 +115,69 @@ def train(epochs, data, partitions, config=None):
     print(f'test loss: {loss:.2f}, metric: {res:.2f}')
     
 def train_one_epoch(model, optimizer, crit, metric, dataloader):
-    
     model.train()    
     # Training loop
+    train_loss = 0.0
+    correct = 0.0
+    total = 0
     for images, titles in dataloader:
-        images, titles = images.to(device), titles.to(device)
-
+        images, titles = images.to(device), titles.to(device) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
+        
         # Forward pass
         outputs = model(images) # batch, NUM_CHAR, seq
 
         loss = 0.0
-        for i in range(y_est.shape[1]):
-            loss += criterion( y_est[:, i, :], y[:, i]).sum()
-            print(loss)
+        loss = crit(outputs, titles).sum() 
+        # print(loss)
         
-        loss = criterion(outputs, labels)# https://stackoverflow.com/questions/71091323/crossentropyloss-on-sequences
-
         # Backward pass and optimization
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
         # Track loss and accuracy
-        train_loss += loss.item() * inputs.size(0)
-        _, predicted = outputs.max(1)
-        correct += (predicted == labels).sum().item()
-        total += labels.size(0)
+        b,_,seq_size = outputs.shape
+        train_loss += loss.item() * b * seq_size # total loss avg for each char
+        _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char
+        correct += (predicted == titles).sum().item() # avg accuracy for each char
+        total += titles.shape[0]*titles.shape[1]
 
     # Calculate training metrics
     avg_train_loss = train_loss / total
     train_accuracy = correct / total
     
-    '''finish the code'''
-    return loss, res
+    return avg_train_loss, train_accuracy
 
 def eval_epoch(model, crit, metric, dataloader):
-    '''finish the code'''
-    return loss, res
+    model.eval()    
+    # Training loop
+    eval_loss = 0.0
+    correct = 0.0
+    total = 0
+
+    with torch.no_grad():
+        for images, titles in dataloader:
+            images, titles = images.to(device), titles.to(device) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
+
+            # Forward pass
+            outputs = model(images) # batch, NUM_CHAR, seq
+
+            loss = 0.0
+            loss = crit(outputs, titles).sum() 
+            # print(loss)
+
+            # Track loss and accuracy
+            b,_,seq_size = outputs.shape
+            eval_loss += loss.item() * b * seq_size # total loss avg for each char
+            _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char
+            correct += (predicted == titles).sum().item() # avg accuracy for each char
+            total += titles.shape[0]*titles.shape[1]
+
+    # Calculate eval metrics
+    avg_eval_loss = eval_loss / total
+    train_accuracy = correct / total
+    
+    return avg_eval_loss, train_accuracy
 
 
 if __name__ == "__main__":
