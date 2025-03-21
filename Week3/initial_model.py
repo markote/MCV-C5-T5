@@ -3,20 +3,24 @@ import random
 from transformers import ResNetModel
 from torch import nn
 from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 from PIL import Image
 from torchvision.transforms import v2
+import torch.optim as optim
 import torch
 import pandas as pd
 import evaluate
+import tqdm
 import sys
 import os
 
-CHARS = ['<SOS>', '<EOS>', '<PAD>', ' ', '!', '"', '#', '&', "'", '(', ')', ',', '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '=', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+CHARS = ['<SOS>', '<EOS>', '<PAD>', ' ', '!', '"', '#', '%', '&', "'", '(', ')', ',', '-', '.', '/', '+', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '=', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 NUM_CHAR = len(CHARS)
-IDX2CHAR = {k: v for k, v in enumerate(chars)}
-CHAR2IDX = {v: k for k, v in enumerate(chars)}
+IDX2CHAR = {k: v for k, v in enumerate(CHARS)}
+CHAR2IDX = {v: k for k, v in enumerate(CHARS)}
 TEXT_MAX_LEN = 201
-DEVICE = 'cuda'
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class Data(Dataset):
     def __init__(self, prefix,  partition, data_aug=False):
@@ -46,14 +50,20 @@ class Data(Dataset):
         img = self.img_proc(img)
     
         ## caption processing
+        # print("Image captioning processing: ")
+        # print(title)
         cap_list = list(title)
         final_list = [CHARS[0]]
         final_list.extend(cap_list)
         final_list.extend([CHARS[1]])
         gap = self.max_len - len(final_list)
         final_list.extend([CHARS[2]]*gap)
-        cap_idx = [char2idx[i] for i in final_list]
-        return img, cap_idx
+        cap_idx = [CHAR2IDX[i] for i in final_list]
+        # print("final list to idx", final_list)
+        # print("final idx", cap_idx)
+        # print("final idx in pytorch tensor: ",  torch.tensor(cap_idx, dtype=torch.long))
+        # sys.exit(1)
+        return img, torch.tensor(cap_idx, dtype=torch.long)
 
 class Model(nn.Module):
     def __init__(self):
@@ -67,7 +77,7 @@ class Model(nn.Module):
         batch_size = img.shape[0]
         feat = self.resnet(img)
         feat = feat.pooler_output.squeeze(-1).squeeze(-1).unsqueeze(0) # 1, batch, 512
-        start = torch.tensor(char2idx['<SOS>']).to(DEVICE)
+        start = torch.tensor(CHAR2IDX['<SOS>']).to(DEVICE)
         start_embed = self.embed(start) # 512
         start_embeds = start_embed.repeat(batch_size, 1).unsqueeze(0) # 1, batch, 512
         inp = start_embeds
@@ -77,8 +87,8 @@ class Model(nn.Module):
             inp = torch.cat((inp, out[-1:]), dim=0) # N, batch, 512
     
         res = inp.permute(1, 0, 2) # batch, seq, 512
-        res = self.proj(res) # batch, seq, 80 (NUM_CHAR == 80)
-        res = res.permute(0, 2, 1) # batch, 80, seq
+        res = self.proj(res) # batch, seq, 81 (NUM_CHAR == 81)
+        res = res.permute(0, 2, 1) # batch, 81, seq
         return res
 
 def optimizer_chooser(model, type_opt):
@@ -92,7 +102,7 @@ def optimizer_chooser(model, type_opt):
         print("Wrong model")
         sys.exit(1)
 
-def train(epochs, prefix, partitions, config=None):
+def train(epochs, prefix, partitions, metric, config=None):
     data_train = Data(prefix, partitions['train'])
     data_valid = Data(prefix, partitions['eval'])
     data_test = Data(prefix, partitions['test'])
@@ -103,14 +113,8 @@ def train(epochs, prefix, partitions, config=None):
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"])
     crit = nn.CrossEntropyLoss()
-    metric = Metric()
 
-    bleu = evaluate.load('bleu')
-    meteor = evaluate.load('meteor')
-    rouge = evaluate.load('rouge')
-    metric = (bleue, rouge, meteor)
-
-    for epoch in range(epochs):
+    for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
         loss, res = train_one_epoch(model, optimizer, crit, metric, dataloader_train)
         print(f'train loss: {loss:.2f}, metric: {res}, epoch: {epoch}')
         loss_v, res_v = eval_epoch(model, crit, metric, dataloader_valid)
@@ -127,14 +131,15 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
     b1,b2,rl,mt = 0.0, 0.0, 0.0, 0.0
     total_batches = 0
     for images, titles in dataloader:
-        images, titles = images.to(device), titles.to(device) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
+        # print("images shape: ", images.shape)
+        # print("titles shape: ", titles.shape)
+        # print("titles: ", titles)
+        # sys.exit(1)
+        images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
         
         # Forward pass
         outputs = model(images) # batch, NUM_CHAR, seq
-
-        loss = 0.0
         loss = crit(outputs, titles).sum() 
-        # print(loss)
         
         # Backward pass and optimization
         optimizer.zero_grad()
@@ -146,13 +151,17 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
 
         _, predicted = outputs.max(1) # we are interested on the pos of the max logits for the NUM_CHAR dimension so basically the predicted char (batch, num_seq vector) with each element being between [0, NUM_CHAR-1] 
         idx_titles_T = titles.T  # Shape: (seq_len, batch_size)
-        idx_predicted_T = predicted.T 
-        gt = [[IDX2CHAR[idx.item()] for idx in seq] for seq in idx_titles_T]
-        pred = [[IDX2CHAR[idx.item()] for idx in seq] for seq in idx_predicted_T]
+        idx_predicted_T = predicted.T # Shape: (seq_len, batch_size)
 
+        # print("title shape: ", titles.shape)
+        # print("pred shape: ", predicted.shape)
+        gt = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in titles]
+        pred = ["".join([IDX2CHAR[idx.item()] for idx in seq]) for seq in predicted]
         # concat gt and pred and do the val after the whole training? Instead of computing by batch
         
-        print(f"GT: {gt}, Pred: {pred}")
+        # print(f"GT: {gt}, Pred: {pred}")
+        # sys.exit(1)
+        
         bleue, rouge, meteor = metric
         bleu1 = bleu.compute(predictions=pred, references=gt, max_order=1)
         bleu2 = bleu.compute(predictions=pred, references=gt, max_order=2)
@@ -165,8 +174,10 @@ def train_one_epoch(model, optimizer, crit, metric, dataloader):
         mt += res_m['meteor']
        
         train_loss += loss.item() * b # compute the avg loss by sum of all seq chars
-        total += seq_size
+        total += b
         total_batches += 1
+        print("Batch completed!")
+        break
 
     # Calculate training metrics
     avg_train_loss = train_loss / total
@@ -188,7 +199,7 @@ def eval_epoch(model, crit, metric, dataloader):
 
     with torch.no_grad():
         for images, titles in dataloader:
-            images, titles = images.to(device), titles.to(device) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
+            images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
 
             # Forward pass
             outputs = model(images) # batch, NUM_CHAR, seq
@@ -221,12 +232,18 @@ if __name__ == "__main__":
     config = {
             "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
-            "batch_size": 32,
+            "batch_size": 2, #32,
             "optimizer_type": "SGD",
             "num_epochs": 1,
         }
 
     partitions = np.load(splits_path, allow_pickle=True).item()
-    train(epoch["num_epochs"], config["prefix"], partitions, config)
+    
+    bleu = evaluate.load('bleu')
+    meteor = evaluate.load('meteor')
+    rouge = evaluate.load('rouge')
+    metric = (bleu, rouge, meteor)
+
+    train(config["num_epochs"], config["prefix"], partitions, metric, config=config)
 
 
