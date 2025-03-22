@@ -266,6 +266,7 @@ def eval_epoch(model, crit, metric, dataloader):
     total = 0
     gts = []
     preds = []
+    all_images = []
     with torch.no_grad():
         for images, titles in dataloader:
             images, titles = images.to(DEVICE), titles.to(DEVICE) # titles should be a tensor of shape (batch, num_seq vector) with each element being between [0, NUM_CHAR-1]
@@ -289,6 +290,8 @@ def eval_epoch(model, crit, metric, dataloader):
             pred = [clean_caption("".join([IDX2CHAR[idx.item()] for idx in seq])) for seq in predicted]
             gts.extend(gt)
             preds.extend(pred)
+
+            all_images.extend(images.cpu())
             eval_loss += loss.item() * b
             total += b
 
@@ -298,15 +301,28 @@ def eval_epoch(model, crit, metric, dataloader):
     res_r = rouge.compute(predictions=preds, references=gts)['rougeL']
     res_m = meteor.compute(predictions=preds, references=gts)['meteor']
     
-    if len(preds) >= 2:
-        sample_indices = random.sample(range(len(preds)), 2)
+    if len(preds) >= 9:
+        sample_indices = random.sample(range(len(preds)), 9)
         sampled_preds = [preds[i] for i in sample_indices]
         sampled_gts = [gts[i] for i in sample_indices]
-        print("Eval preds (2 random): ", sampled_preds)
-        print("Eval gts (2 random): ", sampled_gts)
+        sampled_images = [all_images[i] for i in sample_indices]
+        print("Eval preds (9 random): ", sampled_preds)
+        print("Eval gts (9 random): ", sampled_gts)
+        
+        wandb.log({
+            "eval_predictions": sampled_preds,
+            "eval_ground_truths": sampled_gts,
+            "eval_images": [wandb.Image(img.permute(1, 2, 0).numpy(), caption=f"Pred: {pred}\nGT: {gt[0]}") for img, pred, gt in zip(sampled_images, sampled_preds, sampled_gts)]
+        })
     else:
         print("Eval preds: ", preds)
         print("Eval gts: ", gts)
+        
+        wandb.log({
+            "eval_predictions": preds,
+            "eval_ground_truths": gts,
+            "eval_images": [wandb.Image(img.permute(1, 2, 0).numpy(), caption=f"Pred: {pred}\nGT: {gt[0]}") for img, pred, gt in zip(all_images, preds, gts)]
+        })
 
     avg_eval_loss = eval_loss / total
     result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
