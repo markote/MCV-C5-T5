@@ -283,9 +283,8 @@ def eval_epoch(model, crit, metric, dataloader):
             
             # Add prediction cleaning
             def clean_caption(caption):
-                chars = [c for c in caption if c not in ['<SOS>', '<EOS>', '<PAD>']]
-                return "".join(chars).strip()
-            
+                caption = caption.replace('<SOS>','').replace('<EOS>','').replace('<PAD>','')
+                return caption.strip()
             gt = [[clean_caption("".join([IDX2CHAR[idx.item()] for idx in seq]))] for seq in titles]
             pred = [clean_caption("".join([IDX2CHAR[idx.item()] for idx in seq])) for seq in predicted]
             gts.extend(gt)
