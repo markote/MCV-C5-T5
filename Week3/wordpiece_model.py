@@ -19,7 +19,7 @@ import time
 # Load the BERT tokenizer for wordpiece tokenization
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 VOCAB_SIZE = tokenizer.vocab_size  # 30,522 for bert-base-uncased
-TEXT_MAX_LEN = 50  # Adjust based on your dataset; wordpiece sequences are shorter than character sequences
+TEXT_MAX_LEN = 50
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
