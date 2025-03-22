@@ -315,15 +315,23 @@ def eval_epoch(model, crit, metric, dataloader):
     res_r = rouge.compute(predictions=preds, references=gts)['rougeL']
     res_m = meteor.compute(predictions=preds, references=gts)['meteor']
     
-    if len(preds) >= 2:
-        sample_indices = random.sample(range(len(preds)), 2)
+    if len(preds) >= 10:
+        sample_indices = random.sample(range(len(preds)), 10)
         sampled_preds = [preds[i] for i in sample_indices]
         sampled_gts = [gts[i] for i in sample_indices]
-        print("Eval preds (2 random): ", sampled_preds)
-        print("Eval gts (2 random): ", sampled_gts)
+        print("Eval preds (10 random): ", sampled_preds)
+        print("Eval gts (10 random): ", sampled_gts)
+        wandb.log({
+            "eval_predictions": sampled_preds,
+            "eval_ground_truths": sampled_gts
+        })
     else:
         print("Eval preds: ", preds)
         print("Eval gts: ", gts)
+        wandb.log({
+            "eval_predictions": preds,
+            "eval_ground_truths": gts
+        })
 
     avg_eval_loss = eval_loss / total
     result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
