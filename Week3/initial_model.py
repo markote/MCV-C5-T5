@@ -320,7 +320,7 @@ if __name__ == "__main__":
 
     config = {
             "encoder_type": "resnet18",  # 'resnet18' or 'resnet34'
-            "decoder_type": "lstm",  # 'gru' or 'lstm'
+            "decoder_type": "gru",  # 'gru' or 'lstm'
             "apply_teacher_forcing": True,
             "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
