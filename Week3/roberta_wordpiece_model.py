@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from transformers import ResNetModel, BertTokenizer
+from transformers import ResNetModel, AutoTokenizer
 from torch import nn
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
@@ -16,9 +16,9 @@ import os
 import wandb
 import time  
 
-# Load the BERT tokenizer for wordpiece tokenization
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-VOCAB_SIZE = tokenizer.vocab_size  # 30,522 for bert-base-uncased
+# Load the RoBERTa tokenizer for subword (BPE) tokenization
+tokenizer = AutoTokenizer.from_pretrained("roberta-base")
+VOCAB_SIZE = tokenizer.vocab_size  # 50,265 for roberta-base
 TEXT_MAX_LEN = 50
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -53,12 +53,12 @@ class Data(Dataset):
         img = Image.open(os.path.join(self.prefix, path)).convert('RGB')
         img = self.img_proc(img)
     
-        # Caption processing with wordpiece tokenization
-        # Tokenize the title using the BERT tokenizer
-        # Add [CLS] (start) and [SEP] (end) tokens automatically
+        # Caption processing with subword (BPE) tokenization
+        # Tokenize the title using the RoBERTa tokenizer
+        # Add <s> (start) and </s> (end) tokens automatically
         encoded = self.tokenizer(
             title,
-            add_special_tokens=True,  # Adds [CLS] and [SEP]
+            add_special_tokens=True,  # Adds <s> and </s>
             max_length=self.max_len,
             padding='max_length',
             truncation=True,
@@ -157,7 +157,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     model = Model(encoder_type=encoder_type, decoder_type=decoder_type, apply_teacher_forcing=config["apply_teacher_forcing"]).to(DEVICE)
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss(reduction='none')  # Use reduction='none' to compute per-token loss
+    crit = nn.CrossEntropyLoss(reduction='none')  # Ignore padding tokens in loss, , ignore_index=tokenizer.pad_token_id
 
     # For model saving
     best_val_loss = float('inf')
@@ -228,14 +228,14 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
             # Create a mask to compute loss only up to [SEP]
             mask = torch.ones_like(loss, device=DEVICE)  # (batch, seq_len)
             for b in range(batch_size):
-                # Find [SEP] in ground truth
+                # Find </s> in ground truth
                 gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
                 if len(gt_eos_pos) > 0:
                     gt_eos_pos = gt_eos_pos[0].item()
                 else:
                     gt_eos_pos = seq_len
                 
-                # Find [SEP] in predictions
+                # Find </s> in predictions
                 _, predicted = outputs[b].max(0)  # predicted: (seq_len,)
                 pred_eos_pos = (predicted == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
                 if len(pred_eos_pos) > 0:
@@ -244,8 +244,8 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
                     pred_eos_pos = seq_len
                 
                 # Use the earlier of the two positions
-                eos_pos = min(gt_eos_pos, pred_eos_pos) + 1  # +1 to include [SEP]
-                mask[b, eos_pos:] = 0  # Zero out loss after [SEP]
+                eos_pos = min(gt_eos_pos, pred_eos_pos) + 1  # +1 to include </s>
+                mask[b, eos_pos:] = 0  # Zero out loss after </s>
             
             # Apply mask and compute average loss
             loss = (loss * mask).sum() / (mask.sum() + 1e-8) / accum_steps  # Average over non-masked tokens
