@@ -34,6 +34,8 @@ class Data(Dataset):
                 v2.ToImage(),
                 v2.ToDtype(torch.float32, scale=True),
                 v2.Resize((224, 224), antialias=True),
+                v2.RandomHorizontalFlip(p=0.5),
+                v2.RandomRotation(degrees=10),
                 v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
             )
         else:
@@ -54,17 +56,15 @@ class Data(Dataset):
         img = self.img_proc(img)
     
         # Caption processing with subword (BPE) tokenization
-        # Tokenize the title using the RoBERTa tokenizer
-        # Add <s> (start) and </s> (end) tokens automatically
         encoded = self.tokenizer(
             title,
-            add_special_tokens=True,  # Adds <s> and </s>
+            add_special_tokens=True,
             max_length=self.max_len,
             padding='max_length',
             truncation=True,
             return_tensors='pt'
         )
-        input_ids = encoded['input_ids'].squeeze(0)  # Shape: (max_len,)
+        input_ids = encoded['input_ids'].squeeze(0)
         
         return img, input_ids.to(dtype=torch.long)
 
@@ -82,35 +82,42 @@ class Model(nn.Module):
 
         if decoder_type == "gru":
             print("gru decoder")
-            self.decoder = nn.GRU(512, 512, num_layers=1, dropout=0.3)
+            self.decoder = nn.GRU(512, 512, num_layers=1, dropout=0.5)
             self.zero_cell = torch.zeros(1, 512, device=DEVICE)
         elif decoder_type == 'lstm':
             print("lstm decoder")
-            self.decoder = nn.LSTM(512, 512, num_layers=1, dropout=0.3)
+            self.decoder = nn.LSTM(512, 512, num_layers=1, dropout=0.5)
             self.zero_cell = torch.zeros(1, 512, device=DEVICE)
         else:
             raise ValueError("Unsupported decoder. Choose 'gru' or 'lstm'.")
            
         self.apply_teacher_forcing = apply_teacher_forcing
-        self.proj = nn.Linear(512, VOCAB_SIZE)  # Output logits over wordpiece vocab
-        self.embed = nn.Embedding(VOCAB_SIZE, 512)  # Embedding for wordpiece tokens
-        self.start = torch.tensor(tokenizer.cls_token_id, device=DEVICE)  # [CLS] token as start
+        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0  # Added for scheduled sampling
+        self.proj = nn.Linear(512, VOCAB_SIZE)
+        self.embed = nn.Embedding(VOCAB_SIZE, 512)
+        self.layer_norm = nn.LayerNorm(512).to(DEVICE)
+        self.start = torch.tensor(tokenizer.cls_token_id, device=DEVICE)
+
+    # Added method to set teacher forcing ratio for scheduled sampling
+    def set_teacher_forcing_ratio(self, ratio):
+        self.teacher_forcing_ratio = ratio
 
     def forward(self, img, titles=None):
         batch_size = img.shape[0]
-        feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1).unsqueeze(0)  # 1, batch, 512
+        feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1).unsqueeze(0)
 
-        if titles is not None and self.training and self.apply_teacher_forcing:  # Teacher forcing
-            embeds = self.embed(titles[:, :-1])  # batch, max_len-1, 512
-            embeds = embeds.permute(1, 0, 2)     # max_len-1, batch, 512
+        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:  # Modified for scheduled sampling
+            embeds = self.embed(titles[:, :-1])
+            embeds = embeds.permute(1, 0, 2)
             if isinstance(self.decoder, nn.LSTM):
                 out, _ = self.decoder(embeds, (feat, self.zero_cell.repeat(1, batch_size, 1)))
-            else:  # GRU
+            else:
                 out, _ = self.decoder(embeds, feat)
-            res = self.proj(out.permute(1, 0, 2))  # batch, max_len-1, VOCAB_SIZE
-            return res.permute(0, 2, 1)            # batch, VOCAB_SIZE, max_len-1
-        else:  # Sequential generation
-            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)  # 1, batch, 512
+            out = self.layer_norm(out)
+            res = self.proj(out.permute(1, 0, 2))
+            return res.permute(0, 2, 1)
+        else:
+            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)
             inp = start_embed
             hidden = feat
             outputs = []
@@ -119,11 +126,12 @@ class Model(nn.Module):
                     out, (hidden, _) = self.decoder(inp, (hidden, self.zero_cell.repeat(1, batch_size, 1)))
                 else:
                     out, hidden = self.decoder(inp, hidden)
-                out = self.proj(out.permute(1, 0, 2)).permute(0, 2, 1)  # batch, VOCAB_SIZE, 1
+                out = self.layer_norm(out)
+                out = self.proj(out.permute(1, 0, 2)).permute(0, 2, 1)
                 outputs.append(out)
-                _, predicted = out.max(1)  # batch, 1
-                inp = self.embed(predicted).permute(1, 0, 2)  # 1, batch, 512
-            res = torch.cat(outputs, dim=2)  # batch, VOCAB_SIZE, max_len-1
+                _, predicted = out.max(1)
+                inp = self.embed(predicted).permute(1, 0, 2)
+            res = torch.cat(outputs, dim=2)
             return res
 
 
@@ -138,17 +146,47 @@ def optimizer_chooser(model, type_opt, config):
         print("Wrong model")
         sys.exit(1)
 
+
 def train(epochs, prefix, partitions, metric, config=None):
-    # Create a unique run ID using timestamp
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"run_{run_id}"
-    
-    # Initialize W&B with unique run name
     wandb.init(project="image_captioning", name=run_name, config=config)
     
     encoder_type = config.get("encoder_type", "resnet18")
     decoder_type = config.get("decoder_type", "gru")
-    data_train = Data(prefix, partitions['train'], data_aug=False)
+    
+    # Added dataset inspection before training
+    print(f"Training set size: {len(partitions['train'])}")
+    print(f"Validation set size: {len(partitions['eval'])}")
+    print(f"Test set size: {len(partitions['test'])}")
+
+    print("\nSample Training Data (First 5):")
+    sampled_train_images = []
+    sampled_train_captions = []
+    for i in range(min(5, len(partitions['train']))):
+        title, path = partitions['train'][i]
+        img = Image.open(os.path.join(prefix, path)).convert('RGB')
+        print(f"Train Sample {i}: Title='{title}', Path='{path}'")
+        sampled_train_images.append(img)
+        sampled_train_captions.append(title)
+
+    print("\nSample Validation Data (First 5):")
+    sampled_val_images = []
+    sampled_val_captions = []
+    for i in range(min(5, len(partitions['eval']))):
+        title, path = partitions['eval'][i]
+        img = Image.open(os.path.join(prefix, path)).convert('RGB')
+        print(f"Val Sample {i}: Title='{title}', Path='{path}'")
+        sampled_val_images.append(img)
+        sampled_val_captions.append(title)
+
+    wandb.log({
+        "train_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_train_images, sampled_train_captions)],
+        "val_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_val_images, sampled_val_captions)],
+    })
+
+    # Enable data augmentation for training
+    data_train = Data(prefix, partitions['train'], data_aug=True)
     data_valid = Data(prefix, partitions['eval'])
     data_test = Data(prefix, partitions['test'])
     dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
@@ -157,23 +195,41 @@ def train(epochs, prefix, partitions, metric, config=None):
     model = Model(encoder_type=encoder_type, decoder_type=decoder_type, apply_teacher_forcing=config["apply_teacher_forcing"]).to(DEVICE)
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss(reduction='none')  # Ignore padding tokens in loss, , ignore_index=tokenizer.pad_token_id
+    crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=tokenizer.pad_token_id)
 
-    # For model saving
+    # Added learning rate scheduler
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
+
     best_val_loss = float('inf')
     base_save_dir = config.get("save_dir", "./checkpoints")
     save_dir = os.path.join(base_save_dir, run_name)
     os.makedirs(save_dir, exist_ok=True)
-    patience = 5
+    patience = config["patience_es"]
     epochs_no_improve = 0
+    warmup_epochs = config["warmup_ep"]  # Warm up for x epochs
+    initial_lr = 1e-5  # Start with a small learning rate
+    target_lr = config["lr"] 
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
+        # Learning rate warmup
+        if epoch < warmup_epochs:
+            lr = initial_lr + (target_lr - initial_lr) * (epoch / warmup_epochs)
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr
+        # Added scheduled sampling
+        if config["apply_teacher_forcing"]:
+            teacher_forcing_ratio = max(0.0, 1.0 - (epoch / config["schedule_sampling_speed"]))
+            model.set_teacher_forcing_ratio(teacher_forcing_ratio)
+            print(f"Epoch {epoch}, Teacher Forcing Ratio: {teacher_forcing_ratio:.2f}")
+
         train_loss = train_one_epoch(model, optimizer, crit, dataloader_train, accum_steps=config.get("accum_steps", 4), apply_teacher_forcing=config["apply_teacher_forcing"])
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
         val_loss, val_metrics = eval_epoch(model, crit, metric, dataloader_valid)
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
 
-        # Log to W&B
+        # Added learning rate scheduling
+        scheduler.step(val_loss)
+
         wandb.log({
             "epoch": epoch,
             "train_loss": train_loss,
@@ -182,9 +238,10 @@ def train(epochs, prefix, partitions, metric, config=None):
             "bleu2": float(val_metrics.split("BLEU2:")[1].split("%")[0]) / 100,
             "rouge_l": float(val_metrics.split("ROUGE-L:")[1].split("%")[0]) / 100,
             "meteor": float(val_metrics.split("METEOR:")[1].split("%")[0]) / 100,
+            "teacher_forcing_ratio": teacher_forcing_ratio if config["apply_teacher_forcing"] else 0.0,  # Added logging
+            "learning_rate": optimizer.param_groups[0]['lr'],  # Added logging
         })
 
-        # Save model if validation loss improves
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_no_improve = 0
@@ -208,80 +265,21 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
     model.train()    
     train_loss = 0.0
     total = 0
+    batch_losses = []  # Added for detailed logging
     optimizer.zero_grad()
-    for i, (images, titles) in enumerate(tqdm.tqdm(dataloader, desc="Mini batches")):
+    
+    for i, (images, titles) in enumerate(dataloader):
         images, titles = images.to(DEVICE), titles.to(DEVICE)
         
-        # Forward pass
-        outputs = model(images, titles)  # outputs: (batch, VOCAB_SIZE, seq_len)
+        outputs = model(images, titles)
         
-        # Compute loss based on the mode
         if apply_teacher_forcing:
-            # Teacher forcing mode: compute loss over the entire sequence
-            loss = crit(outputs, titles[:, 1:])  # loss: (batch, seq_len)
-            loss = loss.mean() / accum_steps  # Average over batch and sequence length
+            loss = crit(outputs, titles[:, 1:])
+            loss = loss.mean() / accum_steps
         else:
-            # Sequential generation mode: compute loss up to [SEP] token
             batch_size, _, seq_len = outputs.shape
-            loss = crit(outputs, titles[:, 1:])  # loss: (batch, seq_len)
-            
-            # Create a mask to compute loss only up to [SEP]
-            mask = torch.ones_like(loss, device=DEVICE)  # (batch, seq_len)
-            for b in range(batch_size):
-                # Find </s> in ground truth
-                gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
-                if len(gt_eos_pos) > 0:
-                    gt_eos_pos = gt_eos_pos[0].item()
-                else:
-                    gt_eos_pos = seq_len
-                
-                # Find </s> in predictions
-                _, predicted = outputs[b].max(0)  # predicted: (seq_len,)
-                pred_eos_pos = (predicted == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
-                if len(pred_eos_pos) > 0:
-                    pred_eos_pos = pred_eos_pos[0].item()
-                else:
-                    pred_eos_pos = seq_len
-                
-                # Use the earlier of the two positions
-                eos_pos = min(gt_eos_pos, pred_eos_pos) + 1  # +1 to include </s>
-                mask[b, eos_pos:] = 0  # Zero out loss after </s>
-            
-            # Apply mask and compute average loss
-            loss = (loss * mask).sum() / (mask.sum() + 1e-8) / accum_steps  # Average over non-masked tokens
-        
-        loss.backward()
-        if (i + 1) % accum_steps == 0 or (i + 1) == len(dataloader):
-            optimizer.step()
-            optimizer.zero_grad()
-        
-        train_loss += loss.item() * images.size(0) * accum_steps
-        total += images.size(0)
-    
-    avg_train_loss = train_loss / total
-    return avg_train_loss
-
-
-def eval_epoch(model, crit, metric, dataloader):
-    model.eval()
-    eval_loss = 0.0
-    total = 0
-    gts = []
-    preds = []
-    all_images = []
-    with torch.no_grad():
-        for images, titles in dataloader:
-            images, titles = images.to(DEVICE), titles.to(DEVICE)
-
-            # Forward pass
-            outputs = model(images)  # batch, VOCAB_SIZE, seq
-            if torch.isnan(outputs).any() or torch.isinf(outputs).any():
-                print("Warning: NaN or Inf in outputs")
-            
-            # Compute loss (use sequential generation mode's loss for evaluation)
-            batch_size, _, seq_len = outputs.shape
-            loss = crit(outputs, titles[:, 1:])  # loss: (batch, seq_len)
-            mask = torch.ones_like(loss, device=DEVICE)  # (batch, seq_len)
+            loss = crit(outputs, titles[:, 1:])
+            mask = torch.ones_like(loss, device=DEVICE)
             for b in range(batch_size):
                 gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
                 if len(gt_eos_pos) > 0:
@@ -296,20 +294,74 @@ def eval_epoch(model, crit, metric, dataloader):
                     pred_eos_pos = seq_len
                 eos_pos = min(gt_eos_pos, pred_eos_pos) + 1
                 mask[b, eos_pos:] = 0
-            loss = (loss * mask).sum() / (mask.sum() + 1e-8)
+            loss = (loss * mask).sum() / (mask.sum() + 1e-8) / accum_steps
+        
+        loss.backward()
+        # Added gradient clipping
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+
+        if (i + 1) % accum_steps == 0 or (i + 1) == len(dataloader):
+            optimizer.step()
+            optimizer.zero_grad()
+        
+        # Added logging for batch loss
+        batch_loss = loss.item() * accum_steps
+        batch_losses.append(batch_loss)
+        print(f"Batch {i}, Train Batch Loss: {batch_loss:.4f}")
+        train_loss += batch_loss * images.size(0)
+        total += images.size(0)
+    
+    avg_train_loss = train_loss / total
+    print(f"Average Train Loss for Epoch: {avg_train_loss:.4f}")
+    return avg_train_loss
+
+
+def eval_epoch(model, crit, metric, dataloader):
+    model.eval()
+    eval_loss = 0.0
+    total = 0
+    gts = []
+    preds = []
+    all_images = []
+    batch_losses = []  # Added for detailed logging
+    with torch.no_grad():
+        for i, (images, titles) in enumerate(dataloader):
+            images, titles = images.to(DEVICE), titles.to(DEVICE)
+
+            outputs = model(images)
+            if torch.isnan(outputs).any() or torch.isinf(outputs).any():
+                print("Warning: NaN or Inf in outputs")
             
-            # Track loss and metrics
+            batch_size, _, seq_len = outputs.shape
+            loss = crit(outputs, titles[:, 1:])
+            mask = torch.ones_like(loss, device=DEVICE)
+            for b in range(batch_size):
+                gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                if len(gt_eos_pos) > 0:
+                    gt_eos_pos = gt_eos_pos[0].item()
+                else:
+                    gt_eos_pos = seq_len
+                _, predicted = outputs[b].max(0)
+                pred_eos_pos = (predicted == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                if len(pred_eos_pos) > 0:
+                    pred_eos_pos = pred_eos_pos[0].item()
+                else:
+                    pred_eos_pos = seq_len
+                eos_pos = min(gt_eos_pos, pred_eos_pos) + 1
+                mask[b, eos_pos:] = 0
+            batch_loss = (loss * mask).sum() / (mask.sum() + 1e-8)
+            batch_losses.append(batch_loss.item())
+            print(f"Validation Batch {i}, Val Batch Loss: {batch_loss.item():.4f}")
+
             b, _, seq_size = outputs.shape
-            _, predicted = outputs.max(1)  # batch, seq_len
+            _, predicted = outputs.max(1)
             
-            # Decode predictions and ground truth using the tokenizer
             gt = [tokenizer.decode(title, skip_special_tokens=True) for title in titles]
             pred = [tokenizer.decode(pred, skip_special_tokens=True) for pred in predicted]
-            gts.extend([[g] for g in gt])  # Wrap each ground truth in a list for BLEU
+            gts.extend([[g] for g in gt])
             preds.extend(pred)
-            
             all_images.extend(images.cpu())
-            eval_loss += loss.item() * b
+            eval_loss += batch_loss * b
             total += b
 
     bleue, rouge, meteor = metric
@@ -325,7 +377,6 @@ def eval_epoch(model, crit, metric, dataloader):
         sampled_images = [all_images[i] for i in sample_indices]
         print("Eval preds (9 random): ", sampled_preds)
         print("Eval gts (9 random): ", sampled_gts)
-        
         wandb.log({
             "eval_predictions": sampled_preds,
             "eval_ground_truths": sampled_gts,
@@ -334,7 +385,6 @@ def eval_epoch(model, crit, metric, dataloader):
     else:
         print("Eval preds: ", preds)
         print("Eval gts: ", gts)
-        
         wandb.log({
             "eval_predictions": preds,
             "eval_ground_truths": gts,
@@ -342,6 +392,7 @@ def eval_epoch(model, crit, metric, dataloader):
         })
 
     avg_eval_loss = eval_loss / total
+    print(f"Average Validation Loss for Epoch: {avg_eval_loss:.4f}")
     result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
     return avg_eval_loss, result
 
@@ -352,19 +403,22 @@ if __name__ == "__main__":
     splits_path = f'FilteredDataSplit.npy'
 
     config = {
-            "encoder_type": "resnet18",  # 'resnet18' or 'resnet34'
-            "decoder_type": "gru",  # 'gru' or 'lstm'
-            "apply_teacher_forcing": False,
-            "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
-            "testdata_path": "~/datanew/MIT_small_train_2/test",
-            "batch_size": 16,
-            "optimizer_type": "AdamW",
-            "lr": 1e-4,
-            "weight_decay": 0.05,
-            "num_epochs": 30,
-            "accum_steps": 4,
-            "save_dir": "./checkpoints",  
-        }
+        "encoder_type": "resnet18", # 'resnet18' or 'resnet34'
+        "decoder_type": "gru", # 'gru' or 'lstm'
+        "apply_teacher_forcing": True,
+        "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
+        "testdata_path": "~/datanew/MIT_small_train_2/test",
+        "batch_size": 16,
+        "optimizer_type": "AdamW",
+        "lr": 1e-4,
+        "weight_decay": 0.05,
+        "schedule_sampling_speed": 30,
+        "num_epochs": 30,
+        "accum_steps": 4,
+        "warmup_ep": 3,
+        "patience_es": 5,
+        "save_dir": "./checkpoints",
+    }
 
     partitions = np.load(splits_path, allow_pickle=True).item()
     
