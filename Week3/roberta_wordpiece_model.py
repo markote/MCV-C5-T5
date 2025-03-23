@@ -349,18 +349,18 @@ def eval_epoch(model, crit, metric, dataloader):
 if __name__ == "__main__":
     base_path = '/mnt/dataset/image_captioning_dataset/'
     img_path = f'{base_path}FoodImages/'
-    splits_path = f'{base_path}DataSplit.npy'
+    splits_path = f'FilteredDataSplit.npy'
 
     config = {
             "encoder_type": "resnet18",  # 'resnet18' or 'resnet34'
             "decoder_type": "gru",  # 'gru' or 'lstm'
-            "apply_teacher_forcing": True,
+            "apply_teacher_forcing": False,
             "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
             "testdata_path": "~/datanew/MIT_small_train_2/test",
-            "batch_size": 32,
+            "batch_size": 16,
             "optimizer_type": "AdamW",
-            "lr": 1e-3,
-            "weight_decay": 0.01,
+            "lr": 1e-4,
+            "weight_decay": 0.05,
             "num_epochs": 30,
             "accum_steps": 4,
             "save_dir": "./checkpoints",  
