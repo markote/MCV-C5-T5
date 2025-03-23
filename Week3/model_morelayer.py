@@ -23,7 +23,6 @@ CHAR2IDX = {v: k for k, v in enumerate(CHARS)}
 TEXT_MAX_LEN = 201
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 class Data(Dataset):
     def __init__(self, prefix, partition, data_aug=False):
         self.prefix = prefix
@@ -34,13 +33,17 @@ class Data(Dataset):
                 v2.ToImage(),
                 v2.ToDtype(torch.float32, scale=True),
                 v2.Resize((224, 224), antialias=True),
-                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),)
+                v2.RandomHorizontalFlip(p=0.5),
+                v2.RandomRotation(degrees=10),
+                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            )
         else:
             self.img_proc = torch.nn.Sequential(
                 v2.ToImage(),
                 v2.ToDtype(torch.float32, scale=True),
                 v2.Resize((224, 224), antialias=True),
-                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),)
+                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            )
 
     def __len__(self):
         return len(self.partition)
@@ -67,6 +70,7 @@ class Data(Dataset):
         # sys.exit(1)
         return img, torch.tensor(cap_idx, dtype=torch.long)
 
+
 class Model(nn.Module):
     def __init__(self, encoder_type='resnet18', decoder_type='gru',num_layers=1, apply_teacher_forcing=False):
         super().__init__()
@@ -88,58 +92,56 @@ class Model(nn.Module):
             self.zero_cell = torch.zeros(num_layers, 512, device=DEVICE)
         else:
             raise ValueError("Unsupported decoder. Choose 'gru' or 'lstm'.")
+          
            
         self.apply_teacher_forcing = apply_teacher_forcing
+        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0  # Added for scheduled sampling
         self.proj = nn.Linear(512, NUM_CHAR)
         self.embed = nn.Embedding(NUM_CHAR, 512)
+        self.layer_norm = nn.LayerNorm(512).to(DEVICE)
         self.start = torch.tensor(CHAR2IDX['<SOS>'], device=DEVICE)
-        self.num_layers = num_layers
-        print("decoder has "+str(num_layers)+" layers")
+
+    # Added method to set teacher forcing ratio for scheduled sampling
+    def set_teacher_forcing_ratio(self, ratio):
+        self.teacher_forcing_ratio = ratio
 
     def forward(self, img, titles=None):
         batch_size = img.shape[0]
-        
-        # Extract features from ResNet
         feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # (batch_size, 512)
-        
         # Prepare hidden state for multiple layers
         feat = feat.unsqueeze(0).repeat(self.decoder.num_layers, 1, 1).contiguous()  # (num_layers, batch_size, 512)
 
-        if titles is not None and self.training and self.apply_teacher_forcing:  # Teacher forcing
-            embeds = self.embed(titles[:, :-1])  # (batch_size, seq_len, 512)
-            embeds = embeds.permute(1, 0, 2)     # (seq_len, batch_size, 512)
 
+        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:  # Modified for scheduled sampling
+            embeds = self.embed(titles[:, :-1])
+            embeds = embeds.permute(1, 0, 2)
             if isinstance(self.decoder, nn.LSTM):
-                # Ensure hidden state and cell state are 3-D
-                cell_state = torch.zeros_like(feat)  # (num_layers, batch_size, hidden_size)
-                out, (hidden, _) = self.decoder(embeds, (feat, cell_state))  # LSTM
+                cell_state = torch.zeros_like(feat)
+                out, _ = self.decoder(embeds, (feat, cell_state))
             else:
-                out, _ = self.decoder(embeds, feat)  # GRU
-
-            res = self.proj(out.permute(1, 0, 2))  # (batch, seq_len, NUM_CHAR)
-            return res.permute(0, 2, 1)  # (batch, NUM_CHAR, seq_len)
-
-        else:  # Sequential generation
+                out, _ = self.decoder(embeds, feat)
+            out = self.layer_norm(out)
+            res = self.proj(out.permute(1, 0, 2))
+            return res.permute(0, 2, 1)
+        else:
             start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)  # (1, batch_size, 512)
             inp = start_embed
             hidden = feat
-            cell_state = torch.zeros_like(feat)
             outputs = []
-
             for t in range(TEXT_MAX_LEN - 1):
                 if isinstance(self.decoder, nn.LSTM):
-                    
+                    cell_state = torch.zeros_like(feat)
                     out, (hidden, _) = self.decoder(inp, (hidden, cell_state))
                 else:
                     out, hidden = self.decoder(inp, hidden)
-
+                out = self.layer_norm(out)
                 out = self.proj(out.permute(1, 0, 2)).permute(0, 2, 1)
                 outputs.append(out)
                 _, predicted = out.max(1)
                 inp = self.embed(predicted).permute(1, 0, 2)
-
             res = torch.cat(outputs, dim=2)
             return res
+
 
 def optimizer_chooser(model, type_opt, config):
     if type_opt == "AdamW":
@@ -152,17 +154,47 @@ def optimizer_chooser(model, type_opt, config):
         print("Wrong model")
         sys.exit(1)
 
+
 def train(epochs, prefix, partitions, metric, config=None):
-    # Create a unique run ID using timestamp
-    run_id = time.strftime("%Y%m%d_%H%M%S")  # e.g., 20250321_143022
+    run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"run_{run_id}"
-    
-    # Initialize W&B with unique run name
     wandb.init(project="image_captioning_layers_test", name=run_name, config=config)
     
     encoder_type = config.get("encoder_type", "resnet18")
     decoder_type = config.get("decoder_type", "gru")
-    data_train = Data(prefix, partitions['train'], data_aug=False)
+    
+    # Added dataset inspection before training
+    print(f"Training set size: {len(partitions['train'])}")
+    print(f"Validation set size: {len(partitions['eval'])}")
+    print(f"Test set size: {len(partitions['test'])}")
+
+    print("\nSample Training Data (First 5):")
+    sampled_train_images = []
+    sampled_train_captions = []
+    for i in range(min(5, len(partitions['train']))):
+        title, path = partitions['train'][i]
+        img = Image.open(os.path.join(prefix, path)).convert('RGB')
+        print(f"Train Sample {i}: Title='{title}', Path='{path}'")
+        sampled_train_images.append(img)
+        sampled_train_captions.append(title)
+
+    print("\nSample Validation Data (First 5):")
+    sampled_val_images = []
+    sampled_val_captions = []
+    for i in range(min(5, len(partitions['eval']))):
+        title, path = partitions['eval'][i]
+        img = Image.open(os.path.join(prefix, path)).convert('RGB')
+        print(f"Val Sample {i}: Title='{title}', Path='{path}'")
+        sampled_val_images.append(img)
+        sampled_val_captions.append(title)
+
+    wandb.log({
+        "train_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_train_images, sampled_train_captions)],
+        "val_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_val_images, sampled_val_captions)],
+    })
+
+    # Enable data augmentation for training
+    data_train = Data(prefix, partitions['train'], data_aug=True)
     data_valid = Data(prefix, partitions['eval'])
     data_test = Data(prefix, partitions['test'])
     dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
@@ -171,23 +203,41 @@ def train(epochs, prefix, partitions, metric, config=None):
     model = Model(encoder_type=encoder_type, decoder_type=decoder_type,num_layers=config["num_layers"], apply_teacher_forcing=config["apply_teacher_forcing"]).to(DEVICE)
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss(reduction='none')  # Use reduction='none' to compute per-token loss
+    crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=2)
 
-    # For model saving
+    # Added learning rate scheduler
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
+
     best_val_loss = float('inf')
     base_save_dir = config.get("save_dir", "./checkpoints")
-    save_dir = os.path.join(base_save_dir, run_name)  # Unique save directory
+    save_dir = os.path.join(base_save_dir, run_name)
     os.makedirs(save_dir, exist_ok=True)
-    patience = 5  # Added early stopping
-    epochs_no_improve = 3
+    patience = config["patience_es"]
+    epochs_no_improve = 0
+    warmup_epochs = config["warmup_ep"]  # Warm up for x epochs
+    initial_lr = 1e-5  # Start with a small learning rate
+    target_lr = config["lr"] 
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
+        # Learning rate warmup
+        if epoch < warmup_epochs:
+            lr = initial_lr + (target_lr - initial_lr) * (epoch / warmup_epochs)
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr
+        # Added scheduled sampling
+        if config["apply_teacher_forcing"]:
+            teacher_forcing_ratio = max(0.0, 1.0 - (epoch / config["schedule_sampling_speed"]))
+            model.set_teacher_forcing_ratio(teacher_forcing_ratio)
+            print(f"Epoch {epoch}, Teacher Forcing Ratio: {teacher_forcing_ratio:.2f}")
+
         train_loss = train_one_epoch(model, optimizer, crit, dataloader_train, accum_steps=config.get("accum_steps", 4), apply_teacher_forcing=config["apply_teacher_forcing"])
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
         val_loss, val_metrics = eval_epoch(model, crit, metric, dataloader_valid)
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
 
-        # Log to W&B
+        # Added learning rate scheduling
+        scheduler.step(val_loss)
+
         wandb.log({
             "epoch": epoch,
             "train_loss": train_loss,
@@ -196,9 +246,10 @@ def train(epochs, prefix, partitions, metric, config=None):
             "bleu2": float(val_metrics.split("BLEU2:")[1].split("%")[0]) / 100,
             "rouge_l": float(val_metrics.split("ROUGE-L:")[1].split("%")[0]) / 100,
             "meteor": float(val_metrics.split("METEOR:")[1].split("%")[0]) / 100,
+            "teacher_forcing_ratio": teacher_forcing_ratio if config["apply_teacher_forcing"] else 0.0,  # Added logging
+            "learning_rate": optimizer.param_groups[0]['lr'],  # Added logging
         })
 
-        # Save model if validation loss improves
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_no_improve = 0
@@ -344,26 +395,28 @@ def eval_epoch(model, crit, metric, dataloader):
     result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
     return avg_eval_loss, result
 
-
 if __name__ == "__main__":
     base_path = '/ghome/c5mcv05/image_captioning_dataset/'
     img_path = f'{base_path}FoodImages/'
-    splits_path = f'{base_path}DataSplit.npy'
+    splits_path = f'{base_path}FilteredDataSplitGoodroot.npy'
 
     config = {
-        "encoder_type": "resnet18",  # 'resnet18' or 'resnet34'
-        "decoder_type": "lstm",  # 'gru' or 'lstm'
-        "num_layers": 1,
+        "encoder_type": "resnet18", # 'resnet18' or 'resnet34'
+        "decoder_type": "lstm", # 'gru' or 'lstm'
         "apply_teacher_forcing": True,
+        "num_layers": 3,
         "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
         "testdata_path": "~/datanew/MIT_small_train_2/test",
         "batch_size": 32,
         "optimizer_type": "AdamW",
         "lr": 1e-3,
-        "weight_decay": 0.01,
+        "weight_decay": 0.03,
+        "schedule_sampling_speed": 30,
         "num_epochs": 30,
         "accum_steps": 4,
-        "save_dir": "./checkpoints",  
+        "warmup_ep": 3,
+        "patience_es": 7,
+        "save_dir": "./checkpoints",
     }
 
     partitions = np.load(splits_path, allow_pickle=True).item()
@@ -374,5 +427,3 @@ if __name__ == "__main__":
     metric = (bleu, rouge, meteor)
 
     train(config["num_epochs"], config["prefix"], partitions, metric, config=config)
-
-
