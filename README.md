@@ -9,3 +9,7 @@ The README for Week1 can be found [here](./Week1/README.md)
 ## Week 2
 
 The README for Week2 can be found [here](./Week2/README.md)
+
+## Week 3
+
+The README for Week2 can be found [here](./Week3/README.md)
