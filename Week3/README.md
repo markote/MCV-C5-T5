@@ -21,7 +21,6 @@ pip install r requirements.txt
 python data_splitter.py
 ```
 
-
 * The additional filtering is found [here](./FilterBookCoverImage.ipynb)
 
 * The initial model can be run like this:
