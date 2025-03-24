@@ -17,6 +17,7 @@ import wandb
 import time  
 
 # Load the RoBERTa tokenizer for subword (BPE) tokenization
+from transformers import ResNetModel, AutoTokenizer
 tokenizer = AutoTokenizer.from_pretrained("roberta-base")
 VOCAB_SIZE = tokenizer.vocab_size  # 50,265 for roberta-base
 TEXT_MAX_LEN = 50
@@ -70,60 +71,81 @@ class Data(Dataset):
 
 
 class Model(nn.Module):
-    def __init__(self, encoder_type='resnet18', decoder_type='gru', apply_teacher_forcing=False):
+    def __init__(self, encoder_type='resnet18', freeze_encoder=True, decoder_type='gru', num_layers=1, apply_teacher_forcing=False):
         super().__init__()
+        self.encoder_type = encoder_type
         if encoder_type == "resnet18":
             print("resnet18 encoder")
             self.resnet = ResNetModel.from_pretrained('microsoft/resnet-18').to(DEVICE)
         elif encoder_type == 'resnet34':
             self.resnet = ResNetModel.from_pretrained('microsoft/resnet-34').to(DEVICE)
+        elif encoder_type == 'resnet50':
+            print("resnet50 encoder")
+            self.resnet = ResNetModel.from_pretrained('microsoft/resnet-50').to(DEVICE)
         else:
-            raise ValueError("Unsupported encoder. Choose 'resnet18' or 'resnet34'.")
+            raise ValueError("Unsupported encoder. Choose 'resnet18', 'resnet34', or 'resnet50'.")
+        if freeze_encoder:
+            for param in self.resnet.parameters():
+                param.requires_grad = False
+
+        self.resnet50_proj = nn.Linear(2048, 512) 
 
         if decoder_type == "gru":
             print("gru decoder")
-            self.decoder = nn.GRU(512, 512, num_layers=1, dropout=0.5)
-            self.zero_cell = torch.zeros(1, 512, device=DEVICE)
+            self.decoder = nn.GRU(512, 512, num_layers=num_layers, dropout=0.5)
+            self.zero_cell = torch.zeros(num_layers, 512, device=DEVICE)
         elif decoder_type == 'lstm':
             print("lstm decoder")
-            self.decoder = nn.LSTM(512, 512, num_layers=1, dropout=0.5)
-            self.zero_cell = torch.zeros(1, 512, device=DEVICE)
+            self.decoder = nn.LSTM(512, 512, num_layers=num_layers, dropout=0.5)
+            self.zero_cell = torch.zeros(num_layers, 512, device=DEVICE)
         else:
             raise ValueError("Unsupported decoder. Choose 'gru' or 'lstm'.")
            
         self.apply_teacher_forcing = apply_teacher_forcing
-        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0  # Added for scheduled sampling
+        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0
         self.proj = nn.Linear(512, VOCAB_SIZE)
         self.embed = nn.Embedding(VOCAB_SIZE, 512)
         self.layer_norm = nn.LayerNorm(512).to(DEVICE)
         self.start = torch.tensor(tokenizer.cls_token_id, device=DEVICE)
-
-    # Added method to set teacher forcing ratio for scheduled sampling
+        self.num_layers = num_layers
     def set_teacher_forcing_ratio(self, ratio):
         self.teacher_forcing_ratio = ratio
 
     def forward(self, img, titles=None):
         batch_size = img.shape[0]
-        feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1).unsqueeze(0)
+        
+        # Extract features from ResNet
+        if self.encoder_type == 'resnet50':
+            feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # [batch_size, 2048]
+            feat = self.resnet50_proj(feat)  # [batch_size, 512]
+        else:
+            feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # [batch_size, 512]
+        
+        # Prepare hidden state for multiple layers
+        feat = feat.unsqueeze(0).repeat(self.num_layers, 1, 1).contiguous()  # [num_layers, batch_size, 512]
 
-        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:  # Modified for scheduled sampling
-            embeds = self.embed(titles[:, :-1])
-            embeds = embeds.permute(1, 0, 2)
+        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:
+            embeds = self.embed(titles[:, :-1])  # [batch_size, seq_len-1, 512]
+            embeds = embeds.permute(1, 0, 2)     # [seq_len-1, batch_size, 512]
             if isinstance(self.decoder, nn.LSTM):
-                out, _ = self.decoder(embeds, (feat, self.zero_cell.repeat(1, batch_size, 1)))
+                cell_state = self.zero_cell.unsqueeze(1).repeat(1, batch_size, 1).contiguous()  # [num_layers, batch_size, 512]
+                out, _ = self.decoder(embeds, (feat, cell_state))
             else:
                 out, _ = self.decoder(embeds, feat)
             out = self.layer_norm(out)
             res = self.proj(out.permute(1, 0, 2))
             return res.permute(0, 2, 1)
         else:
-            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)
+            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)  # [1, batch_size, 512]
             inp = start_embed
-            hidden = feat
+            hidden = feat  # [num_layers, batch_size, 512]
             outputs = []
+            if isinstance(self.decoder, nn.LSTM):
+                cell_state = self.zero_cell.unsqueeze(1).repeat(1, batch_size, 1).contiguous()  # [num_layers, batch_size, 512]
+            
             for t in range(TEXT_MAX_LEN - 1):
                 if isinstance(self.decoder, nn.LSTM):
-                    out, (hidden, _) = self.decoder(inp, (hidden, self.zero_cell.repeat(1, batch_size, 1)))
+                    out, (hidden, cell_state) = self.decoder(inp, (hidden, cell_state))
                 else:
                     out, hidden = self.decoder(inp, hidden)
                 out = self.layer_norm(out)
@@ -192,7 +214,12 @@ def train(epochs, prefix, partitions, metric, config=None):
     dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
     dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    model = Model(encoder_type=encoder_type, decoder_type=decoder_type, apply_teacher_forcing=config["apply_teacher_forcing"]).to(DEVICE)
+    model = Model(encoder_type=encoder_type,
+                  freeze_encoder=config["freeze_encoder"], 
+                  decoder_type=decoder_type,
+                  num_layers=config["num_layers"],
+                  apply_teacher_forcing=config["apply_teacher_forcing"]
+                  ).to(DEVICE)
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
     crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=tokenizer.pad_token_id)
@@ -307,7 +334,6 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
         # Added logging for batch loss
         batch_loss = loss.item() * accum_steps
         batch_losses.append(batch_loss)
-        print(f"Batch {i}, Train Batch Loss: {batch_loss:.4f}")
         train_loss += batch_loss * images.size(0)
         total += images.size(0)
     
@@ -351,13 +377,12 @@ def eval_epoch(model, crit, metric, dataloader):
                 mask[b, eos_pos:] = 0
             batch_loss = (loss * mask).sum() / (mask.sum() + 1e-8)
             batch_losses.append(batch_loss.item())
-            print(f"Validation Batch {i}, Val Batch Loss: {batch_loss.item():.4f}")
 
             b, _, seq_size = outputs.shape
             _, predicted = outputs.max(1)
             
-            gt = [tokenizer.decode(title, skip_special_tokens=True) for title in titles]
-            pred = [tokenizer.decode(pred, skip_special_tokens=True) for pred in predicted]
+            gt = [tokenizer.decode(title, skip_special_tokens=True).lower() for title in titles]
+            pred = [tokenizer.decode(pred, skip_special_tokens=True).lower() for pred in predicted]
             gts.extend([[g] for g in gt])
             preds.extend(pred)
             all_images.extend(images.cpu())
@@ -403,20 +428,22 @@ if __name__ == "__main__":
     splits_path = f'FilteredDataSplit.npy'
 
     config = {
-        "encoder_type": "resnet18", # 'resnet18' or 'resnet34'
+        "encoder_type": "resnet18", # 'resnet18' or 'resnet34' or 'resnet50'
         "decoder_type": "gru", # 'gru' or 'lstm'
         "apply_teacher_forcing": True,
         "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
         "testdata_path": "~/datanew/MIT_small_train_2/test",
         "batch_size": 16,
         "optimizer_type": "AdamW",
-        "lr": 1e-4,
-        "weight_decay": 0.05,
-        "schedule_sampling_speed": 30,
+        "lr": 1e-3,
+        "weight_decay": 0.01,
+        "schedule_sampling_speed": 50,
         "num_epochs": 30,
         "accum_steps": 4,
         "warmup_ep": 3,
-        "patience_es": 5,
+        "patience_es": 20,
+        "freeze_encoder": False,
+        "num_layers": 2,
         "save_dir": "./checkpoints",
     }
 
