@@ -182,18 +182,18 @@ def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,e
         # Alternate between training encoder and decoder each epoch
         if epoch % 2 == 0:
             # Freeze decoder and train encoder
+            print("Encoder unfrozen, decoder frozen")
             for param in model.encoder.parameters():
                 param.requires_grad = True  # Train encoder
             for param in model.decoder.parameters():
                 param.requires_grad = False  # Freeze decoder
-            print("Encoder unfrozen, decoder frozen")
         else:
             # Freeze encoder and train decoder
+            print("Encoder frozen, decoder unfrozen")
             for param in model.encoder.parameters():
                 param.requires_grad = False  # Freeze encoder
             for param in model.decoder.parameters():
                 param.requires_grad = True  # Train decoder
-                print("Encoder frozen, decoder unfrozen")
     
     for images, titles in dataloader_train:
         images = images.to(DEVICE)
