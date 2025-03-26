@@ -115,7 +115,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     warmup_epochs = config["warmup_ep"]  # Warm up for x epochs
     initial_lr = 1e-5  # Start with a small learning rate
     target_lr = config["lr"] 
-    SWITCH = True
+    SWITCH = False
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
         # Learning rate warmup
@@ -274,7 +274,7 @@ if __name__ == "__main__":
         "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
         "testdata_path": "~/datanew/MIT_small_train_2/test",
         "train_mode": "alternate",  # "alternate", "encoder", "decoder" options
-        "switch_epochs": 5, # on how many epochs alternate freezing enc or dec
+        "switch_epochs": 3, # on how many epochs alternate freezing enc or dec
         "batch_size": 32,
         "optimizer_type": "AdamW",
         "lr": 2e-5,
