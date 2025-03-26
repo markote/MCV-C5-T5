@@ -115,6 +115,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     warmup_epochs = config["warmup_ep"]  # Warm up for x epochs
     initial_lr = 1e-5  # Start with a small learning rate
     target_lr = config["lr"] 
+    SWITCH = True
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
         # Learning rate warmup
@@ -123,7 +124,7 @@ def train(epochs, prefix, partitions, metric, config=None):
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
 
-        train_loss = train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer,config,epoch)
+        train_loss = train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer,config,epoch,SWITCH)
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
         val_loss, val_metrics = eval_epoch(model, crit, metric, dataloader_valid,tokenizer)
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
@@ -161,7 +162,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     wandb.finish()
 
 
-def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,epoch):
+def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,epoch,SWITCH):
     total_loss = 0
 
     if config["train_mode"] == "encoder":
@@ -178,11 +179,11 @@ def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,e
         for param in model.decoder.parameters():
             param.requires_grad = True  # Train decoder
 
-    elif config["train_mode"] == "alternate":
-        # Alternate between training encoder and decoder each epoch
-        if epoch % 2 == 0:
+    if config["train_mode"] == "alternate" and epoch % config["switch_epochs"] == 0:
+        if SWITCH:
             # Freeze decoder and train encoder
             print("Encoder unfrozen, decoder frozen")
+            SWITCH = not SWITCH
             for param in model.encoder.parameters():
                 param.requires_grad = True  # Train encoder
             for param in model.decoder.parameters():
@@ -190,6 +191,7 @@ def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,e
         else:
             # Freeze encoder and train decoder
             print("Encoder frozen, decoder unfrozen")
+            SWITCH = not SWITCH
             for param in model.encoder.parameters():
                 param.requires_grad = False  # Freeze encoder
             for param in model.decoder.parameters():
@@ -271,15 +273,15 @@ if __name__ == "__main__":
     config = {
         "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
         "testdata_path": "~/datanew/MIT_small_train_2/test",
-        "train_mode": "decoder",  # "alternate", "encoder", "decoder" options
+        "train_mode": "alternate",  # "alternate", "encoder", "decoder" options
+        "switch_epochs": 5, # on how many epochs alternate freezing enc or dec
         "batch_size": 32,
         "optimizer_type": "AdamW",
-        "lr": 1e-3,
+        "lr": 2e-5,
         "weight_decay": 0.03,
-        "schedule_sampling_speed": 30,
-        "num_epochs": 30,
-        "warmup_ep": 3,
-        "patience_es": 7,
+        "num_epochs": 50,
+        "warmup_ep": 0,
+        "patience_es": 15,
         "save_dir": "./checkpoints",
     }
 
