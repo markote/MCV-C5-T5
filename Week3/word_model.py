@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from transformers import ResNetModel, AutoTokenizer
+from transformers import ResNetModel
 from torch import nn
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
@@ -14,13 +14,20 @@ import tqdm
 import sys
 import os
 import wandb
-import time  
+import time
+import nltk
+import pickle
 
-# Load the RoBERTa tokenizer for subword (BPE) tokenization
-from transformers import ResNetModel, AutoTokenizer
-tokenizer = AutoTokenizer.from_pretrained("roberta-base")
-VOCAB_SIZE = tokenizer.vocab_size  # 50,265 for roberta-base
-TEXT_MAX_LEN = 50
+nltk.download('punkt')
+VOCAB = None
+with open("./vocabulary.pkl", "rb") as f:
+    VOCAB = pickle.load(f)
+
+VOCAB_SIZE = len(VOCAB)
+print("VOCAB:", VOCAB_SIZE)
+IDX2TOKEN = {k: v for k, v in enumerate(sorted(VOCAB))}
+TOKEN2IDX = {v: k for k, v in enumerate(sorted(VOCAB))}
+TEXT_MAX_LEN = 25
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -29,7 +36,6 @@ class Data(Dataset):
         self.prefix = prefix
         self.partition = partition
         self.max_len = TEXT_MAX_LEN
-        self.tokenizer = tokenizer
         if data_aug:
             self.img_proc = torch.nn.Sequential(
                 v2.ToImage(),
@@ -53,82 +59,73 @@ class Data(Dataset):
     def __getitem__(self, idx):
         title, path = self.partition[idx]
         # Image processing
+        path = os.path.basename(path)
         img = Image.open(os.path.join(self.prefix, path)).convert('RGB')
         img = self.img_proc(img)
     
-        # Caption processing with subword (BPE) tokenization
-        encoded = self.tokenizer(
-            title,
-            add_special_tokens=True,
-            max_length=self.max_len,
-            padding='max_length',
-            truncation=True,
-            return_tensors='pt'
-        )
-        input_ids = encoded['input_ids'].squeeze(0)
+        ## caption processing
+        # print("Image captioning processing: ")
+        # print(title)
+        words = ["<SOS>"]
+        words.extend(nltk.word_tokenize(title)) # vector of words we need to add <EOS> and <PAD>
+        words.extend(["<EOS>"])
+        gap = self.max_len - len(words)
+        words.extend(["<PAD>"]*gap)
+        cap_idx = [TOKEN2IDX[i] for i in words]
+        # print("final list to idx", final_list)
+        # print("final idx", cap_idx)
+        # print("final idx in pytorch tensor: ",  torch.tensor(cap_idx, dtype=torch.long))
+        # sys.exit(1)
         
-        return img, input_ids.to(dtype=torch.long)
+        return img, torch.tensor(cap_idx, dtype=torch.long)
 
 
 class Model(nn.Module):
-    def __init__(self, encoder_type='resnet18', freeze_encoder=True, decoder_type='gru', num_layers=1, apply_teacher_forcing=False):
+    def __init__(self, encoder_type='resnet18', decoder_type='gru', apply_teacher_forcing=False, num_layers=1):
         super().__init__()
-        self.encoder_type = encoder_type
         if encoder_type == "resnet18":
             print("resnet18 encoder")
             self.resnet = ResNetModel.from_pretrained('microsoft/resnet-18').to(DEVICE)
         elif encoder_type == 'resnet34':
             self.resnet = ResNetModel.from_pretrained('microsoft/resnet-34').to(DEVICE)
-        elif encoder_type == 'resnet50':
-            print("resnet50 encoder")
-            self.resnet = ResNetModel.from_pretrained('microsoft/resnet-50').to(DEVICE)
         else:
-            raise ValueError("Unsupported encoder. Choose 'resnet18', 'resnet34', or 'resnet50'.")
-        if freeze_encoder:
-            for param in self.resnet.parameters():
-                param.requires_grad = False
-
-        self.resnet50_proj = nn.Linear(2048, 512) 
+            raise ValueError("Unsupported encoder. Choose 'resnet18' or 'resnet34'.")
+        
+        # for param in self.resnet.parameters():
+        #     param.requires_grad = False
 
         if decoder_type == "gru":
             print("gru decoder")
-            self.decoder = nn.GRU(512, 512, num_layers=num_layers, dropout=0.5)
+            self.decoder = nn.GRU(512, 512, num_layers=num_layers, dropout=0.3)
             self.zero_cell = torch.zeros(num_layers, 512, device=DEVICE)
         elif decoder_type == 'lstm':
             print("lstm decoder")
-            self.decoder = nn.LSTM(512, 512, num_layers=num_layers, dropout=0.5)
+            self.decoder = nn.LSTM(512, 512, num_layers=num_layers, dropout=0.3)
             self.zero_cell = torch.zeros(num_layers, 512, device=DEVICE)
         else:
             raise ValueError("Unsupported decoder. Choose 'gru' or 'lstm'.")
            
         self.apply_teacher_forcing = apply_teacher_forcing
-        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0
+        self.teacher_forcing_ratio = 1.0 if apply_teacher_forcing else 0.0  # Added for scheduled sampling
         self.proj = nn.Linear(512, VOCAB_SIZE)
         self.embed = nn.Embedding(VOCAB_SIZE, 512)
         self.layer_norm = nn.LayerNorm(512).to(DEVICE)
-        self.start = torch.tensor(tokenizer.cls_token_id, device=DEVICE)
-        self.num_layers = num_layers
+        self.start = torch.tensor(TOKEN2IDX['<SOS>'], device=DEVICE)
+
+    # Added method to set teacher forcing ratio for scheduled sampling
     def set_teacher_forcing_ratio(self, ratio):
         self.teacher_forcing_ratio = ratio
 
     def forward(self, img, titles=None):
         batch_size = img.shape[0]
-        
-        # Extract features from ResNet
-        if self.encoder_type == 'resnet50':
-            feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # [batch_size, 2048]
-            feat = self.resnet50_proj(feat)  # [batch_size, 512]
-        else:
-            feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # [batch_size, 512]
-        
+        feat = self.resnet(img).pooler_output.squeeze(-1).squeeze(-1)  # (batch_size, 512)
         # Prepare hidden state for multiple layers
-        feat = feat.unsqueeze(0).repeat(self.num_layers, 1, 1).contiguous()  # [num_layers, batch_size, 512]
-
-        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:
-            embeds = self.embed(titles[:, :-1])  # [batch_size, seq_len-1, 512]
-            embeds = embeds.permute(1, 0, 2)     # [seq_len-1, batch_size, 512]
+        feat = feat.unsqueeze(0).repeat(self.decoder.num_layers, 1, 1).contiguous()  # (num_layers, batch_size, 512)
+        if titles is not None and self.training and self.apply_teacher_forcing and random.random() < self.teacher_forcing_ratio:  # Modified for scheduled sampling
+            embeds = self.embed(titles[:, :-1])
+            embeds = embeds.permute(1, 0, 2)
             if isinstance(self.decoder, nn.LSTM):
-                cell_state = self.zero_cell.unsqueeze(1).repeat(1, batch_size, 1).contiguous()  # [num_layers, batch_size, 512]
+                cell_state = torch.zeros_like(feat)
                 out, _ = self.decoder(embeds, (feat, cell_state))
             else:
                 out, _ = self.decoder(embeds, feat)
@@ -136,16 +133,14 @@ class Model(nn.Module):
             res = self.proj(out.permute(1, 0, 2))
             return res.permute(0, 2, 1)
         else:
-            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)  # [1, batch_size, 512]
+            start_embed = self.embed(self.start).repeat(batch_size, 1).unsqueeze(0)  # (1, batch_size, 512)
             inp = start_embed
-            hidden = feat  # [num_layers, batch_size, 512]
+            hidden = feat
             outputs = []
-            if isinstance(self.decoder, nn.LSTM):
-                cell_state = self.zero_cell.unsqueeze(1).repeat(1, batch_size, 1).contiguous()  # [num_layers, batch_size, 512]
-            
             for t in range(TEXT_MAX_LEN - 1):
                 if isinstance(self.decoder, nn.LSTM):
-                    out, (hidden, cell_state) = self.decoder(inp, (hidden, cell_state))
+                    cell_state = torch.zeros_like(feat)
+                    out, (hidden, _) = self.decoder(inp, (hidden, cell_state))
                 else:
                     out, hidden = self.decoder(inp, hidden)
                 out = self.layer_norm(out)
@@ -169,14 +164,13 @@ def optimizer_chooser(model, type_opt, config):
         sys.exit(1)
 
 
-def train(epochs, prefix, partitions, metric, config=None):
+def train(epochs, prefix, partitions, metric, config=None, num_layers=1, run_name=""):
     run_id = time.strftime("%Y%m%d_%H%M%S")
-    run_name = f"run_{run_id}"
-    wandb.init(project="image_captioning", name=run_name, config=config)
+    run_name = f"{run_name}_{run_id}"
+    wandb.init(project="Unfrozen_image_captioning_model_word_token", name=run_name, config=config)
     
     encoder_type = config.get("encoder_type", "resnet18")
     decoder_type = config.get("decoder_type", "gru")
-    
     # Added dataset inspection before training
     print(f"Training set size: {len(partitions['train'])}")
     print(f"Validation set size: {len(partitions['eval'])}")
@@ -187,6 +181,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     sampled_train_captions = []
     for i in range(min(5, len(partitions['train']))):
         title, path = partitions['train'][i]
+        path = os.path.basename(path)
         img = Image.open(os.path.join(prefix, path)).convert('RGB')
         print(f"Train Sample {i}: Title='{title}', Path='{path}'")
         sampled_train_images.append(img)
@@ -197,6 +192,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     sampled_val_captions = []
     for i in range(min(5, len(partitions['eval']))):
         title, path = partitions['eval'][i]
+        path = os.path.basename(path)
         img = Image.open(os.path.join(prefix, path)).convert('RGB')
         print(f"Val Sample {i}: Title='{title}', Path='{path}'")
         sampled_val_images.append(img)
@@ -214,15 +210,10 @@ def train(epochs, prefix, partitions, metric, config=None):
     dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
     dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    model = Model(encoder_type=encoder_type,
-                  freeze_encoder=config["freeze_encoder"], 
-                  decoder_type=decoder_type,
-                  num_layers=config["num_layers"],
-                  apply_teacher_forcing=config["apply_teacher_forcing"]
-                  ).to(DEVICE)
+    model = Model(encoder_type=encoder_type, decoder_type=decoder_type, apply_teacher_forcing=config["apply_teacher_forcing"], num_layers=num_layers).to(DEVICE)
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=tokenizer.pad_token_id)
+    crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=TOKEN2IDX["<PAD>"])
 
     # Added learning rate scheduler
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
@@ -308,13 +299,13 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
             loss = crit(outputs, titles[:, 1:])
             mask = torch.ones_like(loss, device=DEVICE)
             for b in range(batch_size):
-                gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                gt_eos_pos = (titles[b, 1:] == TOKEN2IDX['<EOS>']).nonzero(as_tuple=True)[0]
                 if len(gt_eos_pos) > 0:
                     gt_eos_pos = gt_eos_pos[0].item()
                 else:
                     gt_eos_pos = seq_len
                 _, predicted = outputs[b].max(0)
-                pred_eos_pos = (predicted == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                pred_eos_pos = (predicted == TOKEN2IDX['<EOS>']).nonzero(as_tuple=True)[0]
                 if len(pred_eos_pos) > 0:
                     pred_eos_pos = pred_eos_pos[0].item()
                 else:
@@ -334,6 +325,7 @@ def train_one_epoch(model, optimizer, crit, dataloader, accum_steps=4, apply_tea
         # Added logging for batch loss
         batch_loss = loss.item() * accum_steps
         batch_losses.append(batch_loss)
+        print(f"Batch {i}, Train Batch Loss: {batch_loss:.4f}")
         train_loss += batch_loss * images.size(0)
         total += images.size(0)
     
@@ -362,13 +354,13 @@ def eval_epoch(model, crit, metric, dataloader):
             loss = crit(outputs, titles[:, 1:])
             mask = torch.ones_like(loss, device=DEVICE)
             for b in range(batch_size):
-                gt_eos_pos = (titles[b, 1:] == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                gt_eos_pos = (titles[b, 1:] == TOKEN2IDX['<EOS>']).nonzero(as_tuple=True)[0]
                 if len(gt_eos_pos) > 0:
                     gt_eos_pos = gt_eos_pos[0].item()
                 else:
                     gt_eos_pos = seq_len
                 _, predicted = outputs[b].max(0)
-                pred_eos_pos = (predicted == tokenizer.sep_token_id).nonzero(as_tuple=True)[0]
+                pred_eos_pos = (predicted == TOKEN2IDX['<EOS>']).nonzero(as_tuple=True)[0]
                 if len(pred_eos_pos) > 0:
                     pred_eos_pos = pred_eos_pos[0].item()
                 else:
@@ -377,12 +369,18 @@ def eval_epoch(model, crit, metric, dataloader):
                 mask[b, eos_pos:] = 0
             batch_loss = (loss * mask).sum() / (mask.sum() + 1e-8)
             batch_losses.append(batch_loss.item())
+            print(f"Validation Batch {i}, Val Batch Loss: {batch_loss.item():.4f}")
 
             b, _, seq_size = outputs.shape
             _, predicted = outputs.max(1)
             
-            gt = [tokenizer.decode(title, skip_special_tokens=True).lower() for title in titles]
-            pred = [tokenizer.decode(pred, skip_special_tokens=True).lower() for pred in predicted]
+             # Add prediction cleaning
+            def clean_caption(caption):
+                caption = caption.replace('<SOS>','').replace('<EOS>','').replace('<PAD>','')
+                return caption.strip()
+            
+            gt = [clean_caption(" ".join([IDX2TOKEN[idx.item()] for idx in title])) for title in titles]
+            pred = [clean_caption(" ".join([IDX2TOKEN[idx.item()] for idx in pred])) for pred in predicted]
             gts.extend([[g] for g in gt])
             preds.extend(pred)
             all_images.extend(images.cpu())
@@ -423,35 +421,35 @@ def eval_epoch(model, crit, metric, dataloader):
 
 
 if __name__ == "__main__":
-    base_path = '/mnt/dataset/image_captioning_dataset/'
-    img_path = f'{base_path}FoodImages/'
-    splits_path = f'FilteredDataSplit.npy'
+    for num_layers in [1,3,5]:
+        base_path = '/ghome/c5mcv05/image_captioning_dataset/'
+        img_path = f'{base_path}FoodImages/'
+        splits_path = f'{base_path}FilteredDataSplit.npy'
 
-    config = {
-        "encoder_type": "resnet18", # 'resnet18' or 'resnet34' or 'resnet50'
-        "decoder_type": "gru", # 'gru' or 'lstm'
-        "apply_teacher_forcing": True,
-        "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
-        "testdata_path": "~/datanew/MIT_small_train_2/test",
-        "batch_size": 16,
-        "optimizer_type": "AdamW",
-        "lr": 1e-3,
-        "weight_decay": 0.01,
-        "schedule_sampling_speed": 50,
-        "num_epochs": 30,
-        "accum_steps": 4,
-        "warmup_ep": 3,
-        "patience_es": 20,
-        "freeze_encoder": False,
-        "num_layers": 2,
-        "save_dir": "./checkpoints",
-    }
+        config = {
+            "encoder_type": "resnet18", # 'resnet18' or 'resnet34'
+            "decoder_type": "gru", # 'gru' or 'lstm'
+            "apply_teacher_forcing": True,
+            "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages/",
+            "batch_size": 16,
+            "optimizer_type": "AdamW",
+            "lr": 1e-4,
+            "weight_decay": 0.05,
+            "schedule_sampling_speed": 30,
+            "num_epochs": 30,
+            "accum_steps": 4,
+            "warmup_ep": 3,
+            "patience_es": 5,
+            "save_dir": "./checkpoints",
+            "layers": num_layers,
+        }
 
-    partitions = np.load(splits_path, allow_pickle=True).item()
-    
-    bleu = evaluate.load('bleu')
-    meteor = evaluate.load('meteor')
-    rouge = evaluate.load('rouge')
-    metric = (bleu, rouge, meteor)
+        partitions = np.load(splits_path, allow_pickle=True).item()
 
-    train(config["num_epochs"], config["prefix"], partitions, metric, config=config)
+        bleu = evaluate.load('bleu')
+        meteor = evaluate.load('meteor')
+        rouge = evaluate.load('rouge')
+        metric = (bleu, rouge, meteor)
+        print("Prefix: ", config["prefix"])
+        run_name=f'{config["encoder_type"]}_{config["decoder_type"]}_layers_{config["layers"]}'
+        train(config["num_epochs"], config["prefix"], partitions, metric, config=config, num_layers=config["layers"], run_name=run_name)
