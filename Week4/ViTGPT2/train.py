@@ -53,7 +53,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"run_{run_id}"
     wandb.init(project="image_captioning_VITGPT2", name=run_name, config=config)
-    
+    logging_dict = {}
     
     # Added dataset inspection before training
     print(f"Training set size: {len(partitions['train'])}")
@@ -80,7 +80,7 @@ def train(epochs, prefix, partitions, metric, config=None):
         sampled_val_images.append(img)
         sampled_val_captions.append(title)
 
-    wandb.log({
+    logging_dict.update({
         "train_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_train_images, sampled_train_captions)],
         "val_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_val_images, sampled_val_captions)],
     })
@@ -126,13 +126,13 @@ def train(epochs, prefix, partitions, metric, config=None):
 
         train_loss = train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer,config,epoch,SWITCH)
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
-        val_loss, val_metrics = eval_epoch(model, crit, metric, dataloader_valid,tokenizer)
+        val_loss, val_metrics, val_wandb_dict = eval_epoch(model, crit, metric, dataloader_valid,tokenizer)
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
 
         # Added learning rate scheduling
         scheduler.step(val_loss)
 
-        wandb.log({
+        logging_dict.update({
             "epoch": epoch,
             "train_loss": train_loss,
             "val_loss": val_loss,
@@ -142,7 +142,8 @@ def train(epochs, prefix, partitions, metric, config=None):
             "meteor": float(val_metrics.split("METEOR:")[1].split("%")[0]) / 100,
             "learning_rate": optimizer.param_groups[0]['lr'],  # Added logging
         })
-
+        logging_dict.update(val_wandb_dict)
+        wandb.log(logging_dict)
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_no_improve = 0
@@ -155,9 +156,14 @@ def train(epochs, prefix, partitions, metric, config=None):
             print(f"Early stopping at epoch {epoch}")
             break
 
-    test_loss, test_metrics = eval_epoch(model, crit, metric, dataloader_test)
+    test_loss, test_metrics, test_wandb_dict = eval_epoch(model, crit, metric, dataloader_test)
     print(f'test loss: {test_loss:.2f}, metric: {test_metrics}')
-    wandb.log({"test_loss": test_loss})
+    final_test_log = {"test_loss": test_loss}
+    final_test_log["test_predictions"] = test_wandb_dict["eval_predictions"]
+    final_test_log["test_ground_truths"] = test_wandb_dict["eval_ground_truths"]
+    final_test_log["test_images"] = test_wandb_dict["eval_images"]
+
+    wandb.log(test_wandb_dict)
 
     wandb.finish()
 
@@ -254,16 +260,16 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
     sampled_images_np = [img.cpu().numpy().transpose(1, 2, 0) for img in sampled_images]
 
     # Log predictions to W&B
-    wandb.log({
+    eval_wandb_dict = {
         "eval_predictions": sampled_preds,
         "eval_ground_truths": sampled_gts,
         "eval_images": [wandb.Image(img, caption=f"Pred: {pred}\nGT: {gt}") for img, pred, gt in zip(sampled_images_np, sampled_preds, sampled_gts)]
-    })
+    }
 
     avg_eval_loss = total_loss / total if total > 0 else 0
     result = f"BLEU-1:{bleu1*100:.1f}%, BLEU2:{bleu2*100:.1f}%, ROUGE-L:{res_r*100:.1f}%, METEOR:{res_m*100:.1f}%"
     
-    return avg_eval_loss, result
+    return avg_eval_loss, result, eval_wandb_dict
 
 if __name__ == "__main__":
     base_path = '/ghome/c5mcv05/image_captioning_dataset/'
