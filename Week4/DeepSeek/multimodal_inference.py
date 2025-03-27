@@ -76,7 +76,7 @@ def generation_conversation(path_image, prompt):
 
 def inference_one_split(dataset, metric, model=None, prompt="Say 'error wrong prompt for this result' ignoring the given image", split=""):
    
-    for path_image, title in dataloader:
+    for path_image, title in dataset:
         ## single image conversation example
         conversation = generation_conversation(path_image, prompt)
 
