@@ -14,9 +14,10 @@ import sys
 import os
 import wandb
 import time 
-from transformers import VisionEncoderDecoderModel, ViTImageProcessor, AutoTokenizer 
+from transformers import VisionEncoderDecoderModel, ViTImageProcessor, AutoTokenizer, ViTConfig, GPT2Config
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 class Data(Dataset):
     def __init__(self, prefix, partition, feature_extractor):
@@ -87,6 +88,30 @@ def train(epochs, prefix, partitions, metric, config=None):
 
     model_name = "nlpconnect/vit-gpt2-image-captioning"
     model = VisionEncoderDecoderModel.from_pretrained(model_name).to(DEVICE)
+    dropout_enc = config.get("dropout_enc", 0.0)
+    dropout_dec = config.get("dropout_dec", 0.0)
+
+
+    # Update dropout in the ViT encoder layers
+    for layer in model.encoder.encoder.layer:
+        layer.attention.attention.dropout.p = dropout_enc  # Set dropout for self-attention
+        layer.attention.output.dropout.p = dropout_enc  # Set dropout for attention output
+        layer.output.dropout.p = dropout_enc  # Set dropout for feedforward output
+
+    # Update dropout in the ViT embeddings layer (before the encoder)
+    model.encoder.embeddings.dropout.p = dropout_enc  # Set dropout for embeddings
+
+    # Update dropout in the GPT2 decoder layers
+    for block in model.decoder.transformer.h:
+        block.attn.attn_dropout.p = dropout_dec  # Attention dropout
+        block.attn.resid_dropout.p = dropout_dec  # Residual dropout
+        block.mlp.dropout.p = dropout_dec  # MLP dropout
+        block.crossattention.attn_dropout.p = dropout_dec  # Cross-attention dropout
+        block.crossattention.resid_dropout.p = dropout_dec  # Cross-attention residual dropout
+
+    print(model)
+
+    # Initialize the feature extractor and tokenizer
     feature_extractor = ViTImageProcessor.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
@@ -104,7 +129,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=2)
 
     # Added learning rate scheduler
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
+    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
 
     best_val_loss = float('inf')
     base_save_dir = config.get("save_dir", "./checkpoints")
@@ -114,8 +139,11 @@ def train(epochs, prefix, partitions, metric, config=None):
     epochs_no_improve = 0
     warmup_epochs = config["warmup_ep"]  # Warm up for x epochs
     initial_lr = 1e-5  # Start with a small learning rate
-    target_lr = config["lr"] 
+    target_lr = config["lr"]
+    min_lr = config.get("min_lr", 1e-7)  # Minimum learning rate for cosine decay
+    scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs - warmup_epochs, eta_min=min_lr)
     SWITCH = False
+
 
     for epoch in tqdm.tqdm(range(epochs), desc="TRAINING THE MODEL"):
         # Learning rate warmup
@@ -123,6 +151,9 @@ def train(epochs, prefix, partitions, metric, config=None):
             lr = initial_lr + (target_lr - initial_lr) * (epoch / warmup_epochs)
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
+        else:
+            scheduler_cosine.step()  # Apply cosine decay
+
 
         train_loss = train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer,config,epoch,SWITCH)
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
@@ -130,7 +161,7 @@ def train(epochs, prefix, partitions, metric, config=None):
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
 
         # Added learning rate scheduling
-        scheduler.step(val_loss)
+        # scheduler.step(val_loss)
 
         wandb.log({
             "epoch": epoch,
@@ -204,6 +235,7 @@ def train_one_epoch(model, optimizer, crit, dataloader_train,tokenizer, config,e
         loss = outputs.loss
         optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=config["gradient_clip_norm"])
         optimizer.step()
         total_loss += loss.item()
         
@@ -232,7 +264,7 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
             total += 1
             
             # Generate predictions
-            output_ids = model.generate(images, max_length=50, num_beams=4)
+            output_ids = model.generate(images, max_length=80, num_beams=4)
             predictions = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
             preds.extend(predictions)
             gts.extend(titles)
@@ -273,14 +305,19 @@ if __name__ == "__main__":
     config = {
         "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages",
         "testdata_path": "~/datanew/MIT_small_train_2/test",
-        "train_mode": "alternate",  # "alternate", "encoder", "decoder" options
+        "train_mode": "decoder",  # "alternate", "encoder", "decoder" options
         "switch_epochs": 3, # on how many epochs alternate freezing enc or dec
         "batch_size": 32,
         "optimizer_type": "AdamW",
-        "lr": 2e-5,
-        "weight_decay": 0.03,
-        "num_epochs": 50,
-        "warmup_ep": 0,
+        "lr": 1e-5,
+        "min_lr": 1e-7,                      # Minimum learning rate for cosine decay
+        "label_smoothing": 0.1,              # Label smoothing to improve generalization
+        "gradient_clip_norm": 2.0,           # Gradient clipping threshold
+        "dropout_enc": 0.5,
+        "dropout_dec": 0.5,
+        "weight_decay": 0.01,
+        "num_epochs": 20,
+        "warmup_ep": 1,
         "patience_es": 15,
         "save_dir": "./checkpoints",
     }
