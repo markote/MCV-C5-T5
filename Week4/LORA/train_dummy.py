@@ -46,9 +46,8 @@ class Data(Dataset):
 class ViTLLamaModel(nn.Module):
     def __init__(self, vit_model_name, llama_model_name, vit_pretrain, freeze_vit=True):
         super(ViTLLamaModel, self).__init__()
-        # Load pre-trained ViT encoder
         self.vit = VisionEncoderDecoderModel.from_pretrained(vit_model_name).encoder
-        print(vit_pretrain)
+        print(f"Loading ViT checkpoint from: {vit_pretrain}")
         checkpoint = torch.load(vit_pretrain, map_location=DEVICE)
         vit_state_dict = {k.replace("encoder.", ""): v for k, v in checkpoint.items() if "encoder" in k}
         self.vit.load_state_dict(vit_state_dict, strict=False)
@@ -58,38 +57,34 @@ class ViTLLamaModel(nn.Module):
             for param in self.vit.parameters():
                 param.requires_grad = False
         
-        # Load LLaMA decoder
         self.decoder = LlamaForCausalLM.from_pretrained(llama_model_name)
-        # self.decoder.config.pad_token_id = AutoTokenizer.from_pretrained(llama_model_name).eos_token_id  # Set here
+        # Set pad_token_id to EOS token ID during initialization
+        tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
+        self.pad_token_id = tokenizer.eos_token_id  # e.g., 128001 for LLaMA 3.2
         
-        # Projection layer to match ViT output to LLaMA input dimensions
-        vit_hidden_size = self.vit.config.hidden_size  # Typically 768 for ViT
-        llama_hidden_size = self.decoder.config.hidden_size  # 2048 for LLaMA 3.2-1B, 3072 for 3B
+        vit_hidden_size = self.vit.config.hidden_size
+        llama_hidden_size = self.decoder.config.hidden_size
         self.projection = nn.Linear(vit_hidden_size, llama_hidden_size)
 
-    def forward(self, pixel_values, labels=None, tokenizer=None):
-        # Extract image features with frozen ViT
+    def forward(self, pixel_values, labels=None):
         vit_outputs = self.vit(pixel_values=pixel_values)
-        image_features = vit_outputs.last_hidden_state[:, 0, :]  # CLS token
-        projected_features = self.projection(image_features)  # [batch_size, hidden_size]
+        image_features = vit_outputs.last_hidden_state[:, 0, :]
+        projected_features = self.projection(image_features)
         
         if labels is not None:
-            # Tokenize inputs if not already tokenized (handled outside in this case)
             input_embeds = self.decoder.get_input_embeddings()(labels)  # [batch_size, seq_len, hidden_size]
             batch_size = projected_features.size(0)
             projected_features = projected_features.unsqueeze(1)  # [batch_size, 1, hidden_size]
             decoder_inputs = torch.cat([projected_features, input_embeds], dim=1)  # [batch_size, 1 + seq_len, hidden_size]
-
-            # Prepend a dummy token to labels to match sequence length
-            dummy_token = torch.full((batch_size, 1), tokenizer.pad_token_id, device=DEVICE, dtype=labels.dtype)
+            print("pad token id",self.pad_token_id)
+            # Prepend dummy token (pad_token_id) to labels
+            dummy_token = torch.full((batch_size, 1), self.pad_token_id, device=DEVICE, dtype=labels.dtype)
             adjusted_labels = torch.cat([dummy_token, labels], dim=1)  # [batch_size, 1 + seq_len]
 
-            # Pass to decoder with adjusted labels
             outputs = self.decoder(inputs_embeds=decoder_inputs, labels=adjusted_labels)
             return outputs
         else:
-            # For generation
-            projected_features = projected_features.unsqueeze(1)  # [batch_size, 1, hidden_size]
+            projected_features = projected_features.unsqueeze(1)
             return self.decoder.generate(inputs_embeds=projected_features)
 
     def generate(self, pixel_values, **generate_kwargs):
@@ -113,7 +108,7 @@ def apply_lora_to_decoder(model, lora_config):
     peft_config = LoraConfig(
         r=lora_config["r"],
         lora_alpha=lora_config["lora_alpha"],
-        target_modules=["q_proj", "v_proj"],  # Target attention layers in LLaMA
+        target_modules=["q_proj", "v_proj"],
         lora_dropout=lora_config["lora_dropout"],
         bias="none",
         task_type="CAUSAL_LM"
@@ -126,7 +121,6 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     wandb.init(project="image_captioning_LORA_ViT_LLaMA", name=run_name, config=config)
     logging_dict = {}
     
-    # Dataset inspection
     print(f"Training set size: {len(partitions['train'])}")
     print(f"Validation set size: {len(partitions['eval'])}")
     print(f"Test set size: {len(partitions['test'])}")
@@ -156,11 +150,10 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
         "val_samples": [wandb.Image(img, caption=title) for img, title in zip(sampled_val_images, sampled_val_captions)],
     })
 
-    # Model setup
     vit_model_name = "nlpconnect/vit-gpt2-image-captioning"
-    pretrained_model_path = config["pretrained_model_path"]  # Path to your saved checkpoint
-    llama_model_name = f"meta-llama/Llama-3.2-{llama_size.upper()}-Instruct"  # "1B" or "3B"
-    model = ViTLLamaModel(vit_model_name, llama_model_name, vit_pretrain = pretrained_model_path).to(DEVICE)
+    pretrained_model_path = config["pretrained_model_path"]
+    llama_model_name = f"meta-llama/Llama-3.2-{llama_size.upper()}-Instruct"
+    model = ViTLLamaModel(vit_model_name, llama_model_name, vit_pretrain=pretrained_model_path).to(DEVICE)
 
     # Apply LoRA to the decoder
     lora_config = {
@@ -170,12 +163,10 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     }
     model.decoder = apply_lora_to_decoder(model.decoder, lora_config)
 
-    # Feature extractor and tokenizer
     feature_extractor = ViTImageProcessor.from_pretrained(vit_model_name)
     tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
-    tokenizer.pad_token = tokenizer.eos_token  # LLaMA uses EOS as pad token
+    tokenizer.pad_token = tokenizer.eos_token  # Still set for tokenization consistency
 
-    # DataLoaders
     data_train = Data(prefix, partitions['train'], feature_extractor, augment=True)
     data_valid = Data(prefix, partitions['eval'], feature_extractor, augment=False)
     data_test = Data(prefix, partitions['test'], feature_extractor, augment=False)
@@ -183,7 +174,6 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
     
-    # Training setup
     model.train()
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
     crit = nn.CrossEntropyLoss(label_smoothing=config["label_smoothing"], ignore_index=tokenizer.pad_token_id)
@@ -236,9 +226,10 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
         else:
             epochs_no_improve += 1
 
-        save_path = os.path.join(save_dir, f"checkpoint_epoch_{epoch}_val_loss_{val_loss:.4f}.pt")
-        torch.save(model.state_dict(), save_path)
-        print(f"Saved model to {save_path}")
+        if config["save_cp"]:
+            save_path = os.path.join(save_dir, f"checkpoint_epoch_{epoch}_val_loss_{val_loss:.4f}.pt")
+            torch.save(model.state_dict(), save_path)
+            print(f"Saved model to {save_path}")
         if epochs_no_improve >= patience:
             print(f"Early stopping at epoch {epoch}")
             break
@@ -258,7 +249,7 @@ def train_one_epoch(model, optimizer, crit, dataloader_train, tokenizer, config,
     for images, titles in dataloader_train:
         images = images.to(DEVICE)
         inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-        outputs = model(pixel_values=images, labels=inputs, tokenizer = tokenizer)
+        outputs = model(pixel_values=images, labels=inputs)  # No tokenizer needed here
         loss = outputs.loss
         optimizer.zero_grad()
         loss.backward()
@@ -278,7 +269,7 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
         for images, titles in dataloader:
             images = images.to(DEVICE)
             inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-            outputs = model(pixel_values=images, labels=inputs, tokenizer = tokenizer)
+            outputs = model(pixel_values=images, labels=inputs)  # No tokenizer needed here
             loss = outputs.loss
             total_loss += loss.item()
             total += 1
@@ -329,7 +320,8 @@ if __name__ == "__main__":
         "pretrained_model_path":"./LORA/best_vitgpt2.pt",
         "lora_r": 16,  # Rank of the low-rank matrices
         "lora_alpha": 32,  # Scaling factor
-        "lora_dropout": 0.1
+        "lora_dropout": 0.1,
+        "save_cp": False,
     }
 
     print(config)
@@ -340,10 +332,5 @@ if __name__ == "__main__":
     rouge = evaluate.load('rouge')
     metric = (bleu, rouge, meteor)
 
-    # Train with LLaMA 3.2-1B
     print("Training with LLaMA 3.2-1B")
     train(config["num_epochs"], config["prefix"], partitions, metric, config=config, llama_size="1b")
-
-    # Train with LLaMA 3.2-3B (uncomment to run)
-    # print("Training with LLaMA 3.2-3B")
-    # train(config["num_epochs"], config["prefix"], partitions, metric, config=config, llama_size="3b")
