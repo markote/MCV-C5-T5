@@ -126,7 +126,7 @@ def train(epochs, prefix, partitions, metric, config=None):
     crit = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none', ignore_index=tokenizer.pad_token_id)
 
     # Added learning rate scheduler
-    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
     # Initial state based on train_mode
     if config["train_mode"] == "encoder":
         print("Initial state: Encoder unfrozen, decoder frozen")
@@ -177,7 +177,7 @@ def train(epochs, prefix, partitions, metric, config=None):
         else:
             if epoch == warmup_epochs:
                 scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs - warmup_epochs, eta_min=min_lr)
-            scheduler_cosine.step()
+            # scheduler_cosine.step()
 
         train_loss, SWITCH = train_one_epoch(model, optimizer, crit, dataloader_train, tokenizer, config, epoch, SWITCH)
         print(f'train loss: {train_loss:.2f}, epoch: {epoch}')
@@ -185,7 +185,7 @@ def train(epochs, prefix, partitions, metric, config=None):
         print(f'valid loss: {val_loss:.2f}, metric: {val_metrics}')
 
         # Added learning rate scheduling
-        # scheduler.step(val_loss)
+        scheduler.step(val_loss)
 
         logging_dict.update({
             "epoch": epoch,
