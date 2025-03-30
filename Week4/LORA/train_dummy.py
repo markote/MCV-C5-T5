@@ -58,13 +58,22 @@ class ViTLLamaModel(nn.Module):
                 param.requires_grad = False
         
         self.decoder = LlamaForCausalLM.from_pretrained(llama_model_name)
-        # Set pad_token_id to EOS token ID during initialization
-        tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
-        self.pad_token_id = tokenizer.eos_token_id  # e.g., 128001 for LLaMA 3.2
-        
+        self.tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
+        self.tokenizer.pad_token = self.tokenizer.eos_token
+
+        # Define the prompt with an opening quotation mark
+        self.prompt = 'A short description of this dish is as follow: "'
+        self.prompt_ids = self.tokenizer(self.prompt, return_tensors="pt").input_ids[:, :-1].to(DEVICE)  # Remove <eos>
+        with torch.no_grad():
+            self.prompt_embeds = self.decoder.get_input_embeddings().to(DEVICE)(self.prompt_ids)
+
         vit_hidden_size = self.vit.config.hidden_size
         llama_hidden_size = self.decoder.config.hidden_size
-        self.projection = nn.Linear(vit_hidden_size, llama_hidden_size)
+        self.projection = nn.Sequential(
+            nn.Linear(vit_hidden_size, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, llama_hidden_size)
+        )
 
     def forward(self, pixel_values, labels=None):
         vit_outputs = self.vit(pixel_values=pixel_values)
@@ -72,26 +81,45 @@ class ViTLLamaModel(nn.Module):
         projected_features = self.projection(image_features)
         
         if labels is not None:
-            input_embeds = self.decoder.get_input_embeddings()(labels)  # [batch_size, seq_len, hidden_size]
+            input_embeds = self.decoder.get_input_embeddings()(labels)
             batch_size = projected_features.size(0)
-            projected_features = projected_features.unsqueeze(1)  # [batch_size, 1, hidden_size]
-            decoder_inputs = torch.cat([projected_features, input_embeds], dim=1)  # [batch_size, 1 + seq_len, hidden_size]
-            print("pad token id",self.pad_token_id)
-            # Prepend dummy token (pad_token_id) to labels
-            dummy_token = torch.full((batch_size, 1), self.pad_token_id, device=DEVICE, dtype=labels.dtype)
-            adjusted_labels = torch.cat([dummy_token, labels], dim=1)  # [batch_size, 1 + seq_len]
+            projected_features = projected_features.unsqueeze(1)
+            
+            # Prepend prompt embeddings
+            prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
+            inputs_with_prompt = torch.cat([projected_features, prompt_embeds, input_embeds], dim=1)
 
-            outputs = self.decoder(inputs_embeds=decoder_inputs, labels=adjusted_labels)
+            # Prepend dummy token and prompt tokens to labels
+            dummy_token = torch.full((batch_size, 1), self.tokenizer.pad_token_id, device=DEVICE, dtype=labels.dtype)
+            prompt_length = self.prompt_ids.size(1)
+            prompt_tokens = self.prompt_ids.expand(batch_size, -1)
+            adjusted_labels = torch.cat([dummy_token, prompt_tokens, labels], dim=1)
+
+            # Attention mask: mask the image token, but not the prompt
+            attention_mask = torch.ones((batch_size, 1 + prompt_length + labels.size(1)), device=DEVICE)
+            attention_mask[:, 0] = 0  # Mask the image feature token
+
+            print(f"inputs_with_prompt: {inputs_with_prompt.shape}, adjusted_labels: {adjusted_labels.shape}, attention_mask: {attention_mask.shape}")
+            outputs = self.decoder(inputs_embeds=inputs_with_prompt, labels=adjusted_labels, attention_mask=attention_mask)
             return outputs
         else:
             projected_features = projected_features.unsqueeze(1)
-            return self.decoder.generate(inputs_embeds=projected_features)
+            batch_size = projected_features.size(0)
+            prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
+            inputs_with_prompt = torch.cat([projected_features, prompt_embeds], dim=1)
+            return self.decoder.generate(inputs_embeds=inputs_with_prompt)
 
     def generate(self, pixel_values, **generate_kwargs):
         vit_outputs = self.vit(pixel_values=pixel_values)
         image_features = vit_outputs.last_hidden_state[:, 0, :]
         projected_features = self.projection(image_features).unsqueeze(1)
-        return self.decoder.generate(inputs_embeds=projected_features, **generate_kwargs)
+        
+        # Prepend prompt embeddings
+        batch_size = projected_features.size(0)
+        prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
+        inputs_with_prompt = torch.cat([projected_features, prompt_embeds], dim=1)
+        
+        return self.decoder.generate(inputs_embeds=inputs_with_prompt, **generate_kwargs)
 
 def optimizer_chooser(model, type_opt, config):
     if type_opt == "AdamW":
@@ -153,19 +181,18 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     vit_model_name = "nlpconnect/vit-gpt2-image-captioning"
     pretrained_model_path = config["pretrained_model_path"]
     llama_model_name = f"meta-llama/Llama-3.2-{llama_size.upper()}-Instruct"
-    model = ViTLLamaModel(vit_model_name, llama_model_name, vit_pretrain=pretrained_model_path).to(DEVICE)
+    model = ViTLLamaModel(vit_model_name, llama_model_name, vit_pretrain=pretrained_model_path, freeze_vit= config["freeze_vit"]).to(DEVICE)
 
     # Apply LoRA to the decoder
     lora_config = {
-        "r": config["lora_r"],  # Rank of the low-rank matrices
-        "lora_alpha": config["lora_alpha"],  # Scaling factor
+        "r": config["lora_r"],
+        "lora_alpha": config["lora_alpha"],
         "lora_dropout": config["lora_dropout"],
     }
     model.decoder = apply_lora_to_decoder(model.decoder, lora_config)
 
     feature_extractor = ViTImageProcessor.from_pretrained(vit_model_name)
-    tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
-    tokenizer.pad_token = tokenizer.eos_token  # Still set for tokenization consistency
+    tokenizer = model.tokenizer
 
     data_train = Data(prefix, partitions['train'], feature_extractor, augment=True)
     data_valid = Data(prefix, partitions['eval'], feature_extractor, augment=False)
@@ -248,8 +275,10 @@ def train_one_epoch(model, optimizer, crit, dataloader_train, tokenizer, config,
     total_loss = 0
     for images, titles in dataloader_train:
         images = images.to(DEVICE)
-        inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-        outputs = model(pixel_values=images, labels=inputs)  # No tokenizer needed here
+        # Add quotation marks and period to the titles for training
+        modified_titles = [f"{title}\"." for title in titles]
+        inputs = tokenizer(modified_titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
+        outputs = model(pixel_values=images, labels=inputs)
         loss = outputs.loss
         optimizer.zero_grad()
         loss.backward()
@@ -268,21 +297,47 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
     with torch.no_grad():
         for images, titles in dataloader:
             images = images.to(DEVICE)
-            inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-            outputs = model(pixel_values=images, labels=inputs)  # No tokenizer needed here
+            # Add quotation marks and period to the titles for validation/test loss computation
+            modified_titles = [f"{title}\"." for title in titles]
+            inputs = tokenizer(modified_titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
+            outputs = model(pixel_values=images, labels=inputs)
             loss = outputs.loss
             total_loss += loss.item()
             total += 1
-            output_ids = model.generate(pixel_values=images, max_length=80, num_beams=4, pad_token_id=tokenizer.pad_token_id)
+            output_ids = model.generate(pixel_values=images, max_length=50, num_beams=4, pad_token_id=tokenizer.pad_token_id)
             predictions = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
-            preds.extend(predictions)
+            # Handle empty predictions and ensure closing quotation mark and period
+            filtered_preds = []
+            for pred in predictions:
+                if pred.strip():
+                    # Check if the prediction already ends with " and .
+                    if not (pred.endswith('"') and pred.endswith('."')):
+                        formatted_pred = f"{pred}\"."
+                    else:
+                        formatted_pred = pred
+                else:
+                    formatted_pred = "[EMPTY]\"."
+                filtered_preds.append(formatted_pred)
+            preds.extend(filtered_preds)
+            # Use original titles for ground truth comparison
             gts.extend(titles)
     
+    # For metric computation, strip the prompt and quotes from predictions
+    prompt_length = len('A name or very short description of this dish is as follow: "')
+    metric_preds = []
+    for pred in preds:
+        # Remove the prompt
+        pred = pred[prompt_length:]
+        # Remove the closing quote and period
+        if pred.endswith('".'):
+            pred = pred[:-2]
+        metric_preds.append(pred)
+
     bleu, rouge, meteor = metric
-    bleu1 = bleu.compute(predictions=preds, references=gts, max_order=1)["bleu"]
-    bleu2 = bleu.compute(predictions=preds, references=gts, max_order=2)["bleu"]
-    res_r = rouge.compute(predictions=preds, references=gts)['rougeL']
-    res_m = meteor.compute(predictions=preds, references=gts)['meteor']
+    bleu1 = bleu.compute(predictions=metric_preds, references=gts, max_order=1)["bleu"]
+    bleu2 = bleu.compute(predictions=metric_preds, references=gts, max_order=2)["bleu"]
+    res_r = rouge.compute(predictions=metric_preds, references=gts)['rougeL']
+    res_m = meteor.compute(predictions=metric_preds, references=gts)['meteor']
     
     sample_indices = random.sample(range(len(preds)), min(9, len(preds)))
     sampled_preds = [preds[i] for i in sample_indices]
@@ -306,27 +361,32 @@ if __name__ == "__main__":
         "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
         "batch_size": 16,
         "optimizer_type": "AdamW",
-        "lr": 1e-5,
+        "lr": 1e-4,
         "min_lr": 1e-7,
         "label_smoothing": 0.1,
         "gradient_clip_norm": 2.0,
         "dropout_enc": 0.1,
         "dropout_dec": 0.1,
         "weight_decay": 0.01,
-        "num_epochs": 30,
+        "num_epochs": 50,
         "warmup_ep": 1,
         "patience_es": 7,
         "save_dir": "./checkpoints",
-        "pretrained_model_path":"./LORA/best_vitgpt2.pt",
-        "lora_r": 16,  # Rank of the low-rank matrices
-        "lora_alpha": 32,  # Scaling factor
+        "pretrained_model_path": "./LORA/best_vitgpt2.pt",
+        "lora_r": 256,
+        "lora_alpha": 256*2,
         "lora_dropout": 0.1,
         "save_cp": False,
+        "freeze_vit": True,
     }
 
     print(config)
 
     partitions = np.load(splits_path, allow_pickle=True).item()
+    # Force overfitting for debugging
+    # partitions['train'] = partitions['train'][:50]
+    # partitions['eval'] = partitions['eval'][:50]
+    # partitions['test'] = partitions['test'][:50]
     bleu = evaluate.load('bleu')
     meteor = evaluate.load('meteor')
     rouge = evaluate.load('rouge')
