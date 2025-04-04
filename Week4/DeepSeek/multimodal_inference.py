@@ -1,6 +1,8 @@
-from transformers import AutoModelForCausalLM
-from deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
-from deepseek_vl2.utils.io import load_pil_images
+# from transformers import AutoModelForCausalLM
+# from deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
+# from deepseek_vl2.utils.io import load_pil_images
+from transformers import Qwen2_5_VLForConditionalGeneration, AutoTokenizer, AutoProcessor
+from qwen_vl_utils import process_vision_info
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import numpy as np
@@ -14,121 +16,171 @@ import wandb
 import time
 import pickle
 import json
+import random
+from PIL import Image
 
 class Data(Dataset):
-    def __init__(self, prefix, partition, data_aug=False):
+    def __init__(self, prefix, partition):
         self.prefix = prefix
         self.partition = partition
-        self.max_len = TEXT_MAX_LEN
-        if data_aug:
-            self.img_proc = torch.nn.Sequential(
-                v2.ToImage(),
-                v2.ToDtype(torch.float32, scale=True),
-                v2.Resize((224, 224), antialias=True),
-                v2.RandomHorizontalFlip(p=0.5),
-                v2.RandomRotation(degrees=10),
-                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-            )
-        else:
-            self.img_proc = torch.nn.Sequential(
-                v2.ToImage(),
-                v2.ToDtype(torch.float32, scale=True),
-                v2.Resize((224, 224), antialias=True),
-                v2.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-            )
 
     def __len__(self):
         return len(self.partition)
     
     def __getitem__(self, idx):
         title, path = self.partition[idx]
-        # Image processing
-        path = os.path.basename(path)
-        # img = Image.open(os.path.join(self.prefix, path)).convert('RGB')
-        # img = self.img_proc(img)
-    
-        ## caption processing
-        # print("Image captioning processing: ")
-        # print(title)
-        # words = ["<SOS>"]
-        # words.extend(nltk.word_tokenize(title)) # vector of words we need to add <EOS> and <PAD>
-        # words.extend(["<EOS>"])
-        # gap = self.max_len - len(words)
-        # words.extend(["<PAD>"]*gap)
-        # cap_idx = [TOKEN2IDX[i] for i in words]
-        # print("final list to idx", final_list)
-        # print("final idx", cap_idx)
-        # print("final idx in pytorch tensor: ",  torch.tensor(cap_idx, dtype=torch.long))
-        # sys.exit(1)
+        path = os.path.join(self.prefix, os.path.basename(path))
         
         return title, path
 
-def generation_conversation(path_image, prompt):
+def generation_conversation(path_image, prompt, resize_size=224):
     return [
-            {
-                "role": "<|User|>",
-                "content": f"<image>\n<|ref|>{prompt}<|/ref|>.",
-                "images": [path_image],
-            },
-            {"role": "<|Assistant|>", "content": ""},
-        ]
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "image": path_image,
+                            "resized_height": resize_size,
+                            "resized_width": resize_size,
+                        },
+                        {"type": "text", "text": prompt},
+                    ],
+                }
+            ]
 
+def avg(list_param):
+    return sum(list_param)/len(list_param)
 
-def inference_one_split(dataset, metric, model=None, prompt="Say 'error wrong prompt for this result' ignoring the given image", split=""):
-   
-    for path_image, title in dataset:
-        ## single image conversation example
+def inference_one_split(dataset, metric, model=None, processor=None, prompt="Say 'error wrong prompt for this result' ignoring the given image", split=""):
+    predictions = []
+    gts = []
+    all_images = []
+    bleux1, bleux2, rouges, meteores = [],[],[],[]
+    bleu, rouge, meteor = metric
+    for title, path_image in dataset:
         conversation = generation_conversation(path_image, prompt)
+        gts.append([title])
+        all_images.append(path_image)
+        # print("Title:", title)
+        # print("Image path:", path_image)
+        # print("Conversation:", conversation)
 
-        # load images and prepare for inputs
-        pil_images = load_pil_images(conversation)
-        prepare_inputs = vl_chat_processor(
-            conversations=conversation,
-            images=pil_images,
-            force_batchify=True,
-            system_prompt=""
-        ).to(model.device)
-
-        # run image encoder to get the image embeddings
-        inputs_embeds = model.prepare_inputs_embeds(**prepare_inputs)
-
-        # run the model to get the response
-        outputs = model.language_model.generate(
-            inputs_embeds=inputs_embeds,
-            attention_mask=prepare_inputs.attention_mask,
-            pad_token_id=tokenizer.eos_token_id,
-            bos_token_id=tokenizer.bos_token_id,
-            eos_token_id=tokenizer.eos_token_id,
-            max_new_tokens=512,
-            do_sample=False,
-            use_cache=True
+        # Preparation for inference
+        text = processor.apply_chat_template(
+            conversation, tokenize=False, add_generation_prompt=True
         )
+        image_inputs, video_inputs = process_vision_info(conversation)
+        inputs = processor(
+            text=[text],
+            images=image_inputs,
+            videos=video_inputs,
+            padding=True,
+            return_tensors="pt",
+        )
+        inputs = inputs.to("cuda")
 
-        answer = tokenizer.decode(outputs[0].cpu().tolist(), skip_special_tokens=True)
-        print(f"{prepare_inputs['sft_format'][0]}", answer)
-        break
+        # Inference: Generation of the output
+        generated_ids = model.generate(**inputs, max_new_tokens=128)
+        generated_ids_trimmed = [
+            out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+        ]
+        output_text = processor.batch_decode(
+            generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+        )
+        # print("Output text:", output_text[0])
+        predictions.append(output_text[0])
+        if len(gts) > 5000:
+            bleu1 = bleu.compute(predictions=predictions, references=gts, max_order=1)["bleu"]
+            bleu2 = bleu.compute(predictions=predictions, references=gts, max_order=2)["bleu"]
+            res_r = rouge.compute(predictions=predictions, references=gts)['rougeL']
+            res_m = meteor.compute(predictions=predictions, references=gts)['meteor']
+            bleux1.append(bleu1)
+            bleux2.append(bleu2)
+            rouges.append(res_r)
+            meteores.append(res_m)
+            wandb.log({
+                f"{split}_bleu1": bleu1,
+                f"{split}_bleu2": bleu2,
+                f"{split}_rouge_l": res_r,
+                f"{split}_meteor": res_m
+            })
+            sample_indices = random.sample(range(len(predictions)), 9)
+            sampled_preds = [predictions[i] for i in sample_indices]
+            sampled_gts = [gts[i] for i in sample_indices]
+            sampled_images = [all_images[i] for i in sample_indices]
+            print("Eval preds (9 random): ", sampled_preds)
+            print("Eval gts (9 random): ", sampled_gts)
+            wandb.log({
+                f"{split}_predictions": sampled_preds,
+                f"{split}_ground_truths": sampled_gts,
+                f"{split}_images": [wandb.Image(Image.open(img_path), caption=f"Pred: {pred}\nGT: {gt[0]}") for img_path, pred, gt in zip(sampled_images, sampled_preds, sampled_gts)]
+            })
+            predictions = []
+            gts = []
+            print("5k done.")
+            
+            
+    # print("Predictions:", predictions)
+    # print("GTs :", gts)
+    bleu1 = bleu.compute(predictions=predictions, references=gts, max_order=1)["bleu"]
+    bleu2 = bleu.compute(predictions=predictions, references=gts, max_order=2)["bleu"]
+    res_r = rouge.compute(predictions=predictions, references=gts)['rougeL']
+    res_m = meteor.compute(predictions=predictions, references=gts)['meteor']
+    wandb.log({
+            f"{split}_bleu1": bleu1,
+            f"{split}_bleu2": bleu2,
+            f"{split}_rouge_l": res_r,
+            f"{split}_meteor": res_m
+        })
+    bleux1.append(bleu1)
+    bleux2.append(bleu2)
+    rouges.append(res_r)
+    meteores.append(res_m)
+    wandb.log({
+            f"AVG_{split}_bleu1": avg(bleux1),
+            f"AVG_{split}_bleu2": avg(bleux2),
+            f"AVG_{split}_rouge_l": avg(rouges),
+            f"AVG_{split}_meteor": avg(meteores)
+        })
+   
+
+    sample_indices = random.sample(range(len(predictions)), 9)
+    sampled_preds = [predictions[i] for i in sample_indices]
+    sampled_gts = [gts[i] for i in sample_indices]
+    sampled_images = [all_images[i] for i in sample_indices]
+    print("Eval preds (9 random): ", sampled_preds)
+    print("Eval gts (9 random): ", sampled_gts)
+    wandb.log({
+        f"{split}_predictions": sampled_preds,
+        f"{split}_ground_truths": sampled_gts,
+        f"{split}_images": [wandb.Image(Image.open(img_path), caption=f"Pred: {pred}\nGT: {gt[0]}") for img_path, pred, gt in zip(sampled_images, sampled_preds, sampled_gts)]
+    })
 
 def inference(prefix, partitions, metric, config=None, run_name=""):
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"{run_name}_{run_id}"
-    wandb.init(project="Inference multimodal deepseek model", name=run_name, config=config)
-    # specify the path to the model
-    model_path = "deepseek-ai/deepseek-vl2"
-    vl_chat_processor: DeepseekVLV2Processor = DeepseekVLV2Processor.from_pretrained(model_path)
-    tokenizer = vl_chat_processor.tokenizer
+    wandb.init(project="Inference multimodal qwen model", name=run_name, config=config)
+    
+    checkpoint = "Qwen/Qwen2.5-VL-3B-Instruct"
+    # default: Load the model on the available device(s)
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(checkpoint, torch_dtype="auto", device_map="auto")
 
-    vl_gpt: DeepseekVLV2ForCausalLM = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
-    vl_gpt = vl_gpt.to(torch.bfloat16).cuda().eval()
+    # default processer
+    processor = AutoProcessor.from_pretrained(checkpoint)
 
-    data_train = Data(prefix, partitions['train'])
+    # The default range for the number of visual tokens per image in the model is 4-16384.
+    # You can set min_pixels and max_pixels according to your needs, such as a token range of 256-1280, to balance performance and cost.
+    # min_pixels = 256*28*28
+    # max_pixels = 1280*28*28
+    # processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-3B-Instruct", min_pixels=min_pixels, max_pixels=max_pixels)
+
+    #data_train = Data(prefix, partitions['train'])
     data_valid = Data(prefix, partitions['eval'])
     data_test = Data(prefix, partitions['test'])
-    dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    inference_one_split(data_train, metric, model=vl_gpt, promp=config["prompt"], split="train")
-    inference_one_split(data_valid, metric, model=vl_gpt, promp=config["prompt"], split="valid")
-    inference_one_split(data_test, metric, model=vl_gpt, promp=config["prompt"], split="test")
+    inference_one_split(data_train, metric, model=model, processor=processor, prompt=config["prompt"], split="train")
+    inference_one_split(data_valid, metric, model=model, processor=processor, prompt=config["prompt"], split="valid")
+    inference_one_split(data_test, metric, model=model, processor=processor, prompt=config["prompt"], split="test")
 
     wandb.finish()
 
@@ -139,9 +191,9 @@ if __name__ == "__main__":
     splits_path = f'{base_path}FilteredDataSplit.npy'
 
     config = {
-        "prefix": "/ghome/c5mcv05/image_captioning_dataset/FoodImages/",
+        "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages/",
         "batch_size": 32,
-        "prompt":"This image comes from a web of cooking recipe, guess the title of the recipe based on the image.",
+        "prompt":"This image comes from a web of cooking recipes, guess the title of the recipe based on the image. Only output your guessed title.",
     }
 
     partitions = None
