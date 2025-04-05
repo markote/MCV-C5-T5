@@ -53,7 +53,8 @@ class ViTLLamaModel(nn.Module):
                  freeze_vit=True,
                  img_start_token=DEFAULT_IMG_START_TOKEN,
                  img_end_token=DEFAULT_IMG_END_TOKEN,
-                 prompt_text=None
+                 prompt_text=None,
+                 **kwargs
                  ):
         super(ViTLLamaModel, self).__init__()
 
@@ -105,10 +106,10 @@ class ViTLLamaModel(nn.Module):
         self.projection = nn.Sequential(
             nn.Linear(vit_hidden_size, llama_hidden_size),
             nn.GELU(),                              # Added GELU activation
-            nn.Dropout(0.1),
+            nn.Dropout(kwargs.get("projection_dropout",0.1)),
             nn.Linear(llama_hidden_size, llama_hidden_size),
             nn.GELU(),                              # Added GELU activation
-            nn.Dropout(0.1),
+            nn.Dropout(kwargs.get("projection_dropout",0.1)),
             nn.Linear(llama_hidden_size, llama_hidden_size) # Final output layer
         ).to(DEVICE)
 
@@ -279,7 +280,7 @@ def apply_lora_to_decoder(model, lora_config):
 def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"run_{run_id}_llama_{llama_size}"
-    wandb.init(project="final_image_captioning_LORA_ViT_LLaMA", name=run_name, config=config)
+    wandb.init(project=config["wandb_project"], name=run_name, config=config)
     logging_dict = {}
     
     print(f"Training set size: {len(partitions['train'])}")
@@ -321,7 +322,8 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
         freeze_vit=config["freeze_vit"],
         img_start_token=DEFAULT_IMG_START_TOKEN, # Pass special tokens
         img_end_token=DEFAULT_IMG_END_TOKEN,
-        prompt_text=config["PROMPT"]
+        prompt_text=config["PROMPT"],
+        projection_dropout=config["projection_dropout"]
     ).to(DEVICE)
 
     # Apply LoRA to the decoder
@@ -346,7 +348,7 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
             texts_with_eos,
             padding="longest",        # Pad to longest in batch
             truncation=True,          # Truncate to max_length
-            max_length=30,
+            max_length=20,
             return_tensors="pt",
             return_attention_mask=True # *** Crucial: Get attention mask ***
         )
@@ -376,7 +378,7 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
 
     print(f"Manually check model params before training, number of trainable parameters is: {total_trainable_params:,}")
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss()
+    crit = nn.CrossEntropyLoss(label_smoothing = config["label_smoothing"])
 
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
     best_val_loss = float('inf')
@@ -494,7 +496,12 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
             loss = outputs.loss
             total_loss += loss.item()
             total += 1
-            output_ids = model.generate(pixel_values=images, max_new_tokens=30, num_beams=1, pad_token_id=tokenizer.pad_token_id)
+            output_ids = model.generate(pixel_values=images, 
+                                        max_new_tokens=20, 
+                                        num_beams=1,
+                                        repetition_penalty=1.2,
+                                        length_penalty=0.8,
+                                        pad_token_id=tokenizer.pad_token_id)
             predictions = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
             # Removed the enforcement of closing "."
             filtered_preds = []
@@ -535,16 +542,16 @@ if __name__ == "__main__":
     splits_path = f'FilteredDataSplit.npy'
 
     config = {
+        "wandb_project": "final_image_captioning_LORA_ViT_LLaMA",
         "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
         "batch_size": 8,
         "optimizer_type": "AdamW",
-        "lr": 1e-4,
+        "lr": 5e-5,
         "min_lr": 1e-7,
         "label_smoothing": 0.1,
         "gradient_clip_norm": 2.0,
-        "dropout_enc": 0.1,
-        "dropout_dec": 0.1,
-        "weight_decay": 0.01,
+        "weight_decay": 0.05,
+        "projection_dropout": 0.3,
         "num_epochs": 50,
         "warmup_ep": 1,
         "patience_es": 7,
@@ -552,7 +559,7 @@ if __name__ == "__main__":
         "pretrained_model_path": "./LORA/best_vitgpt2.pt",
         "lora_r": 8,
         "lora_alpha": 32,
-        "lora_dropout": 0.1,
+        "lora_dropout": 0.3,
         "save_cp": False,
         "freeze_vit": True,
         "llama_size":"1b",
