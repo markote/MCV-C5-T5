@@ -17,7 +17,10 @@ from transformers import ViTImageProcessor, AutoTokenizer, LlamaForCausalLM, Vis
 from peft import LoraConfig, get_peft_model
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-os.environ["TOKENIZERS_PARALLELISM"] = "true"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+PROMPT = 'A name or very short description of a dish:'
+DEFAULT_IMG_START_TOKEN = "<IMG_START>"
+DEFAULT_IMG_END_TOKEN = "<IMG_END>"
 
 class Data(Dataset):
     def __init__(self, prefix, partition, feature_extractor, augment=False):
@@ -44,8 +47,21 @@ class Data(Dataset):
         return pixel_values, title
 
 class ViTLLamaModel(nn.Module):
-    def __init__(self, vit_model_name, llama_model_name, vit_pretrain, freeze_vit=True):
+    def __init__(self,
+                 vit_model_name,
+                 llama_model_name,
+                 vit_pretrain,
+                 freeze_vit=True,
+                 img_start_token=DEFAULT_IMG_START_TOKEN,
+                 img_end_token=DEFAULT_IMG_END_TOKEN,
+                 prompt_text='A name or very short description of this dish is as follow: "'
+                 ):
         super(ViTLLamaModel, self).__init__()
+
+        # --- ViT Encoder Setup ---
+        # Using the encoder part directly from VisionEncoderDecoderModel might be fine,
+        # but loading ViT standalone might offer more control if needed later.
+        # Let's keep the original loading method for now.
         self.vit = VisionEncoderDecoderModel.from_pretrained(vit_model_name).encoder
         print(f"Loading ViT checkpoint from: {vit_pretrain}")
         checkpoint = torch.load(vit_pretrain, map_location=DEVICE)
@@ -54,72 +70,203 @@ class ViTLLamaModel(nn.Module):
         self.vit.to(DEVICE)
 
         if freeze_vit:
+            print("Freezing ViT encoder.")
             for param in self.vit.parameters():
                 param.requires_grad = False
+        self.vit.eval()
         
         self.decoder = LlamaForCausalLM.from_pretrained(llama_model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(llama_model_name)
-        self.tokenizer.pad_token = self.tokenizer.eos_token
+        
+        # --- Add Special Tokens ---
+        self.img_start_token = img_start_token
+        self.img_end_token = img_end_token
+        special_tokens_dict = {'additional_special_tokens': [self.img_start_token, self.img_end_token]}
+        num_added_toks = self.tokenizer.add_special_tokens(special_tokens_dict)
+        print(f"Added {num_added_toks} special tokens: {self.img_start_token}, {self.img_end_token}")
+        
+        # Resize embeddings ONLY IF tokens were actually added
+        if num_added_toks > 0:
+             self.decoder.resize_token_embeddings(len(self.tokenizer))
 
-        # Define the prompt with an opening quotation mark
-        self.prompt = 'A short description of this dish is as follow: "'
-        self.prompt_ids = self.tokenizer(self.prompt, return_tensors="pt").input_ids[:, :-1].to(DEVICE)  # Remove <eos>
-        with torch.no_grad():
-            self.prompt_embeds = self.decoder.get_input_embeddings().to(DEVICE)(self.prompt_ids)
+        # Set pad token if necessary (Llama usually doesn't have one)
+        if self.tokenizer.pad_token is None:
+             print("Tokenizer has no pad token, setting it to eos_token.")
+             self.tokenizer.pad_token = self.tokenizer.eos_token
+             # Update Llama config if necessary (though usually handled internally)
+             self.decoder.config.pad_token_id = self.tokenizer.pad_token_id
+             
+        self.img_start_token_id = self.tokenizer.convert_tokens_to_ids(self.img_start_token)
+        self.img_end_token_id = self.tokenizer.convert_tokens_to_ids(self.img_end_token)
 
+        # --- Projection Layer (MLP) ---
         vit_hidden_size = self.vit.config.hidden_size
         llama_hidden_size = self.decoder.config.hidden_size
+        # Use the Projector class defined earlier
         self.projection = nn.Sequential(
-            nn.Linear(vit_hidden_size, 1024),
-            nn.ReLU(),
-            nn.Linear(1024, llama_hidden_size)
-        )
+            nn.Linear(vit_hidden_size, llama_hidden_size),
+            nn.GELU(),                              # Added GELU activation
+            nn.Dropout(0.1),
+            nn.Linear(llama_hidden_size, llama_hidden_size),
+            nn.GELU(),                              # Added GELU activation
+            nn.Dropout(0.1),
+            nn.Linear(llama_hidden_size, llama_hidden_size) # Final output layer
+        ).to(DEVICE)
+
+        # --- Prompt Setup ---
+        self.prompt_text = prompt_text
+        # Tokenize prompt - remove <s> but keep trailing space/quote if needed
+        prompt_tokens_info = self.tokenizer(self.prompt_text, add_special_tokens=False, return_tensors="pt")
+        self.prompt_ids = prompt_tokens_info.input_ids.to(DEVICE)
+        # No need to pre-embed prompt, do it dynamically
+
+    def get_input_embeddings(self):
+        # Helper to access possibly PEFT-wrapped embeddings
+        if hasattr(self.decoder, "get_input_embeddings"):
+            return self.decoder.get_input_embeddings()
+        elif hasattr(self.decoder, "model") and hasattr(self.decoder.model, "get_input_embeddings"): # Handle PEFT model structure
+            return self.decoder.model.get_input_embeddings()
+        else:
+            # Fallback or error if structure is unexpected
+            return self.decoder.embed_tokens # Common attribute name
 
     def forward(self, pixel_values, labels=None):
-        vit_outputs = self.vit(pixel_values=pixel_values)
-        image_features = vit_outputs.last_hidden_state[:, 0, :]
-        projected_features = self.projection(image_features)
-        
-        if labels is not None:
-            input_embeds = self.decoder.get_input_embeddings()(labels)
-            batch_size = projected_features.size(0)
-            projected_features = projected_features.unsqueeze(1)
-            
-            # Prepend prompt embeddings
-            prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
-            inputs_with_prompt = torch.cat([projected_features, prompt_embeds, input_embeds], dim=1)
+        # pixel_values: (batch_size, num_channels, height, width)
+        # labels: (batch_size, seq_len) - token IDs of the target text
+        # 1. Get ViT Embeddings
+        with torch.set_grad_enabled(not self.vit.training): # Use torch.no_grad() if ViT is in eval mode
+             vit_outputs = self.vit(pixel_values=pixel_values)
+        image_features = vit_outputs.last_hidden_state # (batch_size, vit_seq_len, vit_hidden_size)
 
-            # Prepend dummy token and prompt tokens to labels
-            dummy_token = torch.full((batch_size, 1), self.tokenizer.pad_token_id, device=DEVICE, dtype=labels.dtype)
-            prompt_length = self.prompt_ids.size(1)
-            prompt_tokens = self.prompt_ids.expand(batch_size, -1)
-            adjusted_labels = torch.cat([dummy_token, prompt_tokens, labels], dim=1)
-
-            # Attention mask: mask the image token, but not the prompt
-            attention_mask = torch.ones((batch_size, 1 + prompt_length + labels.size(1)), device=DEVICE)
-            attention_mask[:, 0] = 0  # Mask the image feature token
-
-            print(f"inputs_with_prompt: {inputs_with_prompt.shape}, adjusted_labels: {adjusted_labels.shape}, attention_mask: {attention_mask.shape}")
-            outputs = self.decoder(inputs_embeds=inputs_with_prompt, labels=adjusted_labels, attention_mask=attention_mask)
-            return outputs
-        else:
-            projected_features = projected_features.unsqueeze(1)
-            batch_size = projected_features.size(0)
-            prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
-            inputs_with_prompt = torch.cat([projected_features, prompt_embeds], dim=1)
-            return self.decoder.generate(inputs_embeds=inputs_with_prompt)
-
-    def generate(self, pixel_values, **generate_kwargs):
-        vit_outputs = self.vit(pixel_values=pixel_values)
-        image_features = vit_outputs.last_hidden_state[:, 0, :]
-        projected_features = self.projection(image_features).unsqueeze(1)
-        
-        # Prepend prompt embeddings
+        # 2. Project ViT Embeddings
+        projected_features = self.projection(image_features) # (batch_size, vit_seq_len, llama_hidden_size)
         batch_size = projected_features.size(0)
-        prompt_embeds = self.prompt_embeds.expand(batch_size, -1, -1)
-        inputs_with_prompt = torch.cat([projected_features, prompt_embeds], dim=1)
+        vit_seq_len = projected_features.size(1)
+
+        # 3. Get Embeddings for Special Tokens and Text
+        embedding_layer = self.get_input_embeddings()
         
-        return self.decoder.generate(inputs_embeds=inputs_with_prompt, **generate_kwargs)
+        # Special token embeddings (batch_size, 1, llama_hidden_size)
+        start_token_embeds = embedding_layer(torch.tensor([[self.img_start_token_id]] * batch_size, device=DEVICE))
+        end_token_embeds = embedding_layer(torch.tensor([[self.img_end_token_id]] * batch_size, device=DEVICE))
+        # Prompt embeddings (batch_size, prompt_len, llama_hidden_size)
+        prompt_embeds = embedding_layer(self.prompt_ids.expand(batch_size, -1))
+        prompt_len = self.prompt_ids.size(1)
+
+        if labels is not None:
+            print("Forward")
+            # Target text label embeddings (batch_size, labels_len, llama_hidden_size)
+            # Ensure labels don't contain pad tokens where embedding is needed (should be handled by collator)
+            # If labels contain eos_token, include it for generation context
+            labels = labels.to(DEVICE)
+            import pdb;pdb.set_trace()
+            label_embeds = embedding_layer(labels)
+            labels_len = labels.size(1)
+            # 4. Concatenate Embeddings for Input
+            # Order: [START | <ViT_FEATURES> | END | <PROMPT_TEXT> | <LABELS_TEXT>]
+            
+            inputs_embeds = torch.cat([
+                start_token_embeds,
+                projected_features,
+                end_token_embeds,
+                prompt_embeds,
+                label_embeds
+            ], dim=1)
+
+            # 5. Prepare Labels for Loss Calculation
+            # Ignore loss for non-label tokens (-100)
+            # Length of prefix to ignore = 1 (start) + vit_seq_len + 1 (end) + prompt_len
+            prefix_len = 1 + vit_seq_len + 1 + prompt_len
+            ignore_prefix = torch.full((batch_size, prefix_len), -100, device=DEVICE, dtype=torch.float)
+            
+            # Shift labels is handled internally by LlamaForCausalLM when labels are provided
+            # We just need to provide the correct sequence aligned with inputs_embeds
+            adjusted_labels = torch.cat([ignore_prefix, labels], dim=1)
+
+            # 6. Create Attention Mask (All non-padding tokens attend to all others)
+            # Assuming no padding is added *yet*. If a collator adds padding later,
+            # it should also provide the attention mask. Here, we assume a dense batch.
+            total_len = 1 + vit_seq_len + 1 + prompt_len + labels_len
+            attention_mask = torch.ones((batch_size, total_len), device=DEVICE, dtype=torch.float) # Correct mask: 1 for attend, 0 for ignore
+
+            # print(f"inputs_embeds: {inputs_embeds.shape}")
+            # print(f"adjusted_labels: {adjusted_labels.shape}")
+            # print(f"attention_mask: {attention_mask.shape}")
+
+
+            # 7. Forward pass through LLaMA Decoder
+            outputs = self.decoder(
+                inputs_embeds=inputs_embeds,
+                labels=adjusted_labels,
+                attention_mask=attention_mask
+            )
+            return outputs # Contains loss and logits
+
+        else:
+            # Handling the case where only generation is needed (labels=None)
+            # This part is typically handled by the generate method, but can be useful
+             # Order: [START | <ViT_FEATURES> | END | <PROMPT_TEXT>]
+            inputs_embeds = torch.cat([
+                start_token_embeds,
+                projected_features,
+                end_token_embeds,
+                prompt_embeds
+            ], dim=1)
+            attention_mask = torch.ones(inputs_embeds.shape[:2], device=DEVICE, dtype=torch.float)
+            
+            # Return decoder outputs directly if needed, otherwise use generate()
+            outputs = self.decoder(inputs_embeds=inputs_embeds, attention_mask=attention_mask)
+            return outputs
+
+
+    # Keep generate method separate for clarity
+    @torch.no_grad() # Ensure no gradients during generation
+    def generate(self, pixel_values, max_new_tokens=50, **generate_kwargs):
+         # pixel_values: (batch_size, num_channels, height, width)
+
+        # 1. Get ViT Embeddings
+        vit_outputs = self.vit(pixel_values=pixel_values)
+        image_features = vit_outputs.last_hidden_state
+
+        # 2. Project ViT Embeddings
+        projected_features = self.projection(image_features)
+        batch_size = projected_features.size(0)
+
+        # 3. Get Embeddings for Special Tokens and Prompt
+        embedding_layer = self.get_input_embeddings()
+        start_token_embeds = embedding_layer(torch.tensor([[self.img_start_token_id]] * batch_size, device=DEVICE))
+        end_token_embeds = embedding_layer(torch.tensor([[self.img_end_token_id]] * batch_size, device=DEVICE))
+        prompt_embeds = embedding_layer(self.prompt_ids.expand(batch_size, -1))
+
+        # 4. Concatenate Embeddings for Generation Prefix
+        # Order: [START | <ViT_FEATURES> | END | <PROMPT_TEXT>]
+        inputs_embeds = torch.cat([
+            start_token_embeds,
+            projected_features,
+            end_token_embeds,
+            prompt_embeds
+        ], dim=1)
+
+        # 5. Create Attention Mask for the prefix
+        attention_mask = torch.ones(inputs_embeds.shape[:2], device=DEVICE, dtype=torch.float)
+
+        # 6. Set pad_token_id for generation if not already set in config
+        if self.decoder.config.pad_token_id is None:
+             generation_pad_token_id = self.tokenizer.eos_token_id
+        else:
+             generation_pad_token_id = self.decoder.config.pad_token_id
+
+        # 7. Generate text using LLaMA's generate method
+        output_ids = self.decoder.generate(
+            inputs_embeds=inputs_embeds,
+            attention_mask=attention_mask,
+            max_new_tokens=max_new_tokens,
+            pad_token_id=generation_pad_token_id, # Crucial for beam search / sampling
+            eos_token_id=self.tokenizer.eos_token_id, # Stop generation token
+            **generate_kwargs # Pass other generation params like temperature, top_k, etc.
+        )
+
+        return output_ids # Return token IDs
 
 def optimizer_chooser(model, type_opt, config):
     if type_opt == "AdamW":
@@ -133,15 +280,25 @@ def optimizer_chooser(model, type_opt, config):
         sys.exit(1)
 
 def apply_lora_to_decoder(model, lora_config):
+    """Applies LoRA to the Llama decoder with broader target modules and saving embeddings."""
     peft_config = LoraConfig(
         r=lora_config["r"],
         lora_alpha=lora_config["lora_alpha"],
-        target_modules=["q_proj", "v_proj"],
+        # Target modules similar to Code 2's example for broader adaptation
+        target_modules=[
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj"
+            ],
         lora_dropout=lora_config["lora_dropout"],
         bias="none",
-        task_type="CAUSAL_LM"
+        task_type="CAUSAL_LM",
+        # Ensure new embeddings (like special tokens) are saved
+        modules_to_save=["embed_tokens"],
     )
-    return get_peft_model(model, peft_config)
+    peft_model = get_peft_model(model, peft_config)
+    print("Applied LoRA to LLaMA Decoder.")
+    peft_model.print_trainable_parameters()
+    return peft_model
 
 def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     run_id = time.strftime("%Y%m%d_%H%M%S")
@@ -181,7 +338,15 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     vit_model_name = "nlpconnect/vit-gpt2-image-captioning"
     pretrained_model_path = config["pretrained_model_path"]
     llama_model_name = f"meta-llama/Llama-3.2-{llama_size.upper()}-Instruct"
-    model = ViTLLamaModel(vit_model_name, llama_model_name, vit_pretrain=pretrained_model_path, freeze_vit= config["freeze_vit"]).to(DEVICE)
+    model = ViTLLamaModel(
+        vit_model_name=vit_model_name,
+        llama_model_name=llama_model_name,
+        vit_pretrain=pretrained_model_path,
+        freeze_vit=config["freeze_vit"],
+        img_start_token=DEFAULT_IMG_START_TOKEN, # Pass special tokens
+        img_end_token=DEFAULT_IMG_END_TOKEN,
+        prompt_text=PROMPT
+    ).to(DEVICE)
 
     # Apply LoRA to the decoder
     lora_config = {
@@ -193,17 +358,40 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
 
     feature_extractor = ViTImageProcessor.from_pretrained(vit_model_name)
     tokenizer = model.tokenizer
+    def collate_fn(batch):
+        pixel_values = torch.stack([item[0] for item in batch])
+        raw_texts = [item[1] for item in batch] # List of text strings
 
+        # Tokenize texts, adding EOS token for generation context, and padding
+        # Important: Add EOS token here, as LLaMA expects it for Causal LM task
+        texts_with_eos = [text + tokenizer.eos_token for text in raw_texts]
+        tokenized_outputs = tokenizer(
+            texts_with_eos,
+            padding="longest", # Pad to the longest sequence in the batch
+            truncation=True,   # Truncate if needed (adjust max_length if required)
+            max_length=50,    # Example max length, put as 50 because max number of tokens in train set is 17
+            return_tensors="pt"
+        )
+        
+        labels = tokenized_outputs.input_ids
+        # Replace padding token ID in labels with -100 for loss calculation
+        labels[labels == tokenizer.pad_token_id] = -100
+
+        return pixel_values, labels # Return pixel values and padded/ignored label IDs
     data_train = Data(prefix, partitions['train'], feature_extractor, augment=True)
     data_valid = Data(prefix, partitions['eval'], feature_extractor, augment=False)
     data_test = Data(prefix, partitions['test'], feature_extractor, augment=False)
-    dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8)
-    dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
-    dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8)
+    # Update DataLoaders to use the collate function
+    dataloader_train = DataLoader(data_train, batch_size=config["batch_size"], pin_memory=True, shuffle=True, num_workers=8, collate_fn=collate_fn)
+    dataloader_valid = DataLoader(data_valid, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8, collate_fn=collate_fn)
+    dataloader_test = DataLoader(data_test, batch_size=config["batch_size"], pin_memory=True, shuffle=False, num_workers=8, collate_fn=collate_fn)
     
     model.train()
+    total_trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+    print(f"Manually check model params before training, number of trainable parameters is: {total_trainable_params:,}")
     optimizer = optimizer_chooser(model, config["optimizer_type"], config)
-    crit = nn.CrossEntropyLoss(label_smoothing=config["label_smoothing"], ignore_index=tokenizer.pad_token_id)
+    crit = nn.CrossEntropyLoss()
 
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
     best_val_loss = float('inf')
@@ -273,12 +461,12 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
 
 def train_one_epoch(model, optimizer, crit, dataloader_train, tokenizer, config, epoch):
     total_loss = 0
-    for images, titles in dataloader_train:
+    for images, titles in tqdm.tqdm(dataloader_train, desc="TRAINING MINI BATCH"):
         images = images.to(DEVICE)
-        # Add quotation marks and period to the titles for training
-        modified_titles = [f"{title}\"." for title in titles]
-        inputs = tokenizer(modified_titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-        outputs = model(pixel_values=images, labels=inputs)
+        
+        # Removed the addition of "."
+        # inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
+        outputs = model(pixel_values=images, labels=titles)
         loss = outputs.loss
         optimizer.zero_grad()
         loss.backward()
@@ -295,43 +483,29 @@ def eval_epoch(model, crit, metric, dataloader, tokenizer):
     total_loss = 0
     total = 0
     with torch.no_grad():
-        for images, titles in dataloader:
+        for images, titles in tqdm.tqdm(dataloader, desc="EVAL MINI BATCH"):
             images = images.to(DEVICE)
-            # Add quotation marks and period to the titles for validation/test loss computation
-            modified_titles = [f"{title}\"." for title in titles]
-            inputs = tokenizer(modified_titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
-            outputs = model(pixel_values=images, labels=inputs)
+            # Removed the addition of "."
+            # inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt").input_ids.to(DEVICE)
+            outputs = model(pixel_values=images, labels=titles)
             loss = outputs.loss
             total_loss += loss.item()
             total += 1
-            output_ids = model.generate(pixel_values=images, max_length=50, num_beams=4, pad_token_id=tokenizer.pad_token_id)
+            output_ids = model.generate(pixel_values=images, max_new_tokens=50, num_beams=4, pad_token_id=tokenizer.pad_token_id)
             predictions = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
-            # Handle empty predictions and ensure closing quotation mark and period
+            # Removed the enforcement of closing "."
             filtered_preds = []
             for pred in predictions:
-                if pred.strip():
-                    # Check if the prediction already ends with " and .
-                    if not (pred.endswith('"') and pred.endswith('."')):
-                        formatted_pred = f"{pred}\"."
-                    else:
-                        formatted_pred = pred
+                if not pred.strip():
+                    filtered_preds.append("[EMPTY]")
                 else:
-                    formatted_pred = "[EMPTY]\"."
-                filtered_preds.append(formatted_pred)
+                    filtered_preds.append(pred)
             preds.extend(filtered_preds)
-            # Use original titles for ground truth comparison
             gts.extend(titles)
     
-    # For metric computation, strip the prompt and quotes from predictions
-    prompt_length = len('A name or very short description of this dish is as follow: "')
-    metric_preds = []
-    for pred in preds:
-        # Remove the prompt
-        pred = pred[prompt_length:]
-        # Remove the closing quote and period
-        if pred.endswith('".'):
-            pred = pred[:-2]
-        metric_preds.append(pred)
+    # Adjust metrics computation: strip the prompt but no closing "."
+    prompt_length = len(PROMPT)
+    metric_preds = [pred[prompt_length:] for pred in preds]
 
     bleu, rouge, meteor = metric
     bleu1 = bleu.compute(predictions=metric_preds, references=gts, max_order=1)["bleu"]
@@ -359,7 +533,7 @@ if __name__ == "__main__":
 
     config = {
         "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
-        "batch_size": 16,
+        "batch_size": 4,
         "optimizer_type": "AdamW",
         "lr": 1e-4,
         "min_lr": 1e-7,
@@ -373,8 +547,8 @@ if __name__ == "__main__":
         "patience_es": 7,
         "save_dir": "./checkpoints",
         "pretrained_model_path": "./LORA/best_vitgpt2.pt",
-        "lora_r": 256,
-        "lora_alpha": 256*2,
+        "lora_r": 8,
+        "lora_alpha": 32,
         "lora_dropout": 0.1,
         "save_cp": False,
         "freeze_vit": True,
@@ -383,10 +557,9 @@ if __name__ == "__main__":
     print(config)
 
     partitions = np.load(splits_path, allow_pickle=True).item()
-    # Force overfitting for debugging
-    # partitions['train'] = partitions['train'][:50]
-    # partitions['eval'] = partitions['eval'][:50]
-    # partitions['test'] = partitions['test'][:50]
+    partitions['train'] = partitions['train'][:50]
+    partitions['eval'] = partitions['eval'][:50]
+    partitions['test'] = partitions['test'][:50]
     bleu = evaluate.load('bleu')
     meteor = evaluate.load('meteor')
     rouge = evaluate.load('rouge')
