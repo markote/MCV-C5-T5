@@ -339,6 +339,7 @@ def train(epochs, prefix, partitions, metric, config=None, llama_size="1b"):
     def collate_fn(batch):
         pixel_values = torch.stack([item[0] for item in batch])
         raw_texts = [item[1] for item in batch] # List of text strings
+        raw_texts = [text + "." for text in raw_texts]
 
         # Tokenize texts, adding EOS token for generation context, and padding
         # Important: Add EOS token here, as LLaMA expects it for Causal LM task
