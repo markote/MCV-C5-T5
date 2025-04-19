@@ -1,0 +1,5258 @@
+[
+    [
+        "Tuna, Fresh Mozzarella, and Basil Pizza",
+        "A dish or a drink named Tuna, Fresh Mozzarella, and Basil Pizza."
+    ],
+    [
+        "Tuna, Fresh Mozzarella, and Basil Pizza",
+        "A dish or a drink named Tuna, Fresh Mozzarella, and Basil Pizza, surounded by different food."
+    ],
+    [
+        "Tuna, Fresh Mozzarella, and Basil Pizza",
+        "A dish or a drink named Tuna, Fresh Mozzarella, and Basil Pizza, seen from really close."
+    ],
+    [
+        "Baked Pears with Ice cream",
+        "A dish or a drink named Baked Pears with Ice cream."
+    ],
+    [
+        "Baked Pears with Ice cream",
+        "A dish or a drink named Baked Pears with Ice cream, surounded by the same food."
+    ],
+    [
+        "Baked Pears with Ice cream",
+        "A dish or a drink named Baked Pears with Ice cream, seen from really close."
+    ],
+    [
+        "Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces",
+        "A dish or a drink named Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces."
+    ],
+    [
+        "Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces",
+        "A dish or a drink named Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces, surounded by the same food."
+    ],
+    [
+        "Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces",
+        "A dish or a drink named Malted Vanilla Ice Cream with Peanut Brittle and Milk Chocolate Pieces, surounded by different food."
+    ],
+    [
+        "Fried Mozzerella with Arugula and Prosciutto",
+        "A dish or a drink named Fried Mozzerella with Arugula and Prosciutto."
+    ],
+    [
+        "Fried Mozzerella with Arugula and Prosciutto",
+        "A dish or a drink named Fried Mozzerella with Arugula and Prosciutto, surounded by different food."
+    ],
+    [
+        "Fried Mozzerella with Arugula and Prosciutto",
+        "A dish or a drink named Fried Mozzerella with Arugula and Prosciutto, surounded by the same food."
+    ],
+    [
+        "Apricot Crumble Parfait",
+        "A dish or a drink named Apricot Crumble Parfait."
+    ],
+    [
+        "Apricot Crumble Parfait",
+        "A dish or a drink named Apricot Crumble Parfait, seen from far away."
+    ],
+    [
+        "Apricot Crumble Parfait",
+        "A dish or a drink named Apricot Crumble Parfait, seen from really close."
+    ],
+    [
+        "Grilled Skirt Steaks with Parsley Oregano Sauce",
+        "A dish or a drink named Grilled Skirt Steaks with Parsley Oregano Sauce."
+    ],
+    [
+        "Grilled Skirt Steaks with Parsley Oregano Sauce",
+        "A dish or a drink named Grilled Skirt Steaks with Parsley Oregano Sauce, surounded by the same food."
+    ],
+    [
+        "Grilled Skirt Steaks with Parsley Oregano Sauce",
+        "A dish or a drink named Grilled Skirt Steaks with Parsley Oregano Sauce, seen from really close."
+    ],
+    [
+        "Rice Pilaf with Pine Nuts",
+        "A dish or a drink named Rice Pilaf with Pine Nuts."
+    ],
+    [
+        "Rice Pilaf with Pine Nuts",
+        "A dish or a drink named Rice Pilaf with Pine Nuts, surounded by the same food."
+    ],
+    [
+        "Rice Pilaf with Pine Nuts",
+        "A dish or a drink named Rice Pilaf with Pine Nuts, seen from really close."
+    ],
+    [
+        "Tagliatelle with Lemon",
+        "A dish or a drink named Tagliatelle with Lemon."
+    ],
+    [
+        "Tagliatelle with Lemon",
+        "A dish or a drink named Tagliatelle with Lemon, seen from far away."
+    ],
+    [
+        "Tagliatelle with Lemon",
+        "A dish or a drink named Tagliatelle with Lemon, surounded by the same food."
+    ],
+    [
+        "Brisket",
+        "A dish or a drink named Brisket."
+    ],
+    [
+        "Brisket",
+        "A dish or a drink named Brisket, seen from really close."
+    ],
+    [
+        "Brisket",
+        "A dish or a drink named Brisket, seen from far away."
+    ],
+    [
+        "Ceviche Marinated Scallops",
+        "A dish or a drink named Ceviche Marinated Scallops."
+    ],
+    [
+        "Ceviche Marinated Scallops",
+        "A dish or a drink named Ceviche Marinated Scallops, seen from really close."
+    ],
+    [
+        "Ceviche Marinated Scallops",
+        "A dish or a drink named Ceviche Marinated Scallops, surounded by different food."
+    ],
+    [
+        "Broccoli and Cheese Quiche",
+        "A dish or a drink named Broccoli and Cheese Quiche."
+    ],
+    [
+        "Broccoli and Cheese Quiche",
+        "A dish or a drink named Broccoli and Cheese Quiche, seen from far away."
+    ],
+    [
+        "Broccoli and Cheese Quiche",
+        "A dish or a drink named Broccoli and Cheese Quiche, surounded by the same food."
+    ],
+    [
+        "Rum Raisin Shortbread",
+        "A dish or a drink named Rum Raisin Shortbread."
+    ],
+    [
+        "Rum Raisin Shortbread",
+        "A dish or a drink named Rum Raisin Shortbread, surounded by different food."
+    ],
+    [
+        "Rum Raisin Shortbread",
+        "A dish or a drink named Rum Raisin Shortbread, surounded by the same food."
+    ],
+    [
+        "Not-So-Basic Meatloaf",
+        "A dish or a drink named Not-So-Basic Meatloaf."
+    ],
+    [
+        "Not-So-Basic Meatloaf",
+        "A dish or a drink named Not-So-Basic Meatloaf, seen from really close."
+    ],
+    [
+        "Not-So-Basic Meatloaf",
+        "A dish or a drink named Not-So-Basic Meatloaf, seen from far away."
+    ],
+    [
+        "Curried Sweet Potato with Warm Paratha Bread",
+        "A dish or a drink named Curried Sweet Potato with Warm Paratha Bread."
+    ],
+    [
+        "Curried Sweet Potato with Warm Paratha Bread",
+        "A dish or a drink named Curried Sweet Potato with Warm Paratha Bread, surounded by the same food."
+    ],
+    [
+        "Curried Sweet Potato with Warm Paratha Bread",
+        "A dish or a drink named Curried Sweet Potato with Warm Paratha Bread, surounded by different food."
+    ],
+    [
+        "Rose All Day",
+        "A dish or a drink named Rose All Day."
+    ],
+    [
+        "Rose All Day",
+        "A dish or a drink named Rose All Day, seen from far away."
+    ],
+    [
+        "Rose All Day",
+        "A dish or a drink named Rose All Day, surounded by different food."
+    ],
+    [
+        "French Apple Tart",
+        "A dish or a drink named French Apple Tart."
+    ],
+    [
+        "French Apple Tart",
+        "A dish or a drink named French Apple Tart, surounded by the same food."
+    ],
+    [
+        "French Apple Tart",
+        "A dish or a drink named French Apple Tart, surounded by different food."
+    ],
+    [
+        "Tea-Flavored Tarte Tatin (Tarte Tatin au The)",
+        "A dish or a drink named Tea-Flavored Tarte Tatin (Tarte Tatin au The)."
+    ],
+    [
+        "Tea-Flavored Tarte Tatin (Tarte Tatin au The)",
+        "A dish or a drink named Tea-Flavored Tarte Tatin (Tarte Tatin au The), surounded by different food."
+    ],
+    [
+        "Tea-Flavored Tarte Tatin (Tarte Tatin au The)",
+        "A dish or a drink named Tea-Flavored Tarte Tatin (Tarte Tatin au The), seen from really close."
+    ],
+    [
+        "Three Dots and a Dash",
+        "A dish or a drink named Three Dots and a Dash."
+    ],
+    [
+        "Three Dots and a Dash",
+        "A dish or a drink named Three Dots and a Dash, surounded by different food."
+    ],
+    [
+        "Three Dots and a Dash",
+        "A dish or a drink named Three Dots and a Dash, seen from really close."
+    ],
+    [
+        "Roulade au Chocolat Pour Julia",
+        "A dish or a drink named Roulade au Chocolat Pour Julia."
+    ],
+    [
+        "Roulade au Chocolat Pour Julia",
+        "A dish or a drink named Roulade au Chocolat Pour Julia, seen from really close."
+    ],
+    [
+        "Roulade au Chocolat Pour Julia",
+        "A dish or a drink named Roulade au Chocolat Pour Julia, seen from far away."
+    ],
+    [
+        "Veal Chops with Asparagus and Morels",
+        "A dish or a drink named Veal Chops with Asparagus and Morels."
+    ],
+    [
+        "Veal Chops with Asparagus and Morels",
+        "A dish or a drink named Veal Chops with Asparagus and Morels, surounded by different food."
+    ],
+    [
+        "Veal Chops with Asparagus and Morels",
+        "A dish or a drink named Veal Chops with Asparagus and Morels, seen from far away."
+    ],
+    [
+        "French Red Onion Soup",
+        "A dish or a drink named French Red Onion Soup."
+    ],
+    [
+        "French Red Onion Soup",
+        "A dish or a drink named French Red Onion Soup, surounded by the same food."
+    ],
+    [
+        "French Red Onion Soup",
+        "A dish or a drink named French Red Onion Soup, seen from far away."
+    ],
+    [
+        "Steamed Asparagus with Cardamom Butter",
+        "A dish or a drink named Steamed Asparagus with Cardamom Butter."
+    ],
+    [
+        "Steamed Asparagus with Cardamom Butter",
+        "A dish or a drink named Steamed Asparagus with Cardamom Butter, surounded by the same food."
+    ],
+    [
+        "Steamed Asparagus with Cardamom Butter",
+        "A dish or a drink named Steamed Asparagus with Cardamom Butter, seen from far away."
+    ],
+    [
+        "The New York Sour",
+        "A dish or a drink named The New York Sour."
+    ],
+    [
+        "The New York Sour",
+        "A dish or a drink named The New York Sour, seen from really close."
+    ],
+    [
+        "The New York Sour",
+        "A dish or a drink named The New York Sour, seen from far away."
+    ],
+    [
+        "Dr. Lee's Mocha Meringue",
+        "A dish or a drink named Dr. Lee's Mocha Meringue."
+    ],
+    [
+        "Dr. Lee's Mocha Meringue",
+        "A dish or a drink named Dr. Lee's Mocha Meringue, surounded by the same food."
+    ],
+    [
+        "Dr. Lee's Mocha Meringue",
+        "A dish or a drink named Dr. Lee's Mocha Meringue, seen from really close."
+    ],
+    [
+        "Mustard Chicken Stew",
+        "A dish or a drink named Mustard Chicken Stew."
+    ],
+    [
+        "Mustard Chicken Stew",
+        "A dish or a drink named Mustard Chicken Stew, seen from really close."
+    ],
+    [
+        "Mustard Chicken Stew",
+        "A dish or a drink named Mustard Chicken Stew, surounded by different food."
+    ],
+    [
+        "Avocado Soup with Herbs, Slivered Radishes, and Pistachios",
+        "A dish or a drink named Avocado Soup with Herbs, Slivered Radishes, and Pistachios."
+    ],
+    [
+        "Avocado Soup with Herbs, Slivered Radishes, and Pistachios",
+        "A dish or a drink named Avocado Soup with Herbs, Slivered Radishes, and Pistachios, surounded by the same food."
+    ],
+    [
+        "Avocado Soup with Herbs, Slivered Radishes, and Pistachios",
+        "A dish or a drink named Avocado Soup with Herbs, Slivered Radishes, and Pistachios, seen from really close."
+    ],
+    [
+        "Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise",
+        "A dish or a drink named Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise."
+    ],
+    [
+        "Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise",
+        "A dish or a drink named Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise, surounded by the same food."
+    ],
+    [
+        "Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise",
+        "A dish or a drink named Almond-Crusted Shrimp Cakes with Lemon Soy Mayonnaise, seen from far away."
+    ],
+    [
+        "Green Gazpacho Shots",
+        "A dish or a drink named Green Gazpacho Shots."
+    ],
+    [
+        "Green Gazpacho Shots",
+        "A dish or a drink named Green Gazpacho Shots, seen from far away."
+    ],
+    [
+        "Green Gazpacho Shots",
+        "A dish or a drink named Green Gazpacho Shots, surounded by the same food."
+    ],
+    [
+        "Cornmeal and Fig Cake with Pine Nuts",
+        "A dish or a drink named Cornmeal and Fig Cake with Pine Nuts."
+    ],
+    [
+        "Cornmeal and Fig Cake with Pine Nuts",
+        "A dish or a drink named Cornmeal and Fig Cake with Pine Nuts, surounded by different food."
+    ],
+    [
+        "Cornmeal and Fig Cake with Pine Nuts",
+        "A dish or a drink named Cornmeal and Fig Cake with Pine Nuts, seen from far away."
+    ],
+    [
+        "Smoked Bluefish Pate",
+        "A dish or a drink named Smoked Bluefish Pate."
+    ],
+    [
+        "Smoked Bluefish Pate",
+        "A dish or a drink named Smoked Bluefish Pate, surounded by different food."
+    ],
+    [
+        "Smoked Bluefish Pate",
+        "A dish or a drink named Smoked Bluefish Pate, seen from really close."
+    ],
+    [
+        "Cranberry and Orange Granola",
+        "A dish or a drink named Cranberry and Orange Granola."
+    ],
+    [
+        "Cranberry and Orange Granola",
+        "A dish or a drink named Cranberry and Orange Granola, surounded by different food."
+    ],
+    [
+        "Cranberry and Orange Granola",
+        "A dish or a drink named Cranberry and Orange Granola, seen from really close."
+    ],
+    [
+        "Eggplants in a North-South Sauce",
+        "A dish or a drink named Eggplants in a North-South Sauce."
+    ],
+    [
+        "Eggplants in a North-South Sauce",
+        "A dish or a drink named Eggplants in a North-South Sauce, seen from far away."
+    ],
+    [
+        "Eggplants in a North-South Sauce",
+        "A dish or a drink named Eggplants in a North-South Sauce, surounded by the same food."
+    ],
+    [
+        "Cranberry Grappa Jelly",
+        "A dish or a drink named Cranberry Grappa Jelly."
+    ],
+    [
+        "Cranberry Grappa Jelly",
+        "A dish or a drink named Cranberry Grappa Jelly, seen from really close."
+    ],
+    [
+        "Cranberry Grappa Jelly",
+        "A dish or a drink named Cranberry Grappa Jelly, surounded by the same food."
+    ],
+    [
+        "Farfalle with Arugula and White Beans",
+        "A dish or a drink named Farfalle with Arugula and White Beans."
+    ],
+    [
+        "Farfalle with Arugula and White Beans",
+        "A dish or a drink named Farfalle with Arugula and White Beans, seen from really close."
+    ],
+    [
+        "Farfalle with Arugula and White Beans",
+        "A dish or a drink named Farfalle with Arugula and White Beans, surounded by the same food."
+    ],
+    [
+        "Very Berry Crumble",
+        "A dish or a drink named Very Berry Crumble."
+    ],
+    [
+        "Very Berry Crumble",
+        "A dish or a drink named Very Berry Crumble, seen from far away."
+    ],
+    [
+        "Very Berry Crumble",
+        "A dish or a drink named Very Berry Crumble, surounded by the same food."
+    ],
+    [
+        "Spinach and Tofu Paneer",
+        "A dish or a drink named Spinach and Tofu Paneer."
+    ],
+    [
+        "Spinach and Tofu Paneer",
+        "A dish or a drink named Spinach and Tofu Paneer, seen from really close."
+    ],
+    [
+        "Spinach and Tofu Paneer",
+        "A dish or a drink named Spinach and Tofu Paneer, surounded by different food."
+    ],
+    [
+        "Pappardelle with Chicken and Mushroom Ragu",
+        "A dish or a drink named Pappardelle with Chicken and Mushroom Ragu."
+    ],
+    [
+        "Pappardelle with Chicken and Mushroom Ragu",
+        "A dish or a drink named Pappardelle with Chicken and Mushroom Ragu, surounded by different food."
+    ],
+    [
+        "Pappardelle with Chicken and Mushroom Ragu",
+        "A dish or a drink named Pappardelle with Chicken and Mushroom Ragu, seen from far away."
+    ],
+    [
+        "Skirt Steak with Hazelnut Picada and Wilted Escarole",
+        "A dish or a drink named Skirt Steak with Hazelnut Picada and Wilted Escarole."
+    ],
+    [
+        "Skirt Steak with Hazelnut Picada and Wilted Escarole",
+        "A dish or a drink named Skirt Steak with Hazelnut Picada and Wilted Escarole, surounded by the same food."
+    ],
+    [
+        "Skirt Steak with Hazelnut Picada and Wilted Escarole",
+        "A dish or a drink named Skirt Steak with Hazelnut Picada and Wilted Escarole, seen from far away."
+    ],
+    [
+        "Blueberriest Muffins",
+        "A dish or a drink named Blueberriest Muffins."
+    ],
+    [
+        "Blueberriest Muffins",
+        "A dish or a drink named Blueberriest Muffins, seen from really close."
+    ],
+    [
+        "Blueberriest Muffins",
+        "A dish or a drink named Blueberriest Muffins, surounded by the same food."
+    ],
+    [
+        "Apple-Spice Layer Cake with Caramel Swirl Icing",
+        "A dish or a drink named Apple-Spice Layer Cake with Caramel Swirl Icing."
+    ],
+    [
+        "Apple-Spice Layer Cake with Caramel Swirl Icing",
+        "A dish or a drink named Apple-Spice Layer Cake with Caramel Swirl Icing, seen from far away."
+    ],
+    [
+        "Apple-Spice Layer Cake with Caramel Swirl Icing",
+        "A dish or a drink named Apple-Spice Layer Cake with Caramel Swirl Icing, seen from really close."
+    ],
+    [
+        "Curried Lentil Soup",
+        "A dish or a drink named Curried Lentil Soup."
+    ],
+    [
+        "Curried Lentil Soup",
+        "A dish or a drink named Curried Lentil Soup, surounded by different food."
+    ],
+    [
+        "Curried Lentil Soup",
+        "A dish or a drink named Curried Lentil Soup, seen from far away."
+    ],
+    [
+        "Broccoli with Orecchiette",
+        "A dish or a drink named Broccoli with Orecchiette."
+    ],
+    [
+        "Broccoli with Orecchiette",
+        "A dish or a drink named Broccoli with Orecchiette, seen from really close."
+    ],
+    [
+        "Broccoli with Orecchiette",
+        "A dish or a drink named Broccoli with Orecchiette, seen from far away."
+    ],
+    [
+        "Tacos Al Pastor",
+        "A dish or a drink named Tacos Al Pastor."
+    ],
+    [
+        "Tacos Al Pastor",
+        "A dish or a drink named Tacos Al Pastor, surounded by the same food."
+    ],
+    [
+        "Tacos Al Pastor",
+        "A dish or a drink named Tacos Al Pastor, surounded by different food."
+    ],
+    [
+        "Beef Stew",
+        "A dish or a drink named Beef Stew."
+    ],
+    [
+        "Beef Stew",
+        "A dish or a drink named Beef Stew, seen from far away."
+    ],
+    [
+        "Beef Stew",
+        "A dish or a drink named Beef Stew, surounded by the same food."
+    ],
+    [
+        "Chard and Onion Omelet (Trouchia)",
+        "A dish or a drink named Chard and Onion Omelet (Trouchia)."
+    ],
+    [
+        "Chard and Onion Omelet (Trouchia)",
+        "A dish or a drink named Chard and Onion Omelet (Trouchia), surounded by different food."
+    ],
+    [
+        "Chard and Onion Omelet (Trouchia)",
+        "A dish or a drink named Chard and Onion Omelet (Trouchia), seen from far away."
+    ],
+    [
+        "Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes",
+        "A dish or a drink named Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes."
+    ],
+    [
+        "Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes",
+        "A dish or a drink named Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes, seen from really close."
+    ],
+    [
+        "Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes",
+        "A dish or a drink named Chicken Breasts Stuffed with Fontina, Artichokes, and Sun-Dried Tomatoes, surounded by the same food."
+    ],
+    [
+        "Mushroom Goat Cheese Pan Sauce",
+        "A dish or a drink named Mushroom Goat Cheese Pan Sauce."
+    ],
+    [
+        "Mushroom Goat Cheese Pan Sauce",
+        "A dish or a drink named Mushroom Goat Cheese Pan Sauce, surounded by the same food."
+    ],
+    [
+        "Mushroom Goat Cheese Pan Sauce",
+        "A dish or a drink named Mushroom Goat Cheese Pan Sauce, seen from far away."
+    ],
+    [
+        "Arugula, Bacon, and Gruyere Bread Pudding",
+        "A dish or a drink named Arugula, Bacon, and Gruyere Bread Pudding."
+    ],
+    [
+        "Arugula, Bacon, and Gruyere Bread Pudding",
+        "A dish or a drink named Arugula, Bacon, and Gruyere Bread Pudding, surounded by the same food."
+    ],
+    [
+        "Arugula, Bacon, and Gruyere Bread Pudding",
+        "A dish or a drink named Arugula, Bacon, and Gruyere Bread Pudding, surounded by different food."
+    ],
+    [
+        "Lisa Loeb's Peanut Butter and Jelly Cookies",
+        "A dish or a drink named Lisa Loeb's Peanut Butter and Jelly Cookies."
+    ],
+    [
+        "Lisa Loeb's Peanut Butter and Jelly Cookies",
+        "A dish or a drink named Lisa Loeb's Peanut Butter and Jelly Cookies, seen from really close."
+    ],
+    [
+        "Lisa Loeb's Peanut Butter and Jelly Cookies",
+        "A dish or a drink named Lisa Loeb's Peanut Butter and Jelly Cookies, surounded by the same food."
+    ],
+    [
+        "Japanese-Style Fried Rice (Chahan)",
+        "A dish or a drink named Japanese-Style Fried Rice (Chahan)."
+    ],
+    [
+        "Japanese-Style Fried Rice (Chahan)",
+        "A dish or a drink named Japanese-Style Fried Rice (Chahan), seen from far away."
+    ],
+    [
+        "Japanese-Style Fried Rice (Chahan)",
+        "A dish or a drink named Japanese-Style Fried Rice (Chahan), seen from really close."
+    ],
+    [
+        "Chicken Breast with Salsa",
+        "A dish or a drink named Chicken Breast with Salsa."
+    ],
+    [
+        "Chicken Breast with Salsa",
+        "A dish or a drink named Chicken Breast with Salsa, seen from really close."
+    ],
+    [
+        "Chicken Breast with Salsa",
+        "A dish or a drink named Chicken Breast with Salsa, seen from far away."
+    ],
+    [
+        "Eggplant, Red Pepper, and Fontina Panini with Spinach Salad",
+        "A dish or a drink named Eggplant, Red Pepper, and Fontina Panini with Spinach Salad."
+    ],
+    [
+        "Eggplant, Red Pepper, and Fontina Panini with Spinach Salad",
+        "A dish or a drink named Eggplant, Red Pepper, and Fontina Panini with Spinach Salad, seen from far away."
+    ],
+    [
+        "Eggplant, Red Pepper, and Fontina Panini with Spinach Salad",
+        "A dish or a drink named Eggplant, Red Pepper, and Fontina Panini with Spinach Salad, surounded by the same food."
+    ],
+    [
+        "Lasagne Bolognese with Spinach",
+        "A dish or a drink named Lasagne Bolognese with Spinach."
+    ],
+    [
+        "Lasagne Bolognese with Spinach",
+        "A dish or a drink named Lasagne Bolognese with Spinach, surounded by the same food."
+    ],
+    [
+        "Lasagne Bolognese with Spinach",
+        "A dish or a drink named Lasagne Bolognese with Spinach, seen from far away."
+    ],
+    [
+        "Lake Charles Dirty Rice",
+        "A dish or a drink named Lake Charles Dirty Rice."
+    ],
+    [
+        "Lake Charles Dirty Rice",
+        "A dish or a drink named Lake Charles Dirty Rice, surounded by the same food."
+    ],
+    [
+        "Lake Charles Dirty Rice",
+        "A dish or a drink named Lake Charles Dirty Rice, seen from far away."
+    ],
+    [
+        "Grilled Tamales with Poblanos and Fresh Corn",
+        "A dish or a drink named Grilled Tamales with Poblanos and Fresh Corn."
+    ],
+    [
+        "Grilled Tamales with Poblanos and Fresh Corn",
+        "A dish or a drink named Grilled Tamales with Poblanos and Fresh Corn, surounded by different food."
+    ],
+    [
+        "Grilled Tamales with Poblanos and Fresh Corn",
+        "A dish or a drink named Grilled Tamales with Poblanos and Fresh Corn, seen from really close."
+    ],
+    [
+        "Yukon Gold Potato Chips with White Anchovy",
+        "A dish or a drink named Yukon Gold Potato Chips with White Anchovy."
+    ],
+    [
+        "Yukon Gold Potato Chips with White Anchovy",
+        "A dish or a drink named Yukon Gold Potato Chips with White Anchovy, surounded by the same food."
+    ],
+    [
+        "Yukon Gold Potato Chips with White Anchovy",
+        "A dish or a drink named Yukon Gold Potato Chips with White Anchovy, surounded by different food."
+    ],
+    [
+        "Ginger Cookies",
+        "A dish or a drink named Ginger Cookies."
+    ],
+    [
+        "Ginger Cookies",
+        "A dish or a drink named Ginger Cookies, seen from far away."
+    ],
+    [
+        "Ginger Cookies",
+        "A dish or a drink named Ginger Cookies, seen from really close."
+    ],
+    [
+        "Chowders",
+        "A dish or a drink named Chowders."
+    ],
+    [
+        "Chowders",
+        "A dish or a drink named Chowders, seen from far away."
+    ],
+    [
+        "Chowders",
+        "A dish or a drink named Chowders, surounded by the same food."
+    ],
+    [
+        "Swedish Pancakes with Raspberries",
+        "A dish or a drink named Swedish Pancakes with Raspberries."
+    ],
+    [
+        "Swedish Pancakes with Raspberries",
+        "A dish or a drink named Swedish Pancakes with Raspberries, seen from far away."
+    ],
+    [
+        "Swedish Pancakes with Raspberries",
+        "A dish or a drink named Swedish Pancakes with Raspberries, seen from really close."
+    ],
+    [
+        "Provencal Fish Soup with Saffron Rouille",
+        "A dish or a drink named Provencal Fish Soup with Saffron Rouille."
+    ],
+    [
+        "Provencal Fish Soup with Saffron Rouille",
+        "A dish or a drink named Provencal Fish Soup with Saffron Rouille, seen from far away."
+    ],
+    [
+        "Provencal Fish Soup with Saffron Rouille",
+        "A dish or a drink named Provencal Fish Soup with Saffron Rouille, seen from really close."
+    ],
+    [
+        "Kumbaya Cocktail",
+        "A dish or a drink named Kumbaya Cocktail."
+    ],
+    [
+        "Kumbaya Cocktail",
+        "A dish or a drink named Kumbaya Cocktail, surounded by the same food."
+    ],
+    [
+        "Kumbaya Cocktail",
+        "A dish or a drink named Kumbaya Cocktail, seen from really close."
+    ],
+    [
+        "Italian Green Beans and Potatoes",
+        "A dish or a drink named Italian Green Beans and Potatoes."
+    ],
+    [
+        "Italian Green Beans and Potatoes",
+        "A dish or a drink named Italian Green Beans and Potatoes, surounded by different food."
+    ],
+    [
+        "Italian Green Beans and Potatoes",
+        "A dish or a drink named Italian Green Beans and Potatoes, surounded by the same food."
+    ],
+    [
+        "Drambuie-Flavored Creme Anglaise",
+        "A dish or a drink named Drambuie-Flavored Creme Anglaise."
+    ],
+    [
+        "Drambuie-Flavored Creme Anglaise",
+        "A dish or a drink named Drambuie-Flavored Creme Anglaise, seen from really close."
+    ],
+    [
+        "Drambuie-Flavored Creme Anglaise",
+        "A dish or a drink named Drambuie-Flavored Creme Anglaise, surounded by different food."
+    ],
+    [
+        "Tex-Mex Mole",
+        "A dish or a drink named Tex-Mex Mole."
+    ],
+    [
+        "Tex-Mex Mole",
+        "A dish or a drink named Tex-Mex Mole, seen from really close."
+    ],
+    [
+        "Tex-Mex Mole",
+        "A dish or a drink named Tex-Mex Mole, surounded by different food."
+    ],
+    [
+        "Mashed Potatoes",
+        "A dish or a drink named Mashed Potatoes."
+    ],
+    [
+        "Mashed Potatoes",
+        "A dish or a drink named Mashed Potatoes, surounded by the same food."
+    ],
+    [
+        "Mashed Potatoes",
+        "A dish or a drink named Mashed Potatoes, seen from far away."
+    ],
+    [
+        "Bird of Paradise",
+        "A dish or a drink named Bird of Paradise."
+    ],
+    [
+        "Bird of Paradise",
+        "A dish or a drink named Bird of Paradise, seen from really close."
+    ],
+    [
+        "Bird of Paradise",
+        "A dish or a drink named Bird of Paradise, surounded by the same food."
+    ],
+    [
+        "Curried Scallops with Tomatoes",
+        "A dish or a drink named Curried Scallops with Tomatoes."
+    ],
+    [
+        "Curried Scallops with Tomatoes",
+        "A dish or a drink named Curried Scallops with Tomatoes, seen from really close."
+    ],
+    [
+        "Curried Scallops with Tomatoes",
+        "A dish or a drink named Curried Scallops with Tomatoes, surounded by the same food."
+    ],
+    [
+        "Italian Vegetable Stew (Ciambotta)",
+        "A dish or a drink named Italian Vegetable Stew (Ciambotta)."
+    ],
+    [
+        "Italian Vegetable Stew (Ciambotta)",
+        "A dish or a drink named Italian Vegetable Stew (Ciambotta), surounded by different food."
+    ],
+    [
+        "Italian Vegetable Stew (Ciambotta)",
+        "A dish or a drink named Italian Vegetable Stew (Ciambotta), seen from far away."
+    ],
+    [
+        "Classic Michelada",
+        "A dish or a drink named Classic Michelada."
+    ],
+    [
+        "Classic Michelada",
+        "A dish or a drink named Classic Michelada, surounded by the same food."
+    ],
+    [
+        "Classic Michelada",
+        "A dish or a drink named Classic Michelada, seen from really close."
+    ],
+    [
+        "Spicy Sweet Potato Spread",
+        "A dish or a drink named Spicy Sweet Potato Spread."
+    ],
+    [
+        "Spicy Sweet Potato Spread",
+        "A dish or a drink named Spicy Sweet Potato Spread, seen from really close."
+    ],
+    [
+        "Spicy Sweet Potato Spread",
+        "A dish or a drink named Spicy Sweet Potato Spread, surounded by the same food."
+    ],
+    [
+        "Low-Fat Carrot Ginger Soup",
+        "A dish or a drink named Low-Fat Carrot Ginger Soup."
+    ],
+    [
+        "Low-Fat Carrot Ginger Soup",
+        "A dish or a drink named Low-Fat Carrot Ginger Soup, seen from really close."
+    ],
+    [
+        "Low-Fat Carrot Ginger Soup",
+        "A dish or a drink named Low-Fat Carrot Ginger Soup, seen from far away."
+    ],
+    [
+        "Grilled Rainbow Chard with Fava Beans and Oregano",
+        "A dish or a drink named Grilled Rainbow Chard with Fava Beans and Oregano."
+    ],
+    [
+        "Grilled Rainbow Chard with Fava Beans and Oregano",
+        "A dish or a drink named Grilled Rainbow Chard with Fava Beans and Oregano, seen from really close."
+    ],
+    [
+        "Grilled Rainbow Chard with Fava Beans and Oregano",
+        "A dish or a drink named Grilled Rainbow Chard with Fava Beans and Oregano, seen from far away."
+    ],
+    [
+        "Lemon-Caper Braised Halibut",
+        "A dish or a drink named Lemon-Caper Braised Halibut."
+    ],
+    [
+        "Lemon-Caper Braised Halibut",
+        "A dish or a drink named Lemon-Caper Braised Halibut, surounded by the same food."
+    ],
+    [
+        "Lemon-Caper Braised Halibut",
+        "A dish or a drink named Lemon-Caper Braised Halibut, seen from really close."
+    ],
+    [
+        "Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese",
+        "A dish or a drink named Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese."
+    ],
+    [
+        "Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese",
+        "A dish or a drink named Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese, surounded by different food."
+    ],
+    [
+        "Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese",
+        "A dish or a drink named Marblehead Soft Scrambled Egg, Corn, and Cheddar Cheese, seen from really close."
+    ],
+    [
+        "Plum and Mascarpone Pie",
+        "A dish or a drink named Plum and Mascarpone Pie."
+    ],
+    [
+        "Plum and Mascarpone Pie",
+        "A dish or a drink named Plum and Mascarpone Pie, seen from really close."
+    ],
+    [
+        "Plum and Mascarpone Pie",
+        "A dish or a drink named Plum and Mascarpone Pie, seen from far away."
+    ],
+    [
+        "Grilled Vegetable Antipasto with Herbed Chevre and Crostini",
+        "A dish or a drink named Grilled Vegetable Antipasto with Herbed Chevre and Crostini."
+    ],
+    [
+        "Grilled Vegetable Antipasto with Herbed Chevre and Crostini",
+        "A dish or a drink named Grilled Vegetable Antipasto with Herbed Chevre and Crostini, seen from really close."
+    ],
+    [
+        "Grilled Vegetable Antipasto with Herbed Chevre and Crostini",
+        "A dish or a drink named Grilled Vegetable Antipasto with Herbed Chevre and Crostini, seen from far away."
+    ],
+    [
+        "Rocco's How Low Can You Go Low-Fat Marinara Sauce",
+        "A dish or a drink named Rocco's How Low Can You Go Low-Fat Marinara Sauce."
+    ],
+    [
+        "Rocco's How Low Can You Go Low-Fat Marinara Sauce",
+        "A dish or a drink named Rocco's How Low Can You Go Low-Fat Marinara Sauce, surounded by the same food."
+    ],
+    [
+        "Rocco's How Low Can You Go Low-Fat Marinara Sauce",
+        "A dish or a drink named Rocco's How Low Can You Go Low-Fat Marinara Sauce, seen from really close."
+    ],
+    [
+        "Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping",
+        "A dish or a drink named Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping."
+    ],
+    [
+        "Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping",
+        "A dish or a drink named Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping, surounded by different food."
+    ],
+    [
+        "Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping",
+        "A dish or a drink named Slow-Roasted Arctic Char with Lemon-Mustard Seed Topping, surounded by the same food."
+    ],
+    [
+        "Crab with Romaine, Dill Sauce, and Sunflower Seeds",
+        "A dish or a drink named Crab with Romaine, Dill Sauce, and Sunflower Seeds."
+    ],
+    [
+        "Crab with Romaine, Dill Sauce, and Sunflower Seeds",
+        "A dish or a drink named Crab with Romaine, Dill Sauce, and Sunflower Seeds, surounded by different food."
+    ],
+    [
+        "Crab with Romaine, Dill Sauce, and Sunflower Seeds",
+        "A dish or a drink named Crab with Romaine, Dill Sauce, and Sunflower Seeds, seen from really close."
+    ],
+    [
+        "Italian Sausage with Giant White Beans and Radicchio",
+        "A dish or a drink named Italian Sausage with Giant White Beans and Radicchio."
+    ],
+    [
+        "Italian Sausage with Giant White Beans and Radicchio",
+        "A dish or a drink named Italian Sausage with Giant White Beans and Radicchio, surounded by the same food."
+    ],
+    [
+        "Italian Sausage with Giant White Beans and Radicchio",
+        "A dish or a drink named Italian Sausage with Giant White Beans and Radicchio, surounded by different food."
+    ],
+    [
+        "Chile Peanuts",
+        "A dish or a drink named Chile Peanuts."
+    ],
+    [
+        "Chile Peanuts",
+        "A dish or a drink named Chile Peanuts, surounded by different food."
+    ],
+    [
+        "Chile Peanuts",
+        "A dish or a drink named Chile Peanuts, surounded by the same food."
+    ],
+    [
+        "Moroccan Lamb with Tabbouleh and Crispy Garlic",
+        "A dish or a drink named Moroccan Lamb with Tabbouleh and Crispy Garlic."
+    ],
+    [
+        "Moroccan Lamb with Tabbouleh and Crispy Garlic",
+        "A dish or a drink named Moroccan Lamb with Tabbouleh and Crispy Garlic, seen from really close."
+    ],
+    [
+        "Moroccan Lamb with Tabbouleh and Crispy Garlic",
+        "A dish or a drink named Moroccan Lamb with Tabbouleh and Crispy Garlic, surounded by the same food."
+    ],
+    [
+        "Broiled Arctic Char with Basil Sauce and Tomato",
+        "A dish or a drink named Broiled Arctic Char with Basil Sauce and Tomato."
+    ],
+    [
+        "Broiled Arctic Char with Basil Sauce and Tomato",
+        "A dish or a drink named Broiled Arctic Char with Basil Sauce and Tomato, seen from really close."
+    ],
+    [
+        "Broiled Arctic Char with Basil Sauce and Tomato",
+        "A dish or a drink named Broiled Arctic Char with Basil Sauce and Tomato, seen from far away."
+    ],
+    [
+        "Provencal Chicken and Tomato Roast",
+        "A dish or a drink named Provencal Chicken and Tomato Roast."
+    ],
+    [
+        "Provencal Chicken and Tomato Roast",
+        "A dish or a drink named Provencal Chicken and Tomato Roast, seen from really close."
+    ],
+    [
+        "Provencal Chicken and Tomato Roast",
+        "A dish or a drink named Provencal Chicken and Tomato Roast, surounded by the same food."
+    ],
+    [
+        "Baccala Mantecato: A Savory Spread of Whipped Salt Cod",
+        "A dish or a drink named Baccala Mantecato: A Savory Spread of Whipped Salt Cod."
+    ],
+    [
+        "Baccala Mantecato: A Savory Spread of Whipped Salt Cod",
+        "A dish or a drink named Baccala Mantecato: A Savory Spread of Whipped Salt Cod, seen from really close."
+    ],
+    [
+        "Baccala Mantecato: A Savory Spread of Whipped Salt Cod",
+        "A dish or a drink named Baccala Mantecato: A Savory Spread of Whipped Salt Cod, surounded by different food."
+    ],
+    [
+        "Blueberry Pie with Cornmeal Crust and Lemon Cream",
+        "A dish or a drink named Blueberry Pie with Cornmeal Crust and Lemon Cream."
+    ],
+    [
+        "Blueberry Pie with Cornmeal Crust and Lemon Cream",
+        "A dish or a drink named Blueberry Pie with Cornmeal Crust and Lemon Cream, surounded by different food."
+    ],
+    [
+        "Blueberry Pie with Cornmeal Crust and Lemon Cream",
+        "A dish or a drink named Blueberry Pie with Cornmeal Crust and Lemon Cream, seen from far away."
+    ],
+    [
+        "Pina Colada Ice Pops",
+        "A dish or a drink named Pina Colada Ice Pops."
+    ],
+    [
+        "Pina Colada Ice Pops",
+        "A dish or a drink named Pina Colada Ice Pops, surounded by different food."
+    ],
+    [
+        "Pina Colada Ice Pops",
+        "A dish or a drink named Pina Colada Ice Pops, seen from far away."
+    ],
+    [
+        "Dr. Lee's Red Wine Chicken Stew",
+        "A dish or a drink named Dr. Lee's Red Wine Chicken Stew."
+    ],
+    [
+        "Dr. Lee's Red Wine Chicken Stew",
+        "A dish or a drink named Dr. Lee's Red Wine Chicken Stew, seen from far away."
+    ],
+    [
+        "Dr. Lee's Red Wine Chicken Stew",
+        "A dish or a drink named Dr. Lee's Red Wine Chicken Stew, surounded by different food."
+    ],
+    [
+        "Grandad Danner's Favorite Peanut Butter Cookies",
+        "A dish or a drink named Grandad Danner's Favorite Peanut Butter Cookies."
+    ],
+    [
+        "Grandad Danner's Favorite Peanut Butter Cookies",
+        "A dish or a drink named Grandad Danner's Favorite Peanut Butter Cookies, surounded by the same food."
+    ],
+    [
+        "Grandad Danner's Favorite Peanut Butter Cookies",
+        "A dish or a drink named Grandad Danner's Favorite Peanut Butter Cookies, surounded by different food."
+    ],
+    [
+        "Broiled Lemon Thyme Pollock",
+        "A dish or a drink named Broiled Lemon Thyme Pollock."
+    ],
+    [
+        "Broiled Lemon Thyme Pollock",
+        "A dish or a drink named Broiled Lemon Thyme Pollock, surounded by the same food."
+    ],
+    [
+        "Broiled Lemon Thyme Pollock",
+        "A dish or a drink named Broiled Lemon Thyme Pollock, seen from far away."
+    ],
+    [
+        "Cranberry Vanilla Coffeecake",
+        "A dish or a drink named Cranberry Vanilla Coffeecake."
+    ],
+    [
+        "Cranberry Vanilla Coffeecake",
+        "A dish or a drink named Cranberry Vanilla Coffeecake, seen from far away."
+    ],
+    [
+        "Cranberry Vanilla Coffeecake",
+        "A dish or a drink named Cranberry Vanilla Coffeecake, seen from really close."
+    ],
+    [
+        "Amazuzuke (Quick Vinegar Pickles)",
+        "A dish or a drink named Amazuzuke (Quick Vinegar Pickles)."
+    ],
+    [
+        "Amazuzuke (Quick Vinegar Pickles)",
+        "A dish or a drink named Amazuzuke (Quick Vinegar Pickles), seen from really close."
+    ],
+    [
+        "Amazuzuke (Quick Vinegar Pickles)",
+        "A dish or a drink named Amazuzuke (Quick Vinegar Pickles), seen from far away."
+    ],
+    [
+        "Foster's Omelets",
+        "A dish or a drink named Foster's Omelets."
+    ],
+    [
+        "Foster's Omelets",
+        "A dish or a drink named Foster's Omelets, seen from really close."
+    ],
+    [
+        "Foster's Omelets",
+        "A dish or a drink named Foster's Omelets, surounded by the same food."
+    ],
+    [
+        "Herb-and-Spice Southern Fried Chicken",
+        "A dish or a drink named Herb-and-Spice Southern Fried Chicken."
+    ],
+    [
+        "Herb-and-Spice Southern Fried Chicken",
+        "A dish or a drink named Herb-and-Spice Southern Fried Chicken, seen from far away."
+    ],
+    [
+        "Herb-and-Spice Southern Fried Chicken",
+        "A dish or a drink named Herb-and-Spice Southern Fried Chicken, seen from really close."
+    ],
+    [
+        "Parson's Negroni Slushy",
+        "A dish or a drink named Parson's Negroni Slushy."
+    ],
+    [
+        "Parson's Negroni Slushy",
+        "A dish or a drink named Parson's Negroni Slushy, surounded by the same food."
+    ],
+    [
+        "Parson's Negroni Slushy",
+        "A dish or a drink named Parson's Negroni Slushy, surounded by different food."
+    ],
+    [
+        "Lamb and Eggplant Shepherd's Pie",
+        "A dish or a drink named Lamb and Eggplant Shepherd's Pie."
+    ],
+    [
+        "Lamb and Eggplant Shepherd's Pie",
+        "A dish or a drink named Lamb and Eggplant Shepherd's Pie, seen from really close."
+    ],
+    [
+        "Lamb and Eggplant Shepherd's Pie",
+        "A dish or a drink named Lamb and Eggplant Shepherd's Pie, surounded by different food."
+    ],
+    [
+        "Asian Glazed Salmon",
+        "A dish or a drink named Asian Glazed Salmon."
+    ],
+    [
+        "Asian Glazed Salmon",
+        "A dish or a drink named Asian Glazed Salmon, surounded by the same food."
+    ],
+    [
+        "Asian Glazed Salmon",
+        "A dish or a drink named Asian Glazed Salmon, seen from really close."
+    ],
+    [
+        "Income Tax Cocktail",
+        "A dish or a drink named Income Tax Cocktail."
+    ],
+    [
+        "Income Tax Cocktail",
+        "A dish or a drink named Income Tax Cocktail, surounded by different food."
+    ],
+    [
+        "Income Tax Cocktail",
+        "A dish or a drink named Income Tax Cocktail, surounded by the same food."
+    ],
+    [
+        "Cheesy Chicken and Mushroom Lasagne",
+        "A dish or a drink named Cheesy Chicken and Mushroom Lasagne."
+    ],
+    [
+        "Cheesy Chicken and Mushroom Lasagne",
+        "A dish or a drink named Cheesy Chicken and Mushroom Lasagne, seen from really close."
+    ],
+    [
+        "Cheesy Chicken and Mushroom Lasagne",
+        "A dish or a drink named Cheesy Chicken and Mushroom Lasagne, surounded by different food."
+    ],
+    [
+        "Kiwi Ice Pop",
+        "A dish or a drink named Kiwi Ice Pop."
+    ],
+    [
+        "Kiwi Ice Pop",
+        "A dish or a drink named Kiwi Ice Pop, surounded by different food."
+    ],
+    [
+        "Kiwi Ice Pop",
+        "A dish or a drink named Kiwi Ice Pop, seen from far away."
+    ],
+    [
+        "Red Velvet Cupcakes with Mascarpone Cream Cheese Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Mascarpone Cream Cheese Icing."
+    ],
+    [
+        "Red Velvet Cupcakes with Mascarpone Cream Cheese Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Mascarpone Cream Cheese Icing, surounded by the same food."
+    ],
+    [
+        "Red Velvet Cupcakes with Mascarpone Cream Cheese Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Mascarpone Cream Cheese Icing, seen from far away."
+    ],
+    [
+        "Brown Butter, Ginger, and Sour Cream Coffee Cake",
+        "A dish or a drink named Brown Butter, Ginger, and Sour Cream Coffee Cake."
+    ],
+    [
+        "Brown Butter, Ginger, and Sour Cream Coffee Cake",
+        "A dish or a drink named Brown Butter, Ginger, and Sour Cream Coffee Cake, seen from far away."
+    ],
+    [
+        "Brown Butter, Ginger, and Sour Cream Coffee Cake",
+        "A dish or a drink named Brown Butter, Ginger, and Sour Cream Coffee Cake, surounded by the same food."
+    ],
+    [
+        "Avocado Tomato Salsa",
+        "A dish or a drink named Avocado Tomato Salsa."
+    ],
+    [
+        "Avocado Tomato Salsa",
+        "A dish or a drink named Avocado Tomato Salsa, surounded by the same food."
+    ],
+    [
+        "Avocado Tomato Salsa",
+        "A dish or a drink named Avocado Tomato Salsa, seen from really close."
+    ],
+    [
+        "Comforting Little Casseroles",
+        "A dish or a drink named Comforting Little Casseroles."
+    ],
+    [
+        "Comforting Little Casseroles",
+        "A dish or a drink named Comforting Little Casseroles, surounded by different food."
+    ],
+    [
+        "Comforting Little Casseroles",
+        "A dish or a drink named Comforting Little Casseroles, seen from really close."
+    ],
+    [
+        "Pork Chops with Apples",
+        "A dish or a drink named Pork Chops with Apples."
+    ],
+    [
+        "Pork Chops with Apples",
+        "A dish or a drink named Pork Chops with Apples, surounded by different food."
+    ],
+    [
+        "Pork Chops with Apples",
+        "A dish or a drink named Pork Chops with Apples, seen from far away."
+    ],
+    [
+        "Rib-Eye Fajitas on the Grill",
+        "A dish or a drink named Rib-Eye Fajitas on the Grill."
+    ],
+    [
+        "Rib-Eye Fajitas on the Grill",
+        "A dish or a drink named Rib-Eye Fajitas on the Grill, surounded by the same food."
+    ],
+    [
+        "Rib-Eye Fajitas on the Grill",
+        "A dish or a drink named Rib-Eye Fajitas on the Grill, seen from really close."
+    ],
+    [
+        "Rhubarb with Berries and Candied Ginger",
+        "A dish or a drink named Rhubarb with Berries and Candied Ginger."
+    ],
+    [
+        "Rhubarb with Berries and Candied Ginger",
+        "A dish or a drink named Rhubarb with Berries and Candied Ginger, surounded by different food."
+    ],
+    [
+        "Rhubarb with Berries and Candied Ginger",
+        "A dish or a drink named Rhubarb with Berries and Candied Ginger, surounded by the same food."
+    ],
+    [
+        "Christmas Coconut Cake",
+        "A dish or a drink named Christmas Coconut Cake."
+    ],
+    [
+        "Christmas Coconut Cake",
+        "A dish or a drink named Christmas Coconut Cake, seen from far away."
+    ],
+    [
+        "Christmas Coconut Cake",
+        "A dish or a drink named Christmas Coconut Cake, seen from really close."
+    ],
+    [
+        "The Ultimate Spice-Rubbed Rib Steak",
+        "A dish or a drink named The Ultimate Spice-Rubbed Rib Steak."
+    ],
+    [
+        "The Ultimate Spice-Rubbed Rib Steak",
+        "A dish or a drink named The Ultimate Spice-Rubbed Rib Steak, seen from really close."
+    ],
+    [
+        "The Ultimate Spice-Rubbed Rib Steak",
+        "A dish or a drink named The Ultimate Spice-Rubbed Rib Steak, surounded by the same food."
+    ],
+    [
+        "Ecuadoran Potato Cakes with Peanut Sauce",
+        "A dish or a drink named Ecuadoran Potato Cakes with Peanut Sauce."
+    ],
+    [
+        "Ecuadoran Potato Cakes with Peanut Sauce",
+        "A dish or a drink named Ecuadoran Potato Cakes with Peanut Sauce, seen from really close."
+    ],
+    [
+        "Ecuadoran Potato Cakes with Peanut Sauce",
+        "A dish or a drink named Ecuadoran Potato Cakes with Peanut Sauce, surounded by the same food."
+    ],
+    [
+        "The Sweet Pea",
+        "A dish or a drink named The Sweet Pea."
+    ],
+    [
+        "The Sweet Pea",
+        "A dish or a drink named The Sweet Pea, surounded by different food."
+    ],
+    [
+        "The Sweet Pea",
+        "A dish or a drink named The Sweet Pea, seen from far away."
+    ],
+    [
+        "Lamb with Preserved Lemons",
+        "A dish or a drink named Lamb with Preserved Lemons."
+    ],
+    [
+        "Lamb with Preserved Lemons",
+        "A dish or a drink named Lamb with Preserved Lemons, seen from far away."
+    ],
+    [
+        "Lamb with Preserved Lemons",
+        "A dish or a drink named Lamb with Preserved Lemons, seen from really close."
+    ],
+    [
+        "Grilled Chicken with Almond and Garlic Sauce",
+        "A dish or a drink named Grilled Chicken with Almond and Garlic Sauce."
+    ],
+    [
+        "Grilled Chicken with Almond and Garlic Sauce",
+        "A dish or a drink named Grilled Chicken with Almond and Garlic Sauce, surounded by different food."
+    ],
+    [
+        "Grilled Chicken with Almond and Garlic Sauce",
+        "A dish or a drink named Grilled Chicken with Almond and Garlic Sauce, seen from really close."
+    ],
+    [
+        "Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu",
+        "A dish or a drink named Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu."
+    ],
+    [
+        "Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu",
+        "A dish or a drink named Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu, seen from really close."
+    ],
+    [
+        "Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu",
+        "A dish or a drink named Chicken Cordon Bleu - Supremes de Volaille Cordon Bleu, surounded by the same food."
+    ],
+    [
+        "Cranberry and Vanilla Bean Sorbet",
+        "A dish or a drink named Cranberry and Vanilla Bean Sorbet."
+    ],
+    [
+        "Cranberry and Vanilla Bean Sorbet",
+        "A dish or a drink named Cranberry and Vanilla Bean Sorbet, surounded by different food."
+    ],
+    [
+        "Cranberry and Vanilla Bean Sorbet",
+        "A dish or a drink named Cranberry and Vanilla Bean Sorbet, seen from really close."
+    ],
+    [
+        "Bulgur Risotto with Corn and Shrimp",
+        "A dish or a drink named Bulgur Risotto with Corn and Shrimp."
+    ],
+    [
+        "Bulgur Risotto with Corn and Shrimp",
+        "A dish or a drink named Bulgur Risotto with Corn and Shrimp, surounded by different food."
+    ],
+    [
+        "Bulgur Risotto with Corn and Shrimp",
+        "A dish or a drink named Bulgur Risotto with Corn and Shrimp, seen from really close."
+    ],
+    [
+        "Bucatini with Olives, Sun-Dried Tomatoes, and Basil",
+        "A dish or a drink named Bucatini with Olives, Sun-Dried Tomatoes, and Basil."
+    ],
+    [
+        "Bucatini with Olives, Sun-Dried Tomatoes, and Basil",
+        "A dish or a drink named Bucatini with Olives, Sun-Dried Tomatoes, and Basil, surounded by the same food."
+    ],
+    [
+        "Bucatini with Olives, Sun-Dried Tomatoes, and Basil",
+        "A dish or a drink named Bucatini with Olives, Sun-Dried Tomatoes, and Basil, seen from really close."
+    ],
+    [
+        "Prime Rib Roast",
+        "A dish or a drink named Prime Rib Roast."
+    ],
+    [
+        "Prime Rib Roast",
+        "A dish or a drink named Prime Rib Roast, seen from really close."
+    ],
+    [
+        "Prime Rib Roast",
+        "A dish or a drink named Prime Rib Roast, seen from far away."
+    ],
+    [
+        "Plum Tomatoes and Artichokes with Penne",
+        "A dish or a drink named Plum Tomatoes and Artichokes with Penne."
+    ],
+    [
+        "Plum Tomatoes and Artichokes with Penne",
+        "A dish or a drink named Plum Tomatoes and Artichokes with Penne, surounded by the same food."
+    ],
+    [
+        "Plum Tomatoes and Artichokes with Penne",
+        "A dish or a drink named Plum Tomatoes and Artichokes with Penne, seen from far away."
+    ],
+    [
+        "Hirsheimer's Hot & Sweet Mustard",
+        "A dish or a drink named Hirsheimer's Hot & Sweet Mustard."
+    ],
+    [
+        "Hirsheimer's Hot & Sweet Mustard",
+        "A dish or a drink named Hirsheimer's Hot & Sweet Mustard, surounded by the same food."
+    ],
+    [
+        "Hirsheimer's Hot & Sweet Mustard",
+        "A dish or a drink named Hirsheimer's Hot & Sweet Mustard, seen from really close."
+    ],
+    [
+        "Herbed Bean Salad",
+        "A dish or a drink named Herbed Bean Salad."
+    ],
+    [
+        "Herbed Bean Salad",
+        "A dish or a drink named Herbed Bean Salad, seen from really close."
+    ],
+    [
+        "Herbed Bean Salad",
+        "A dish or a drink named Herbed Bean Salad, surounded by the same food."
+    ],
+    [
+        "Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy",
+        "A dish or a drink named Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy."
+    ],
+    [
+        "Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy",
+        "A dish or a drink named Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy, surounded by different food."
+    ],
+    [
+        "Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy",
+        "A dish or a drink named Teriyaki Black Cod with Sticky Rice Cakes and Seared Baby Bok Choy, seen from really close."
+    ],
+    [
+        "Strawberry Sundaes with Prosecco Sabayon",
+        "A dish or a drink named Strawberry Sundaes with Prosecco Sabayon."
+    ],
+    [
+        "Strawberry Sundaes with Prosecco Sabayon",
+        "A dish or a drink named Strawberry Sundaes with Prosecco Sabayon, surounded by different food."
+    ],
+    [
+        "Strawberry Sundaes with Prosecco Sabayon",
+        "A dish or a drink named Strawberry Sundaes with Prosecco Sabayon, seen from really close."
+    ],
+    [
+        "Soba Noodle Stir-Fry",
+        "A dish or a drink named Soba Noodle Stir-Fry."
+    ],
+    [
+        "Soba Noodle Stir-Fry",
+        "A dish or a drink named Soba Noodle Stir-Fry, seen from really close."
+    ],
+    [
+        "Soba Noodle Stir-Fry",
+        "A dish or a drink named Soba Noodle Stir-Fry, surounded by the same food."
+    ],
+    [
+        "Delicate Bread Pudding",
+        "A dish or a drink named Delicate Bread Pudding."
+    ],
+    [
+        "Delicate Bread Pudding",
+        "A dish or a drink named Delicate Bread Pudding, surounded by the same food."
+    ],
+    [
+        "Delicate Bread Pudding",
+        "A dish or a drink named Delicate Bread Pudding, seen from really close."
+    ],
+    [
+        "Green Bean Casserole",
+        "A dish or a drink named Green Bean Casserole."
+    ],
+    [
+        "Green Bean Casserole",
+        "A dish or a drink named Green Bean Casserole, seen from really close."
+    ],
+    [
+        "Green Bean Casserole",
+        "A dish or a drink named Green Bean Casserole, surounded by the same food."
+    ],
+    [
+        "Chocolate and Zucchini Cake",
+        "A dish or a drink named Chocolate and Zucchini Cake."
+    ],
+    [
+        "Chocolate and Zucchini Cake",
+        "A dish or a drink named Chocolate and Zucchini Cake, surounded by the same food."
+    ],
+    [
+        "Chocolate and Zucchini Cake",
+        "A dish or a drink named Chocolate and Zucchini Cake, surounded by different food."
+    ],
+    [
+        "Egg Drop Soup with Fresh Spinach",
+        "A dish or a drink named Egg Drop Soup with Fresh Spinach."
+    ],
+    [
+        "Egg Drop Soup with Fresh Spinach",
+        "A dish or a drink named Egg Drop Soup with Fresh Spinach, seen from really close."
+    ],
+    [
+        "Egg Drop Soup with Fresh Spinach",
+        "A dish or a drink named Egg Drop Soup with Fresh Spinach, seen from far away."
+    ],
+    [
+        "Homemade Corn Tortillas",
+        "A dish or a drink named Homemade Corn Tortillas."
+    ],
+    [
+        "Homemade Corn Tortillas",
+        "A dish or a drink named Homemade Corn Tortillas, seen from far away."
+    ],
+    [
+        "Homemade Corn Tortillas",
+        "A dish or a drink named Homemade Corn Tortillas, surounded by the same food."
+    ],
+    [
+        "Turkey Sloppy Joes",
+        "A dish or a drink named Turkey Sloppy Joes."
+    ],
+    [
+        "Turkey Sloppy Joes",
+        "A dish or a drink named Turkey Sloppy Joes, surounded by the same food."
+    ],
+    [
+        "Turkey Sloppy Joes",
+        "A dish or a drink named Turkey Sloppy Joes, surounded by different food."
+    ],
+    [
+        "Black Forest Shooter",
+        "A dish or a drink named Black Forest Shooter."
+    ],
+    [
+        "Black Forest Shooter",
+        "A dish or a drink named Black Forest Shooter, surounded by the same food."
+    ],
+    [
+        "Black Forest Shooter",
+        "A dish or a drink named Black Forest Shooter, surounded by different food."
+    ],
+    [
+        "Johnny Iuzzini's Chocolate Soup",
+        "A dish or a drink named Johnny Iuzzini's Chocolate Soup."
+    ],
+    [
+        "Johnny Iuzzini's Chocolate Soup",
+        "A dish or a drink named Johnny Iuzzini's Chocolate Soup, surounded by different food."
+    ],
+    [
+        "Johnny Iuzzini's Chocolate Soup",
+        "A dish or a drink named Johnny Iuzzini's Chocolate Soup, seen from really close."
+    ],
+    [
+        "Iron-Skillet Cornbread",
+        "A dish or a drink named Iron-Skillet Cornbread."
+    ],
+    [
+        "Iron-Skillet Cornbread",
+        "A dish or a drink named Iron-Skillet Cornbread, seen from really close."
+    ],
+    [
+        "Iron-Skillet Cornbread",
+        "A dish or a drink named Iron-Skillet Cornbread, surounded by the same food."
+    ],
+    [
+        "Broccoli Garlic Quiche",
+        "A dish or a drink named Broccoli Garlic Quiche."
+    ],
+    [
+        "Broccoli Garlic Quiche",
+        "A dish or a drink named Broccoli Garlic Quiche, seen from really close."
+    ],
+    [
+        "Broccoli Garlic Quiche",
+        "A dish or a drink named Broccoli Garlic Quiche, seen from far away."
+    ],
+    [
+        "Pecan Waffles with Sauteed Bananas and Cinnamon Honey",
+        "A dish or a drink named Pecan Waffles with Sauteed Bananas and Cinnamon Honey."
+    ],
+    [
+        "Pecan Waffles with Sauteed Bananas and Cinnamon Honey",
+        "A dish or a drink named Pecan Waffles with Sauteed Bananas and Cinnamon Honey, surounded by different food."
+    ],
+    [
+        "Pecan Waffles with Sauteed Bananas and Cinnamon Honey",
+        "A dish or a drink named Pecan Waffles with Sauteed Bananas and Cinnamon Honey, seen from really close."
+    ],
+    [
+        "BA's Best Fried Chicken Sandwich",
+        "A dish or a drink named BA's Best Fried Chicken Sandwich."
+    ],
+    [
+        "BA's Best Fried Chicken Sandwich",
+        "A dish or a drink named BA's Best Fried Chicken Sandwich, surounded by different food."
+    ],
+    [
+        "BA's Best Fried Chicken Sandwich",
+        "A dish or a drink named BA's Best Fried Chicken Sandwich, seen from far away."
+    ],
+    [
+        "Sweet Potato Souffle",
+        "A dish or a drink named Sweet Potato Souffle."
+    ],
+    [
+        "Sweet Potato Souffle",
+        "A dish or a drink named Sweet Potato Souffle, seen from really close."
+    ],
+    [
+        "Sweet Potato Souffle",
+        "A dish or a drink named Sweet Potato Souffle, seen from far away."
+    ],
+    [
+        "Cranberry Buckle with Vanilla Crumb",
+        "A dish or a drink named Cranberry Buckle with Vanilla Crumb."
+    ],
+    [
+        "Cranberry Buckle with Vanilla Crumb",
+        "A dish or a drink named Cranberry Buckle with Vanilla Crumb, seen from far away."
+    ],
+    [
+        "Cranberry Buckle with Vanilla Crumb",
+        "A dish or a drink named Cranberry Buckle with Vanilla Crumb, surounded by the same food."
+    ],
+    [
+        "Baja-Style Tempura Fish",
+        "A dish or a drink named Baja-Style Tempura Fish."
+    ],
+    [
+        "Baja-Style Tempura Fish",
+        "A dish or a drink named Baja-Style Tempura Fish, seen from far away."
+    ],
+    [
+        "Baja-Style Tempura Fish",
+        "A dish or a drink named Baja-Style Tempura Fish, surounded by different food."
+    ],
+    [
+        "Green Goddess Buddha Bowl",
+        "A dish or a drink named Green Goddess Buddha Bowl."
+    ],
+    [
+        "Green Goddess Buddha Bowl",
+        "A dish or a drink named Green Goddess Buddha Bowl, surounded by different food."
+    ],
+    [
+        "Green Goddess Buddha Bowl",
+        "A dish or a drink named Green Goddess Buddha Bowl, seen from far away."
+    ],
+    [
+        "Broiled Tofu with Cilantro Pesto",
+        "A dish or a drink named Broiled Tofu with Cilantro Pesto."
+    ],
+    [
+        "Broiled Tofu with Cilantro Pesto",
+        "A dish or a drink named Broiled Tofu with Cilantro Pesto, surounded by the same food."
+    ],
+    [
+        "Broiled Tofu with Cilantro Pesto",
+        "A dish or a drink named Broiled Tofu with Cilantro Pesto, seen from really close."
+    ],
+    [
+        "Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping",
+        "A dish or a drink named Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping."
+    ],
+    [
+        "Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping",
+        "A dish or a drink named Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping, seen from far away."
+    ],
+    [
+        "Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping",
+        "A dish or a drink named Lemon Pudding Filled Coconut Cupcakes with Shaved Coconut Topping, seen from really close."
+    ],
+    [
+        "Iced Christmas-Cookie Letters",
+        "A dish or a drink named Iced Christmas-Cookie Letters."
+    ],
+    [
+        "Iced Christmas-Cookie Letters",
+        "A dish or a drink named Iced Christmas-Cookie Letters, seen from really close."
+    ],
+    [
+        "Iced Christmas-Cookie Letters",
+        "A dish or a drink named Iced Christmas-Cookie Letters, surounded by different food."
+    ],
+    [
+        "Steak Au Poivre",
+        "A dish or a drink named Steak Au Poivre."
+    ],
+    [
+        "Steak Au Poivre",
+        "A dish or a drink named Steak Au Poivre, seen from far away."
+    ],
+    [
+        "Steak Au Poivre",
+        "A dish or a drink named Steak Au Poivre, surounded by the same food."
+    ],
+    [
+        "Lentil Soup with Italian Sausage and Escarole",
+        "A dish or a drink named Lentil Soup with Italian Sausage and Escarole."
+    ],
+    [
+        "Lentil Soup with Italian Sausage and Escarole",
+        "A dish or a drink named Lentil Soup with Italian Sausage and Escarole, seen from far away."
+    ],
+    [
+        "Lentil Soup with Italian Sausage and Escarole",
+        "A dish or a drink named Lentil Soup with Italian Sausage and Escarole, surounded by different food."
+    ],
+    [
+        "Sufganiyot (Jelly Doughnuts)",
+        "A dish or a drink named Sufganiyot (Jelly Doughnuts)."
+    ],
+    [
+        "Sufganiyot (Jelly Doughnuts)",
+        "A dish or a drink named Sufganiyot (Jelly Doughnuts), surounded by different food."
+    ],
+    [
+        "Sufganiyot (Jelly Doughnuts)",
+        "A dish or a drink named Sufganiyot (Jelly Doughnuts), seen from far away."
+    ],
+    [
+        "Roasted Squash with Date Relish and Pumpkin Seeds",
+        "A dish or a drink named Roasted Squash with Date Relish and Pumpkin Seeds."
+    ],
+    [
+        "Roasted Squash with Date Relish and Pumpkin Seeds",
+        "A dish or a drink named Roasted Squash with Date Relish and Pumpkin Seeds, seen from really close."
+    ],
+    [
+        "Roasted Squash with Date Relish and Pumpkin Seeds",
+        "A dish or a drink named Roasted Squash with Date Relish and Pumpkin Seeds, surounded by different food."
+    ],
+    [
+        "Vanilla Crumb",
+        "A dish or a drink named Vanilla Crumb."
+    ],
+    [
+        "Vanilla Crumb",
+        "A dish or a drink named Vanilla Crumb, surounded by the same food."
+    ],
+    [
+        "Vanilla Crumb",
+        "A dish or a drink named Vanilla Crumb, surounded by different food."
+    ],
+    [
+        "Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese",
+        "A dish or a drink named Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese."
+    ],
+    [
+        "Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese",
+        "A dish or a drink named Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese, surounded by the same food."
+    ],
+    [
+        "Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese",
+        "A dish or a drink named Smashed Baby Red Potatoes with Ancho Chiles and Dry Jack Cheese, seen from far away."
+    ],
+    [
+        "Viet-Mex Fajita Rolls",
+        "A dish or a drink named Viet-Mex Fajita Rolls."
+    ],
+    [
+        "Viet-Mex Fajita Rolls",
+        "A dish or a drink named Viet-Mex Fajita Rolls, seen from far away."
+    ],
+    [
+        "Viet-Mex Fajita Rolls",
+        "A dish or a drink named Viet-Mex Fajita Rolls, surounded by the same food."
+    ],
+    [
+        "Peppered Lamb Burgers with \"Hot Tomato\" Jam",
+        "A dish or a drink named Peppered Lamb Burgers with \"Hot Tomato\" Jam."
+    ],
+    [
+        "Peppered Lamb Burgers with \"Hot Tomato\" Jam",
+        "A dish or a drink named Peppered Lamb Burgers with \"Hot Tomato\" Jam, seen from really close."
+    ],
+    [
+        "Peppered Lamb Burgers with \"Hot Tomato\" Jam",
+        "A dish or a drink named Peppered Lamb Burgers with \"Hot Tomato\" Jam, surounded by the same food."
+    ],
+    [
+        "Gingerbread Pancakes with Butterscotch Apples",
+        "A dish or a drink named Gingerbread Pancakes with Butterscotch Apples."
+    ],
+    [
+        "Gingerbread Pancakes with Butterscotch Apples",
+        "A dish or a drink named Gingerbread Pancakes with Butterscotch Apples, surounded by the same food."
+    ],
+    [
+        "Gingerbread Pancakes with Butterscotch Apples",
+        "A dish or a drink named Gingerbread Pancakes with Butterscotch Apples, seen from far away."
+    ],
+    [
+        "Mom's White Chicken Chili",
+        "A dish or a drink named Mom's White Chicken Chili."
+    ],
+    [
+        "Mom's White Chicken Chili",
+        "A dish or a drink named Mom's White Chicken Chili, seen from far away."
+    ],
+    [
+        "Mom's White Chicken Chili",
+        "A dish or a drink named Mom's White Chicken Chili, surounded by the same food."
+    ],
+    [
+        "Grandma Louise's Oatmeal with Grated Apple",
+        "A dish or a drink named Grandma Louise's Oatmeal with Grated Apple."
+    ],
+    [
+        "Grandma Louise's Oatmeal with Grated Apple",
+        "A dish or a drink named Grandma Louise's Oatmeal with Grated Apple, seen from really close."
+    ],
+    [
+        "Grandma Louise's Oatmeal with Grated Apple",
+        "A dish or a drink named Grandma Louise's Oatmeal with Grated Apple, surounded by the same food."
+    ],
+    [
+        "Roasted Black Sea Bass with Tomato and Olive Salad",
+        "A dish or a drink named Roasted Black Sea Bass with Tomato and Olive Salad."
+    ],
+    [
+        "Roasted Black Sea Bass with Tomato and Olive Salad",
+        "A dish or a drink named Roasted Black Sea Bass with Tomato and Olive Salad, surounded by the same food."
+    ],
+    [
+        "Roasted Black Sea Bass with Tomato and Olive Salad",
+        "A dish or a drink named Roasted Black Sea Bass with Tomato and Olive Salad, surounded by different food."
+    ],
+    [
+        "Arugula Salad",
+        "A dish or a drink named Arugula Salad."
+    ],
+    [
+        "Arugula Salad",
+        "A dish or a drink named Arugula Salad, surounded by different food."
+    ],
+    [
+        "Arugula Salad",
+        "A dish or a drink named Arugula Salad, surounded by the same food."
+    ],
+    [
+        "Teriyaki Tofu Triangles",
+        "A dish or a drink named Teriyaki Tofu Triangles."
+    ],
+    [
+        "Teriyaki Tofu Triangles",
+        "A dish or a drink named Teriyaki Tofu Triangles, seen from far away."
+    ],
+    [
+        "Teriyaki Tofu Triangles",
+        "A dish or a drink named Teriyaki Tofu Triangles, surounded by the same food."
+    ],
+    [
+        "Spicy Glazed Eggplant",
+        "A dish or a drink named Spicy Glazed Eggplant."
+    ],
+    [
+        "Spicy Glazed Eggplant",
+        "A dish or a drink named Spicy Glazed Eggplant, surounded by different food."
+    ],
+    [
+        "Spicy Glazed Eggplant",
+        "A dish or a drink named Spicy Glazed Eggplant, seen from really close."
+    ],
+    [
+        "Chocolate-Covered Gingerbread Kids",
+        "A dish or a drink named Chocolate-Covered Gingerbread Kids."
+    ],
+    [
+        "Chocolate-Covered Gingerbread Kids",
+        "A dish or a drink named Chocolate-Covered Gingerbread Kids, seen from really close."
+    ],
+    [
+        "Chocolate-Covered Gingerbread Kids",
+        "A dish or a drink named Chocolate-Covered Gingerbread Kids, surounded by different food."
+    ],
+    [
+        "Make-Me-Crazy Grill Marinade",
+        "A dish or a drink named Make-Me-Crazy Grill Marinade."
+    ],
+    [
+        "Make-Me-Crazy Grill Marinade",
+        "A dish or a drink named Make-Me-Crazy Grill Marinade, seen from far away."
+    ],
+    [
+        "Make-Me-Crazy Grill Marinade",
+        "A dish or a drink named Make-Me-Crazy Grill Marinade, surounded by different food."
+    ],
+    [
+        "Lemon Aioli",
+        "A dish or a drink named Lemon Aioli."
+    ],
+    [
+        "Lemon Aioli",
+        "A dish or a drink named Lemon Aioli, surounded by the same food."
+    ],
+    [
+        "Lemon Aioli",
+        "A dish or a drink named Lemon Aioli, seen from far away."
+    ],
+    [
+        "Timmy's Brandy Milk Punch",
+        "A dish or a drink named Timmy's Brandy Milk Punch."
+    ],
+    [
+        "Timmy's Brandy Milk Punch",
+        "A dish or a drink named Timmy's Brandy Milk Punch, seen from far away."
+    ],
+    [
+        "Timmy's Brandy Milk Punch",
+        "A dish or a drink named Timmy's Brandy Milk Punch, surounded by different food."
+    ],
+    [
+        "Boiled Lobster Dinner with Sesame Mayonnaise",
+        "A dish or a drink named Boiled Lobster Dinner with Sesame Mayonnaise."
+    ],
+    [
+        "Boiled Lobster Dinner with Sesame Mayonnaise",
+        "A dish or a drink named Boiled Lobster Dinner with Sesame Mayonnaise, seen from far away."
+    ],
+    [
+        "Boiled Lobster Dinner with Sesame Mayonnaise",
+        "A dish or a drink named Boiled Lobster Dinner with Sesame Mayonnaise, surounded by the same food."
+    ],
+    [
+        "Lillet Marshmallows",
+        "A dish or a drink named Lillet Marshmallows."
+    ],
+    [
+        "Lillet Marshmallows",
+        "A dish or a drink named Lillet Marshmallows, seen from far away."
+    ],
+    [
+        "Lillet Marshmallows",
+        "A dish or a drink named Lillet Marshmallows, seen from really close."
+    ],
+    [
+        "Roasted Fresh Ham with Citrus and Rye",
+        "A dish or a drink named Roasted Fresh Ham with Citrus and Rye."
+    ],
+    [
+        "Roasted Fresh Ham with Citrus and Rye",
+        "A dish or a drink named Roasted Fresh Ham with Citrus and Rye, surounded by the same food."
+    ],
+    [
+        "Roasted Fresh Ham with Citrus and Rye",
+        "A dish or a drink named Roasted Fresh Ham with Citrus and Rye, seen from far away."
+    ],
+    [
+        "Smashed Potatoes with Roasted-Garlic Gravy",
+        "A dish or a drink named Smashed Potatoes with Roasted-Garlic Gravy."
+    ],
+    [
+        "Smashed Potatoes with Roasted-Garlic Gravy",
+        "A dish or a drink named Smashed Potatoes with Roasted-Garlic Gravy, seen from far away."
+    ],
+    [
+        "Smashed Potatoes with Roasted-Garlic Gravy",
+        "A dish or a drink named Smashed Potatoes with Roasted-Garlic Gravy, surounded by the same food."
+    ],
+    [
+        "Lime Noodles with Vegetables, Basil, and Sesame",
+        "A dish or a drink named Lime Noodles with Vegetables, Basil, and Sesame."
+    ],
+    [
+        "Lime Noodles with Vegetables, Basil, and Sesame",
+        "A dish or a drink named Lime Noodles with Vegetables, Basil, and Sesame, seen from far away."
+    ],
+    [
+        "Lime Noodles with Vegetables, Basil, and Sesame",
+        "A dish or a drink named Lime Noodles with Vegetables, Basil, and Sesame, seen from really close."
+    ],
+    [
+        "Spaghetti with Braised Kale",
+        "A dish or a drink named Spaghetti with Braised Kale."
+    ],
+    [
+        "Spaghetti with Braised Kale",
+        "A dish or a drink named Spaghetti with Braised Kale, surounded by different food."
+    ],
+    [
+        "Spaghetti with Braised Kale",
+        "A dish or a drink named Spaghetti with Braised Kale, surounded by the same food."
+    ],
+    [
+        "Herb-Roasted Chicken with Lemon and Sage",
+        "A dish or a drink named Herb-Roasted Chicken with Lemon and Sage."
+    ],
+    [
+        "Herb-Roasted Chicken with Lemon and Sage",
+        "A dish or a drink named Herb-Roasted Chicken with Lemon and Sage, surounded by the same food."
+    ],
+    [
+        "Herb-Roasted Chicken with Lemon and Sage",
+        "A dish or a drink named Herb-Roasted Chicken with Lemon and Sage, surounded by different food."
+    ],
+    [
+        "Chocolate Peanut Butter Bars with Hot Fudge Sauce",
+        "A dish or a drink named Chocolate Peanut Butter Bars with Hot Fudge Sauce."
+    ],
+    [
+        "Chocolate Peanut Butter Bars with Hot Fudge Sauce",
+        "A dish or a drink named Chocolate Peanut Butter Bars with Hot Fudge Sauce, seen from really close."
+    ],
+    [
+        "Chocolate Peanut Butter Bars with Hot Fudge Sauce",
+        "A dish or a drink named Chocolate Peanut Butter Bars with Hot Fudge Sauce, surounded by the same food."
+    ],
+    [
+        "Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce",
+        "A dish or a drink named Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce."
+    ],
+    [
+        "Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce",
+        "A dish or a drink named Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce, seen from really close."
+    ],
+    [
+        "Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce",
+        "A dish or a drink named Marinated Chicken Kebabs with Lemon Pepper Yogurt Sauce, seen from far away."
+    ],
+    [
+        "Faux-Fried Onion Rings with Smoky Mayonnaise",
+        "A dish or a drink named Faux-Fried Onion Rings with Smoky Mayonnaise."
+    ],
+    [
+        "Faux-Fried Onion Rings with Smoky Mayonnaise",
+        "A dish or a drink named Faux-Fried Onion Rings with Smoky Mayonnaise, surounded by different food."
+    ],
+    [
+        "Faux-Fried Onion Rings with Smoky Mayonnaise",
+        "A dish or a drink named Faux-Fried Onion Rings with Smoky Mayonnaise, seen from really close."
+    ],
+    [
+        "Clay-Pot Miso Chicken",
+        "A dish or a drink named Clay-Pot Miso Chicken."
+    ],
+    [
+        "Clay-Pot Miso Chicken",
+        "A dish or a drink named Clay-Pot Miso Chicken, surounded by different food."
+    ],
+    [
+        "Clay-Pot Miso Chicken",
+        "A dish or a drink named Clay-Pot Miso Chicken, surounded by the same food."
+    ],
+    [
+        "Chocolate-Covered Raspberry Truffles",
+        "A dish or a drink named Chocolate-Covered Raspberry Truffles."
+    ],
+    [
+        "Chocolate-Covered Raspberry Truffles",
+        "A dish or a drink named Chocolate-Covered Raspberry Truffles, surounded by different food."
+    ],
+    [
+        "Chocolate-Covered Raspberry Truffles",
+        "A dish or a drink named Chocolate-Covered Raspberry Truffles, seen from far away."
+    ],
+    [
+        "Borscht Horseradish Terrine",
+        "A dish or a drink named Borscht Horseradish Terrine."
+    ],
+    [
+        "Borscht Horseradish Terrine",
+        "A dish or a drink named Borscht Horseradish Terrine, surounded by different food."
+    ],
+    [
+        "Borscht Horseradish Terrine",
+        "A dish or a drink named Borscht Horseradish Terrine, seen from far away."
+    ],
+    [
+        "Mom's Meatloaf",
+        "A dish or a drink named Mom's Meatloaf."
+    ],
+    [
+        "Mom's Meatloaf",
+        "A dish or a drink named Mom's Meatloaf, surounded by different food."
+    ],
+    [
+        "Mom's Meatloaf",
+        "A dish or a drink named Mom's Meatloaf, seen from really close."
+    ],
+    [
+        "Flank Steak",
+        "A dish or a drink named Flank Steak."
+    ],
+    [
+        "Flank Steak",
+        "A dish or a drink named Flank Steak, surounded by the same food."
+    ],
+    [
+        "Flank Steak",
+        "A dish or a drink named Flank Steak, surounded by different food."
+    ],
+    [
+        "Mango Sake",
+        "A dish or a drink named Mango Sake."
+    ],
+    [
+        "Mango Sake",
+        "A dish or a drink named Mango Sake, seen from far away."
+    ],
+    [
+        "Mango Sake",
+        "A dish or a drink named Mango Sake, surounded by the same food."
+    ],
+    [
+        "Grilled Fontina with Artichokes and Mushrooms",
+        "A dish or a drink named Grilled Fontina with Artichokes and Mushrooms."
+    ],
+    [
+        "Grilled Fontina with Artichokes and Mushrooms",
+        "A dish or a drink named Grilled Fontina with Artichokes and Mushrooms, seen from far away."
+    ],
+    [
+        "Grilled Fontina with Artichokes and Mushrooms",
+        "A dish or a drink named Grilled Fontina with Artichokes and Mushrooms, seen from really close."
+    ],
+    [
+        "Rosy Boa Cocktail",
+        "A dish or a drink named Rosy Boa Cocktail."
+    ],
+    [
+        "Rosy Boa Cocktail",
+        "A dish or a drink named Rosy Boa Cocktail, seen from far away."
+    ],
+    [
+        "Rosy Boa Cocktail",
+        "A dish or a drink named Rosy Boa Cocktail, surounded by different food."
+    ],
+    [
+        "Quesadillas with Oaxacan Cheese and Squash Blossoms",
+        "A dish or a drink named Quesadillas with Oaxacan Cheese and Squash Blossoms."
+    ],
+    [
+        "Quesadillas with Oaxacan Cheese and Squash Blossoms",
+        "A dish or a drink named Quesadillas with Oaxacan Cheese and Squash Blossoms, seen from really close."
+    ],
+    [
+        "Quesadillas with Oaxacan Cheese and Squash Blossoms",
+        "A dish or a drink named Quesadillas with Oaxacan Cheese and Squash Blossoms, surounded by the same food."
+    ],
+    [
+        "Farfalle Salad",
+        "A dish or a drink named Farfalle Salad."
+    ],
+    [
+        "Farfalle Salad",
+        "A dish or a drink named Farfalle Salad, seen from really close."
+    ],
+    [
+        "Farfalle Salad",
+        "A dish or a drink named Farfalle Salad, surounded by different food."
+    ],
+    [
+        "Corn on the Cob with Mint-Feta Butter",
+        "A dish or a drink named Corn on the Cob with Mint-Feta Butter."
+    ],
+    [
+        "Corn on the Cob with Mint-Feta Butter",
+        "A dish or a drink named Corn on the Cob with Mint-Feta Butter, surounded by the same food."
+    ],
+    [
+        "Corn on the Cob with Mint-Feta Butter",
+        "A dish or a drink named Corn on the Cob with Mint-Feta Butter, seen from really close."
+    ],
+    [
+        "D.I.Y. Ricotta",
+        "A dish or a drink named D.I.Y. Ricotta."
+    ],
+    [
+        "D.I.Y. Ricotta",
+        "A dish or a drink named D.I.Y. Ricotta, seen from far away."
+    ],
+    [
+        "D.I.Y. Ricotta",
+        "A dish or a drink named D.I.Y. Ricotta, seen from really close."
+    ],
+    [
+        "Almond, Chocolate, and Pistachio Spumoni",
+        "A dish or a drink named Almond, Chocolate, and Pistachio Spumoni."
+    ],
+    [
+        "Almond, Chocolate, and Pistachio Spumoni",
+        "A dish or a drink named Almond, Chocolate, and Pistachio Spumoni, surounded by different food."
+    ],
+    [
+        "Almond, Chocolate, and Pistachio Spumoni",
+        "A dish or a drink named Almond, Chocolate, and Pistachio Spumoni, seen from really close."
+    ],
+    [
+        "Cold Provencal White Bean Salad",
+        "A dish or a drink named Cold Provencal White Bean Salad."
+    ],
+    [
+        "Cold Provencal White Bean Salad",
+        "A dish or a drink named Cold Provencal White Bean Salad, surounded by the same food."
+    ],
+    [
+        "Cold Provencal White Bean Salad",
+        "A dish or a drink named Cold Provencal White Bean Salad, seen from far away."
+    ],
+    [
+        "Our Favorite Sour Milk Cornbread",
+        "A dish or a drink named Our Favorite Sour Milk Cornbread."
+    ],
+    [
+        "Our Favorite Sour Milk Cornbread",
+        "A dish or a drink named Our Favorite Sour Milk Cornbread, seen from really close."
+    ],
+    [
+        "Our Favorite Sour Milk Cornbread",
+        "A dish or a drink named Our Favorite Sour Milk Cornbread, surounded by the same food."
+    ],
+    [
+        "Mashed Potatoes and Parsnips",
+        "A dish or a drink named Mashed Potatoes and Parsnips."
+    ],
+    [
+        "Mashed Potatoes and Parsnips",
+        "A dish or a drink named Mashed Potatoes and Parsnips, seen from far away."
+    ],
+    [
+        "Mashed Potatoes and Parsnips",
+        "A dish or a drink named Mashed Potatoes and Parsnips, surounded by different food."
+    ],
+    [
+        "Teddie's Apple Cake",
+        "A dish or a drink named Teddie's Apple Cake."
+    ],
+    [
+        "Teddie's Apple Cake",
+        "A dish or a drink named Teddie's Apple Cake, surounded by the same food."
+    ],
+    [
+        "Teddie's Apple Cake",
+        "A dish or a drink named Teddie's Apple Cake, seen from far away."
+    ],
+    [
+        "Matzo Meal Latkes",
+        "A dish or a drink named Matzo Meal Latkes."
+    ],
+    [
+        "Matzo Meal Latkes",
+        "A dish or a drink named Matzo Meal Latkes, surounded by the same food."
+    ],
+    [
+        "Matzo Meal Latkes",
+        "A dish or a drink named Matzo Meal Latkes, seen from really close."
+    ],
+    [
+        "Hake with Wild Mushrooms",
+        "A dish or a drink named Hake with Wild Mushrooms."
+    ],
+    [
+        "Hake with Wild Mushrooms",
+        "A dish or a drink named Hake with Wild Mushrooms, surounded by the same food."
+    ],
+    [
+        "Hake with Wild Mushrooms",
+        "A dish or a drink named Hake with Wild Mushrooms, seen from far away."
+    ],
+    [
+        "Starry Starry Nights",
+        "A dish or a drink named Starry Starry Nights."
+    ],
+    [
+        "Starry Starry Nights",
+        "A dish or a drink named Starry Starry Nights, seen from really close."
+    ],
+    [
+        "Starry Starry Nights",
+        "A dish or a drink named Starry Starry Nights, surounded by the same food."
+    ],
+    [
+        "Infinite Zest",
+        "A dish or a drink named Infinite Zest."
+    ],
+    [
+        "Infinite Zest",
+        "A dish or a drink named Infinite Zest, seen from really close."
+    ],
+    [
+        "Infinite Zest",
+        "A dish or a drink named Infinite Zest, seen from far away."
+    ],
+    [
+        "Smoked Ham, Roasted Radicchio, And Cheese Panini",
+        "A dish or a drink named Smoked Ham, Roasted Radicchio, And Cheese Panini."
+    ],
+    [
+        "Smoked Ham, Roasted Radicchio, And Cheese Panini",
+        "A dish or a drink named Smoked Ham, Roasted Radicchio, And Cheese Panini, surounded by the same food."
+    ],
+    [
+        "Smoked Ham, Roasted Radicchio, And Cheese Panini",
+        "A dish or a drink named Smoked Ham, Roasted Radicchio, And Cheese Panini, seen from far away."
+    ],
+    [
+        "Caramelized-Apple and Pecan Pie",
+        "A dish or a drink named Caramelized-Apple and Pecan Pie."
+    ],
+    [
+        "Caramelized-Apple and Pecan Pie",
+        "A dish or a drink named Caramelized-Apple and Pecan Pie, surounded by different food."
+    ],
+    [
+        "Caramelized-Apple and Pecan Pie",
+        "A dish or a drink named Caramelized-Apple and Pecan Pie, seen from far away."
+    ],
+    [
+        "Volcano Surprise with Lemon Mousseline Cake",
+        "A dish or a drink named Volcano Surprise with Lemon Mousseline Cake."
+    ],
+    [
+        "Volcano Surprise with Lemon Mousseline Cake",
+        "A dish or a drink named Volcano Surprise with Lemon Mousseline Cake, surounded by different food."
+    ],
+    [
+        "Volcano Surprise with Lemon Mousseline Cake",
+        "A dish or a drink named Volcano Surprise with Lemon Mousseline Cake, seen from far away."
+    ],
+    [
+        "Spicy Napa Cabbage Slaw with Cilantro Dressing",
+        "A dish or a drink named Spicy Napa Cabbage Slaw with Cilantro Dressing."
+    ],
+    [
+        "Spicy Napa Cabbage Slaw with Cilantro Dressing",
+        "A dish or a drink named Spicy Napa Cabbage Slaw with Cilantro Dressing, surounded by different food."
+    ],
+    [
+        "Spicy Napa Cabbage Slaw with Cilantro Dressing",
+        "A dish or a drink named Spicy Napa Cabbage Slaw with Cilantro Dressing, surounded by the same food."
+    ],
+    [
+        "Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread",
+        "A dish or a drink named Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread."
+    ],
+    [
+        "Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread",
+        "A dish or a drink named Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread, seen from far away."
+    ],
+    [
+        "Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread",
+        "A dish or a drink named Pan con Tomate' y Anchoa--Garlic, Olive Oil, and Fresh Tomato on Toasted Bread, surounded by different food."
+    ],
+    [
+        "Hot Milk Cakes with Strawberries and Cream",
+        "A dish or a drink named Hot Milk Cakes with Strawberries and Cream."
+    ],
+    [
+        "Hot Milk Cakes with Strawberries and Cream",
+        "A dish or a drink named Hot Milk Cakes with Strawberries and Cream, seen from far away."
+    ],
+    [
+        "Hot Milk Cakes with Strawberries and Cream",
+        "A dish or a drink named Hot Milk Cakes with Strawberries and Cream, seen from really close."
+    ],
+    [
+        "Asparagus Veloute",
+        "A dish or a drink named Asparagus Veloute."
+    ],
+    [
+        "Asparagus Veloute",
+        "A dish or a drink named Asparagus Veloute, surounded by different food."
+    ],
+    [
+        "Asparagus Veloute",
+        "A dish or a drink named Asparagus Veloute, seen from far away."
+    ],
+    [
+        "Spicy Carrot-Miso Dressing",
+        "A dish or a drink named Spicy Carrot-Miso Dressing."
+    ],
+    [
+        "Spicy Carrot-Miso Dressing",
+        "A dish or a drink named Spicy Carrot-Miso Dressing, surounded by different food."
+    ],
+    [
+        "Spicy Carrot-Miso Dressing",
+        "A dish or a drink named Spicy Carrot-Miso Dressing, seen from far away."
+    ],
+    [
+        "Pa's Fudge",
+        "A dish or a drink named Pa's Fudge."
+    ],
+    [
+        "Pa's Fudge",
+        "A dish or a drink named Pa's Fudge, seen from really close."
+    ],
+    [
+        "Pa's Fudge",
+        "A dish or a drink named Pa's Fudge, surounded by the same food."
+    ],
+    [
+        "Macadamia Fudge Squares",
+        "A dish or a drink named Macadamia Fudge Squares."
+    ],
+    [
+        "Macadamia Fudge Squares",
+        "A dish or a drink named Macadamia Fudge Squares, seen from really close."
+    ],
+    [
+        "Macadamia Fudge Squares",
+        "A dish or a drink named Macadamia Fudge Squares, surounded by the same food."
+    ],
+    [
+        "Zeppole",
+        "A dish or a drink named Zeppole."
+    ],
+    [
+        "Zeppole",
+        "A dish or a drink named Zeppole, seen from really close."
+    ],
+    [
+        "Zeppole",
+        "A dish or a drink named Zeppole, seen from far away."
+    ],
+    [
+        "Napa Cabbage Salad with Buttermilk Dressing",
+        "A dish or a drink named Napa Cabbage Salad with Buttermilk Dressing."
+    ],
+    [
+        "Napa Cabbage Salad with Buttermilk Dressing",
+        "A dish or a drink named Napa Cabbage Salad with Buttermilk Dressing, surounded by the same food."
+    ],
+    [
+        "Napa Cabbage Salad with Buttermilk Dressing",
+        "A dish or a drink named Napa Cabbage Salad with Buttermilk Dressing, seen from really close."
+    ],
+    [
+        "Golden Eggs",
+        "A dish or a drink named Golden Eggs."
+    ],
+    [
+        "Golden Eggs",
+        "A dish or a drink named Golden Eggs, surounded by the same food."
+    ],
+    [
+        "Golden Eggs",
+        "A dish or a drink named Golden Eggs, seen from really close."
+    ],
+    [
+        "The Vespa",
+        "A dish or a drink named The Vespa."
+    ],
+    [
+        "The Vespa",
+        "A dish or a drink named The Vespa, surounded by different food."
+    ],
+    [
+        "The Vespa",
+        "A dish or a drink named The Vespa, seen from really close."
+    ],
+    [
+        "Seafood Cocktail",
+        "A dish or a drink named Seafood Cocktail."
+    ],
+    [
+        "Seafood Cocktail",
+        "A dish or a drink named Seafood Cocktail, seen from really close."
+    ],
+    [
+        "Seafood Cocktail",
+        "A dish or a drink named Seafood Cocktail, surounded by different food."
+    ],
+    [
+        "Grilled Stuffed Peppers",
+        "A dish or a drink named Grilled Stuffed Peppers."
+    ],
+    [
+        "Grilled Stuffed Peppers",
+        "A dish or a drink named Grilled Stuffed Peppers, surounded by the same food."
+    ],
+    [
+        "Grilled Stuffed Peppers",
+        "A dish or a drink named Grilled Stuffed Peppers, seen from really close."
+    ],
+    [
+        "Chicken Wings with Ginger and Caramel Sauce",
+        "A dish or a drink named Chicken Wings with Ginger and Caramel Sauce."
+    ],
+    [
+        "Chicken Wings with Ginger and Caramel Sauce",
+        "A dish or a drink named Chicken Wings with Ginger and Caramel Sauce, surounded by the same food."
+    ],
+    [
+        "Chicken Wings with Ginger and Caramel Sauce",
+        "A dish or a drink named Chicken Wings with Ginger and Caramel Sauce, seen from far away."
+    ],
+    [
+        "Beer Americano",
+        "A dish or a drink named Beer Americano."
+    ],
+    [
+        "Beer Americano",
+        "A dish or a drink named Beer Americano, seen from far away."
+    ],
+    [
+        "Beer Americano",
+        "A dish or a drink named Beer Americano, surounded by the same food."
+    ],
+    [
+        "Lemon-Roasted Green Beans with Marcona Almonds",
+        "A dish or a drink named Lemon-Roasted Green Beans with Marcona Almonds."
+    ],
+    [
+        "Lemon-Roasted Green Beans with Marcona Almonds",
+        "A dish or a drink named Lemon-Roasted Green Beans with Marcona Almonds, seen from really close."
+    ],
+    [
+        "Lemon-Roasted Green Beans with Marcona Almonds",
+        "A dish or a drink named Lemon-Roasted Green Beans with Marcona Almonds, surounded by different food."
+    ],
+    [
+        "Grilled Shrimp with Papaya Mustard",
+        "A dish or a drink named Grilled Shrimp with Papaya Mustard."
+    ],
+    [
+        "Grilled Shrimp with Papaya Mustard",
+        "A dish or a drink named Grilled Shrimp with Papaya Mustard, seen from really close."
+    ],
+    [
+        "Grilled Shrimp with Papaya Mustard",
+        "A dish or a drink named Grilled Shrimp with Papaya Mustard, seen from far away."
+    ],
+    [
+        "Parmesan-Stuffed Dates Wrapped in Bacon",
+        "A dish or a drink named Parmesan-Stuffed Dates Wrapped in Bacon."
+    ],
+    [
+        "Parmesan-Stuffed Dates Wrapped in Bacon",
+        "A dish or a drink named Parmesan-Stuffed Dates Wrapped in Bacon, seen from far away."
+    ],
+    [
+        "Parmesan-Stuffed Dates Wrapped in Bacon",
+        "A dish or a drink named Parmesan-Stuffed Dates Wrapped in Bacon, surounded by different food."
+    ],
+    [
+        "Ugly Baby's Red Curry Paste",
+        "A dish or a drink named Ugly Baby's Red Curry Paste."
+    ],
+    [
+        "Ugly Baby's Red Curry Paste",
+        "A dish or a drink named Ugly Baby's Red Curry Paste, seen from far away."
+    ],
+    [
+        "Ugly Baby's Red Curry Paste",
+        "A dish or a drink named Ugly Baby's Red Curry Paste, surounded by the same food."
+    ],
+    [
+        "Grilled Meatballs with Indian-Spiced Yogurt Sauce",
+        "A dish or a drink named Grilled Meatballs with Indian-Spiced Yogurt Sauce."
+    ],
+    [
+        "Grilled Meatballs with Indian-Spiced Yogurt Sauce",
+        "A dish or a drink named Grilled Meatballs with Indian-Spiced Yogurt Sauce, surounded by different food."
+    ],
+    [
+        "Grilled Meatballs with Indian-Spiced Yogurt Sauce",
+        "A dish or a drink named Grilled Meatballs with Indian-Spiced Yogurt Sauce, surounded by the same food."
+    ],
+    [
+        "Cream of Tomato Soup with Souffleed Cheese Toasts",
+        "A dish or a drink named Cream of Tomato Soup with Souffleed Cheese Toasts."
+    ],
+    [
+        "Cream of Tomato Soup with Souffleed Cheese Toasts",
+        "A dish or a drink named Cream of Tomato Soup with Souffleed Cheese Toasts, surounded by different food."
+    ],
+    [
+        "Cream of Tomato Soup with Souffleed Cheese Toasts",
+        "A dish or a drink named Cream of Tomato Soup with Souffleed Cheese Toasts, surounded by the same food."
+    ],
+    [
+        "Parsi Potatoes with Egg",
+        "A dish or a drink named Parsi Potatoes with Egg."
+    ],
+    [
+        "Parsi Potatoes with Egg",
+        "A dish or a drink named Parsi Potatoes with Egg, seen from far away."
+    ],
+    [
+        "Parsi Potatoes with Egg",
+        "A dish or a drink named Parsi Potatoes with Egg, seen from really close."
+    ],
+    [
+        "Korean Pancakes",
+        "A dish or a drink named Korean Pancakes."
+    ],
+    [
+        "Korean Pancakes",
+        "A dish or a drink named Korean Pancakes, seen from really close."
+    ],
+    [
+        "Korean Pancakes",
+        "A dish or a drink named Korean Pancakes, seen from far away."
+    ],
+    [
+        "Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly",
+        "A dish or a drink named Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly."
+    ],
+    [
+        "Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly",
+        "A dish or a drink named Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly, surounded by the same food."
+    ],
+    [
+        "Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly",
+        "A dish or a drink named Grilled Butterflied Leg Of Lamb With Fresh Mint-Pepper Jelly, seen from really close."
+    ],
+    [
+        "Sun Dried Tomato Marinade",
+        "A dish or a drink named Sun Dried Tomato Marinade."
+    ],
+    [
+        "Sun Dried Tomato Marinade",
+        "A dish or a drink named Sun Dried Tomato Marinade, surounded by the same food."
+    ],
+    [
+        "Sun Dried Tomato Marinade",
+        "A dish or a drink named Sun Dried Tomato Marinade, seen from really close."
+    ],
+    [
+        "Pan-Grilled Paillards of Duck",
+        "A dish or a drink named Pan-Grilled Paillards of Duck."
+    ],
+    [
+        "Pan-Grilled Paillards of Duck",
+        "A dish or a drink named Pan-Grilled Paillards of Duck, surounded by the same food."
+    ],
+    [
+        "Pan-Grilled Paillards of Duck",
+        "A dish or a drink named Pan-Grilled Paillards of Duck, seen from far away."
+    ],
+    [
+        "Piquitos De Enrique Dacosta--Enrique's Bread Bites",
+        "A dish or a drink named Piquitos De Enrique Dacosta--Enrique's Bread Bites."
+    ],
+    [
+        "Piquitos De Enrique Dacosta--Enrique's Bread Bites",
+        "A dish or a drink named Piquitos De Enrique Dacosta--Enrique's Bread Bites, seen from really close."
+    ],
+    [
+        "Piquitos De Enrique Dacosta--Enrique's Bread Bites",
+        "A dish or a drink named Piquitos De Enrique Dacosta--Enrique's Bread Bites, surounded by different food."
+    ],
+    [
+        "Haunted Gingerbread House",
+        "A dish or a drink named Haunted Gingerbread House."
+    ],
+    [
+        "Haunted Gingerbread House",
+        "A dish or a drink named Haunted Gingerbread House, surounded by the same food."
+    ],
+    [
+        "Haunted Gingerbread House",
+        "A dish or a drink named Haunted Gingerbread House, seen from far away."
+    ],
+    [
+        "Stuffed Trout",
+        "A dish or a drink named Stuffed Trout."
+    ],
+    [
+        "Stuffed Trout",
+        "A dish or a drink named Stuffed Trout, seen from really close."
+    ],
+    [
+        "Stuffed Trout",
+        "A dish or a drink named Stuffed Trout, surounded by different food."
+    ],
+    [
+        "Barbecued Chicken and Chickpea Quesadillas",
+        "A dish or a drink named Barbecued Chicken and Chickpea Quesadillas."
+    ],
+    [
+        "Barbecued Chicken and Chickpea Quesadillas",
+        "A dish or a drink named Barbecued Chicken and Chickpea Quesadillas, surounded by different food."
+    ],
+    [
+        "Barbecued Chicken and Chickpea Quesadillas",
+        "A dish or a drink named Barbecued Chicken and Chickpea Quesadillas, surounded by the same food."
+    ],
+    [
+        "Simple Fried Rice",
+        "A dish or a drink named Simple Fried Rice."
+    ],
+    [
+        "Simple Fried Rice",
+        "A dish or a drink named Simple Fried Rice, seen from really close."
+    ],
+    [
+        "Simple Fried Rice",
+        "A dish or a drink named Simple Fried Rice, seen from far away."
+    ],
+    [
+        "Tiramisu with Amaretti Cookies",
+        "A dish or a drink named Tiramisu with Amaretti Cookies."
+    ],
+    [
+        "Tiramisu with Amaretti Cookies",
+        "A dish or a drink named Tiramisu with Amaretti Cookies, seen from far away."
+    ],
+    [
+        "Tiramisu with Amaretti Cookies",
+        "A dish or a drink named Tiramisu with Amaretti Cookies, surounded by different food."
+    ],
+    [
+        "Triple Chocolate Chocolate Chip Cookies",
+        "A dish or a drink named Triple Chocolate Chocolate Chip Cookies."
+    ],
+    [
+        "Triple Chocolate Chocolate Chip Cookies",
+        "A dish or a drink named Triple Chocolate Chocolate Chip Cookies, seen from really close."
+    ],
+    [
+        "Triple Chocolate Chocolate Chip Cookies",
+        "A dish or a drink named Triple Chocolate Chocolate Chip Cookies, seen from far away."
+    ],
+    [
+        "Baja Cabbage Slaw",
+        "A dish or a drink named Baja Cabbage Slaw."
+    ],
+    [
+        "Baja Cabbage Slaw",
+        "A dish or a drink named Baja Cabbage Slaw, seen from far away."
+    ],
+    [
+        "Baja Cabbage Slaw",
+        "A dish or a drink named Baja Cabbage Slaw, surounded by different food."
+    ],
+    [
+        "Guajillo and Tomatillo Salsa",
+        "A dish or a drink named Guajillo and Tomatillo Salsa."
+    ],
+    [
+        "Guajillo and Tomatillo Salsa",
+        "A dish or a drink named Guajillo and Tomatillo Salsa, surounded by the same food."
+    ],
+    [
+        "Guajillo and Tomatillo Salsa",
+        "A dish or a drink named Guajillo and Tomatillo Salsa, seen from really close."
+    ],
+    [
+        "Peaches and Crema Paleta Pops",
+        "A dish or a drink named Peaches and Crema Paleta Pops."
+    ],
+    [
+        "Peaches and Crema Paleta Pops",
+        "A dish or a drink named Peaches and Crema Paleta Pops, seen from really close."
+    ],
+    [
+        "Peaches and Crema Paleta Pops",
+        "A dish or a drink named Peaches and Crema Paleta Pops, surounded by the same food."
+    ],
+    [
+        "Limoncello Tiramisu",
+        "A dish or a drink named Limoncello Tiramisu."
+    ],
+    [
+        "Limoncello Tiramisu",
+        "A dish or a drink named Limoncello Tiramisu, seen from really close."
+    ],
+    [
+        "Limoncello Tiramisu",
+        "A dish or a drink named Limoncello Tiramisu, surounded by the same food."
+    ],
+    [
+        "Double Ginger Cookies",
+        "A dish or a drink named Double Ginger Cookies."
+    ],
+    [
+        "Double Ginger Cookies",
+        "A dish or a drink named Double Ginger Cookies, seen from far away."
+    ],
+    [
+        "Double Ginger Cookies",
+        "A dish or a drink named Double Ginger Cookies, surounded by the same food."
+    ],
+    [
+        "Peppery Fig and Cider Compote",
+        "A dish or a drink named Peppery Fig and Cider Compote."
+    ],
+    [
+        "Peppery Fig and Cider Compote",
+        "A dish or a drink named Peppery Fig and Cider Compote, surounded by the same food."
+    ],
+    [
+        "Peppery Fig and Cider Compote",
+        "A dish or a drink named Peppery Fig and Cider Compote, surounded by different food."
+    ],
+    [
+        "Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce",
+        "A dish or a drink named Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce."
+    ],
+    [
+        "Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce",
+        "A dish or a drink named Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce, seen from far away."
+    ],
+    [
+        "Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce",
+        "A dish or a drink named Il Falconiere: Steamed Chocolate Cake with Vanilla Sauce, seen from really close."
+    ],
+    [
+        "Pan Seared Salmon on Baby Arugula",
+        "A dish or a drink named Pan Seared Salmon on Baby Arugula."
+    ],
+    [
+        "Pan Seared Salmon on Baby Arugula",
+        "A dish or a drink named Pan Seared Salmon on Baby Arugula, surounded by the same food."
+    ],
+    [
+        "Pan Seared Salmon on Baby Arugula",
+        "A dish or a drink named Pan Seared Salmon on Baby Arugula, surounded by different food."
+    ],
+    [
+        "Dipping Biscuits",
+        "A dish or a drink named Dipping Biscuits."
+    ],
+    [
+        "Dipping Biscuits",
+        "A dish or a drink named Dipping Biscuits, surounded by the same food."
+    ],
+    [
+        "Dipping Biscuits",
+        "A dish or a drink named Dipping Biscuits, surounded by different food."
+    ],
+    [
+        "Queso Manchego con Aceitunas y Piquillos",
+        "A dish or a drink named Queso Manchego con Aceitunas y Piquillos."
+    ],
+    [
+        "Queso Manchego con Aceitunas y Piquillos",
+        "A dish or a drink named Queso Manchego con Aceitunas y Piquillos, seen from far away."
+    ],
+    [
+        "Queso Manchego con Aceitunas y Piquillos",
+        "A dish or a drink named Queso Manchego con Aceitunas y Piquillos, seen from really close."
+    ],
+    [
+        "Garlicky Doused Shrimp",
+        "A dish or a drink named Garlicky Doused Shrimp."
+    ],
+    [
+        "Garlicky Doused Shrimp",
+        "A dish or a drink named Garlicky Doused Shrimp, seen from far away."
+    ],
+    [
+        "Garlicky Doused Shrimp",
+        "A dish or a drink named Garlicky Doused Shrimp, seen from really close."
+    ],
+    [
+        "Steak Florentine",
+        "A dish or a drink named Steak Florentine."
+    ],
+    [
+        "Steak Florentine",
+        "A dish or a drink named Steak Florentine, surounded by the same food."
+    ],
+    [
+        "Steak Florentine",
+        "A dish or a drink named Steak Florentine, seen from really close."
+    ],
+    [
+        "Roasted Pork Tenderloin with Apples",
+        "A dish or a drink named Roasted Pork Tenderloin with Apples."
+    ],
+    [
+        "Roasted Pork Tenderloin with Apples",
+        "A dish or a drink named Roasted Pork Tenderloin with Apples, surounded by different food."
+    ],
+    [
+        "Roasted Pork Tenderloin with Apples",
+        "A dish or a drink named Roasted Pork Tenderloin with Apples, surounded by the same food."
+    ],
+    [
+        "Sausage Ragout with Linguine",
+        "A dish or a drink named Sausage Ragout with Linguine."
+    ],
+    [
+        "Sausage Ragout with Linguine",
+        "A dish or a drink named Sausage Ragout with Linguine, surounded by the same food."
+    ],
+    [
+        "Sausage Ragout with Linguine",
+        "A dish or a drink named Sausage Ragout with Linguine, surounded by different food."
+    ],
+    [
+        "Spiced Up, Oven-Fried Chicken",
+        "A dish or a drink named Spiced Up, Oven-Fried Chicken."
+    ],
+    [
+        "Spiced Up, Oven-Fried Chicken",
+        "A dish or a drink named Spiced Up, Oven-Fried Chicken, surounded by the same food."
+    ],
+    [
+        "Spiced Up, Oven-Fried Chicken",
+        "A dish or a drink named Spiced Up, Oven-Fried Chicken, surounded by different food."
+    ],
+    [
+        "Taiwanese Beef Noodle Soup",
+        "A dish or a drink named Taiwanese Beef Noodle Soup."
+    ],
+    [
+        "Taiwanese Beef Noodle Soup",
+        "A dish or a drink named Taiwanese Beef Noodle Soup, seen from far away."
+    ],
+    [
+        "Taiwanese Beef Noodle Soup",
+        "A dish or a drink named Taiwanese Beef Noodle Soup, surounded by different food."
+    ],
+    [
+        "Grilled Flatbreads",
+        "A dish or a drink named Grilled Flatbreads."
+    ],
+    [
+        "Grilled Flatbreads",
+        "A dish or a drink named Grilled Flatbreads, surounded by the same food."
+    ],
+    [
+        "Grilled Flatbreads",
+        "A dish or a drink named Grilled Flatbreads, seen from really close."
+    ],
+    [
+        "Grilled Veggie and Tofu Stack with Balsamic and Mint",
+        "A dish or a drink named Grilled Veggie and Tofu Stack with Balsamic and Mint."
+    ],
+    [
+        "Grilled Veggie and Tofu Stack with Balsamic and Mint",
+        "A dish or a drink named Grilled Veggie and Tofu Stack with Balsamic and Mint, surounded by different food."
+    ],
+    [
+        "Grilled Veggie and Tofu Stack with Balsamic and Mint",
+        "A dish or a drink named Grilled Veggie and Tofu Stack with Balsamic and Mint, surounded by the same food."
+    ],
+    [
+        "Cardamom Sour-Cream Waffles",
+        "A dish or a drink named Cardamom Sour-Cream Waffles."
+    ],
+    [
+        "Cardamom Sour-Cream Waffles",
+        "A dish or a drink named Cardamom Sour-Cream Waffles, surounded by the same food."
+    ],
+    [
+        "Cardamom Sour-Cream Waffles",
+        "A dish or a drink named Cardamom Sour-Cream Waffles, seen from far away."
+    ],
+    [
+        "Vanilla Sauce",
+        "A dish or a drink named Vanilla Sauce."
+    ],
+    [
+        "Vanilla Sauce",
+        "A dish or a drink named Vanilla Sauce, seen from really close."
+    ],
+    [
+        "Vanilla Sauce",
+        "A dish or a drink named Vanilla Sauce, surounded by the same food."
+    ],
+    [
+        "Homemade Ranch Dressing",
+        "A dish or a drink named Homemade Ranch Dressing."
+    ],
+    [
+        "Homemade Ranch Dressing",
+        "A dish or a drink named Homemade Ranch Dressing, surounded by the same food."
+    ],
+    [
+        "Homemade Ranch Dressing",
+        "A dish or a drink named Homemade Ranch Dressing, seen from really close."
+    ],
+    [
+        "Egg and Watercress Sandwiches",
+        "A dish or a drink named Egg and Watercress Sandwiches."
+    ],
+    [
+        "Egg and Watercress Sandwiches",
+        "A dish or a drink named Egg and Watercress Sandwiches, seen from far away."
+    ],
+    [
+        "Egg and Watercress Sandwiches",
+        "A dish or a drink named Egg and Watercress Sandwiches, surounded by different food."
+    ],
+    [
+        "Citrus Salad with Mint Sugar",
+        "A dish or a drink named Citrus Salad with Mint Sugar."
+    ],
+    [
+        "Citrus Salad with Mint Sugar",
+        "A dish or a drink named Citrus Salad with Mint Sugar, surounded by different food."
+    ],
+    [
+        "Citrus Salad with Mint Sugar",
+        "A dish or a drink named Citrus Salad with Mint Sugar, surounded by the same food."
+    ],
+    [
+        "Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup",
+        "A dish or a drink named Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup."
+    ],
+    [
+        "Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup",
+        "A dish or a drink named Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup, surounded by the same food."
+    ],
+    [
+        "Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup",
+        "A dish or a drink named Barbecue-Rubbed Scallops with Creamy Sauerkraut Soup, seen from far away."
+    ],
+    [
+        "Mixed Mushrooms Stroganoff",
+        "A dish or a drink named Mixed Mushrooms Stroganoff."
+    ],
+    [
+        "Mixed Mushrooms Stroganoff",
+        "A dish or a drink named Mixed Mushrooms Stroganoff, surounded by the same food."
+    ],
+    [
+        "Mixed Mushrooms Stroganoff",
+        "A dish or a drink named Mixed Mushrooms Stroganoff, seen from really close."
+    ],
+    [
+        "The Minimalist's Corn Chowder",
+        "A dish or a drink named The Minimalist's Corn Chowder."
+    ],
+    [
+        "The Minimalist's Corn Chowder",
+        "A dish or a drink named The Minimalist's Corn Chowder, surounded by the same food."
+    ],
+    [
+        "The Minimalist's Corn Chowder",
+        "A dish or a drink named The Minimalist's Corn Chowder, seen from really close."
+    ],
+    [
+        "Emergency Ginerator",
+        "A dish or a drink named Emergency Ginerator."
+    ],
+    [
+        "Emergency Ginerator",
+        "A dish or a drink named Emergency Ginerator, seen from really close."
+    ],
+    [
+        "Emergency Ginerator",
+        "A dish or a drink named Emergency Ginerator, seen from far away."
+    ],
+    [
+        "Almond Floating Islands with Custard Sauce",
+        "A dish or a drink named Almond Floating Islands with Custard Sauce."
+    ],
+    [
+        "Almond Floating Islands with Custard Sauce",
+        "A dish or a drink named Almond Floating Islands with Custard Sauce, surounded by different food."
+    ],
+    [
+        "Almond Floating Islands with Custard Sauce",
+        "A dish or a drink named Almond Floating Islands with Custard Sauce, surounded by the same food."
+    ],
+    [
+        "Perfect Roast Chicken",
+        "A dish or a drink named Perfect Roast Chicken."
+    ],
+    [
+        "Perfect Roast Chicken",
+        "A dish or a drink named Perfect Roast Chicken, seen from really close."
+    ],
+    [
+        "Perfect Roast Chicken",
+        "A dish or a drink named Perfect Roast Chicken, seen from far away."
+    ],
+    [
+        "Roasted Leg of Lamb with North African Spices, Lemon, and Onions",
+        "A dish or a drink named Roasted Leg of Lamb with North African Spices, Lemon, and Onions."
+    ],
+    [
+        "Roasted Leg of Lamb with North African Spices, Lemon, and Onions",
+        "A dish or a drink named Roasted Leg of Lamb with North African Spices, Lemon, and Onions, seen from really close."
+    ],
+    [
+        "Roasted Leg of Lamb with North African Spices, Lemon, and Onions",
+        "A dish or a drink named Roasted Leg of Lamb with North African Spices, Lemon, and Onions, surounded by the same food."
+    ],
+    [
+        "Dark Chocolate and Pine Nut Crostata",
+        "A dish or a drink named Dark Chocolate and Pine Nut Crostata."
+    ],
+    [
+        "Dark Chocolate and Pine Nut Crostata",
+        "A dish or a drink named Dark Chocolate and Pine Nut Crostata, seen from far away."
+    ],
+    [
+        "Dark Chocolate and Pine Nut Crostata",
+        "A dish or a drink named Dark Chocolate and Pine Nut Crostata, seen from really close."
+    ],
+    [
+        "Paprika Roast Chicken with Sweet Onion",
+        "A dish or a drink named Paprika Roast Chicken with Sweet Onion."
+    ],
+    [
+        "Paprika Roast Chicken with Sweet Onion",
+        "A dish or a drink named Paprika Roast Chicken with Sweet Onion, seen from far away."
+    ],
+    [
+        "Paprika Roast Chicken with Sweet Onion",
+        "A dish or a drink named Paprika Roast Chicken with Sweet Onion, seen from really close."
+    ],
+    [
+        "Mozzarella Arrabiata Salsa",
+        "A dish or a drink named Mozzarella Arrabiata Salsa."
+    ],
+    [
+        "Mozzarella Arrabiata Salsa",
+        "A dish or a drink named Mozzarella Arrabiata Salsa, surounded by different food."
+    ],
+    [
+        "Mozzarella Arrabiata Salsa",
+        "A dish or a drink named Mozzarella Arrabiata Salsa, seen from really close."
+    ],
+    [
+        "Saffron Shrimp Paella",
+        "A dish or a drink named Saffron Shrimp Paella."
+    ],
+    [
+        "Saffron Shrimp Paella",
+        "A dish or a drink named Saffron Shrimp Paella, surounded by different food."
+    ],
+    [
+        "Saffron Shrimp Paella",
+        "A dish or a drink named Saffron Shrimp Paella, seen from far away."
+    ],
+    [
+        "Flash-Fried Finger-Lickin' Chicken",
+        "A dish or a drink named Flash-Fried Finger-Lickin' Chicken."
+    ],
+    [
+        "Flash-Fried Finger-Lickin' Chicken",
+        "A dish or a drink named Flash-Fried Finger-Lickin' Chicken, seen from really close."
+    ],
+    [
+        "Flash-Fried Finger-Lickin' Chicken",
+        "A dish or a drink named Flash-Fried Finger-Lickin' Chicken, seen from far away."
+    ],
+    [
+        "My Favorite Chicken Salad",
+        "A dish or a drink named My Favorite Chicken Salad."
+    ],
+    [
+        "My Favorite Chicken Salad",
+        "A dish or a drink named My Favorite Chicken Salad, seen from really close."
+    ],
+    [
+        "My Favorite Chicken Salad",
+        "A dish or a drink named My Favorite Chicken Salad, seen from far away."
+    ],
+    [
+        "Hudson Bay",
+        "A dish or a drink named Hudson Bay."
+    ],
+    [
+        "Hudson Bay",
+        "A dish or a drink named Hudson Bay, surounded by the same food."
+    ],
+    [
+        "Hudson Bay",
+        "A dish or a drink named Hudson Bay, surounded by different food."
+    ],
+    [
+        "Pecan or Angel Slices",
+        "A dish or a drink named Pecan or Angel Slices."
+    ],
+    [
+        "Pecan or Angel Slices",
+        "A dish or a drink named Pecan or Angel Slices, surounded by different food."
+    ],
+    [
+        "Pecan or Angel Slices",
+        "A dish or a drink named Pecan or Angel Slices, seen from really close."
+    ],
+    [
+        "Mixed Berry and Cassis Sundaes",
+        "A dish or a drink named Mixed Berry and Cassis Sundaes."
+    ],
+    [
+        "Mixed Berry and Cassis Sundaes",
+        "A dish or a drink named Mixed Berry and Cassis Sundaes, seen from really close."
+    ],
+    [
+        "Mixed Berry and Cassis Sundaes",
+        "A dish or a drink named Mixed Berry and Cassis Sundaes, seen from far away."
+    ],
+    [
+        "Veggie Pot Pie",
+        "A dish or a drink named Veggie Pot Pie."
+    ],
+    [
+        "Veggie Pot Pie",
+        "A dish or a drink named Veggie Pot Pie, seen from far away."
+    ],
+    [
+        "Veggie Pot Pie",
+        "A dish or a drink named Veggie Pot Pie, surounded by the same food."
+    ],
+    [
+        "Pasta alla Norma",
+        "A dish or a drink named Pasta alla Norma."
+    ],
+    [
+        "Pasta alla Norma",
+        "A dish or a drink named Pasta alla Norma, seen from far away."
+    ],
+    [
+        "Pasta alla Norma",
+        "A dish or a drink named Pasta alla Norma, surounded by the same food."
+    ],
+    [
+        "Foie Gras Toasts with Sauternes Gelee",
+        "A dish or a drink named Foie Gras Toasts with Sauternes Gelee."
+    ],
+    [
+        "Foie Gras Toasts with Sauternes Gelee",
+        "A dish or a drink named Foie Gras Toasts with Sauternes Gelee, seen from really close."
+    ],
+    [
+        "Foie Gras Toasts with Sauternes Gelee",
+        "A dish or a drink named Foie Gras Toasts with Sauternes Gelee, surounded by different food."
+    ],
+    [
+        "Butter Cookies",
+        "A dish or a drink named Butter Cookies."
+    ],
+    [
+        "Butter Cookies",
+        "A dish or a drink named Butter Cookies, seen from far away."
+    ],
+    [
+        "Butter Cookies",
+        "A dish or a drink named Butter Cookies, surounded by the same food."
+    ],
+    [
+        "Rustic French Meatloaf",
+        "A dish or a drink named Rustic French Meatloaf."
+    ],
+    [
+        "Rustic French Meatloaf",
+        "A dish or a drink named Rustic French Meatloaf, surounded by the same food."
+    ],
+    [
+        "Rustic French Meatloaf",
+        "A dish or a drink named Rustic French Meatloaf, seen from really close."
+    ],
+    [
+        "Balsamic Roasted Tomato and Goat Cheese Crisps",
+        "A dish or a drink named Balsamic Roasted Tomato and Goat Cheese Crisps."
+    ],
+    [
+        "Balsamic Roasted Tomato and Goat Cheese Crisps",
+        "A dish or a drink named Balsamic Roasted Tomato and Goat Cheese Crisps, seen from far away."
+    ],
+    [
+        "Balsamic Roasted Tomato and Goat Cheese Crisps",
+        "A dish or a drink named Balsamic Roasted Tomato and Goat Cheese Crisps, surounded by different food."
+    ],
+    [
+        "Inside-Out Eggplant Parmigiana",
+        "A dish or a drink named Inside-Out Eggplant Parmigiana."
+    ],
+    [
+        "Inside-Out Eggplant Parmigiana",
+        "A dish or a drink named Inside-Out Eggplant Parmigiana, seen from really close."
+    ],
+    [
+        "Inside-Out Eggplant Parmigiana",
+        "A dish or a drink named Inside-Out Eggplant Parmigiana, surounded by different food."
+    ],
+    [
+        "Squash Salad",
+        "A dish or a drink named Squash Salad."
+    ],
+    [
+        "Squash Salad",
+        "A dish or a drink named Squash Salad, surounded by the same food."
+    ],
+    [
+        "Squash Salad",
+        "A dish or a drink named Squash Salad, seen from really close."
+    ],
+    [
+        "Ludo's Omelet",
+        "A dish or a drink named Ludo's Omelet."
+    ],
+    [
+        "Ludo's Omelet",
+        "A dish or a drink named Ludo's Omelet, seen from really close."
+    ],
+    [
+        "Ludo's Omelet",
+        "A dish or a drink named Ludo's Omelet, seen from far away."
+    ],
+    [
+        "Grilled Zucchini Pepper Salad",
+        "A dish or a drink named Grilled Zucchini Pepper Salad."
+    ],
+    [
+        "Grilled Zucchini Pepper Salad",
+        "A dish or a drink named Grilled Zucchini Pepper Salad, surounded by the same food."
+    ],
+    [
+        "Grilled Zucchini Pepper Salad",
+        "A dish or a drink named Grilled Zucchini Pepper Salad, seen from really close."
+    ],
+    [
+        "Herb-Grilled Salmon with Fresh Tomato-Orange Chutney",
+        "A dish or a drink named Herb-Grilled Salmon with Fresh Tomato-Orange Chutney."
+    ],
+    [
+        "Herb-Grilled Salmon with Fresh Tomato-Orange Chutney",
+        "A dish or a drink named Herb-Grilled Salmon with Fresh Tomato-Orange Chutney, seen from far away."
+    ],
+    [
+        "Herb-Grilled Salmon with Fresh Tomato-Orange Chutney",
+        "A dish or a drink named Herb-Grilled Salmon with Fresh Tomato-Orange Chutney, surounded by different food."
+    ],
+    [
+        "Lemon Cake with Raspberries and Pistachios",
+        "A dish or a drink named Lemon Cake with Raspberries and Pistachios."
+    ],
+    [
+        "Lemon Cake with Raspberries and Pistachios",
+        "A dish or a drink named Lemon Cake with Raspberries and Pistachios, seen from far away."
+    ],
+    [
+        "Lemon Cake with Raspberries and Pistachios",
+        "A dish or a drink named Lemon Cake with Raspberries and Pistachios, surounded by the same food."
+    ],
+    [
+        "Green Tomato Soup",
+        "A dish or a drink named Green Tomato Soup."
+    ],
+    [
+        "Green Tomato Soup",
+        "A dish or a drink named Green Tomato Soup, seen from really close."
+    ],
+    [
+        "Green Tomato Soup",
+        "A dish or a drink named Green Tomato Soup, surounded by different food."
+    ],
+    [
+        "Grilled Veal Chops with Arugula and Basil Salad",
+        "A dish or a drink named Grilled Veal Chops with Arugula and Basil Salad."
+    ],
+    [
+        "Grilled Veal Chops with Arugula and Basil Salad",
+        "A dish or a drink named Grilled Veal Chops with Arugula and Basil Salad, seen from far away."
+    ],
+    [
+        "Grilled Veal Chops with Arugula and Basil Salad",
+        "A dish or a drink named Grilled Veal Chops with Arugula and Basil Salad, surounded by the same food."
+    ],
+    [
+        "Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup",
+        "A dish or a drink named Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup."
+    ],
+    [
+        "Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup",
+        "A dish or a drink named Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup, surounded by the same food."
+    ],
+    [
+        "Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup",
+        "A dish or a drink named Zuppa di Cavolo Nero, Cannellini, e Salsicce: Kale, White Bean, and Sausage Soup, seen from far away."
+    ],
+    [
+        "Chicken-Fried Steak with Sausage Gravy",
+        "A dish or a drink named Chicken-Fried Steak with Sausage Gravy."
+    ],
+    [
+        "Chicken-Fried Steak with Sausage Gravy",
+        "A dish or a drink named Chicken-Fried Steak with Sausage Gravy, surounded by different food."
+    ],
+    [
+        "Chicken-Fried Steak with Sausage Gravy",
+        "A dish or a drink named Chicken-Fried Steak with Sausage Gravy, seen from really close."
+    ],
+    [
+        "Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes)",
+        "A dish or a drink named Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes)."
+    ],
+    [
+        "Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes)",
+        "A dish or a drink named Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes), surounded by the same food."
+    ],
+    [
+        "Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes)",
+        "A dish or a drink named Beef Cheeks Braised in Red Wine with Orange Zest (Joues de Boeuf aux Agrumes), surounded by different food."
+    ],
+    [
+        "Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano",
+        "A dish or a drink named Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano."
+    ],
+    [
+        "Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano",
+        "A dish or a drink named Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano, surounded by different food."
+    ],
+    [
+        "Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano",
+        "A dish or a drink named Tuscan Bean Soup with Prosciutto and Grated Parmigiano-Reggiano, seen from far away."
+    ],
+    [
+        "Corn-Bread and Chorizo Stuffing",
+        "A dish or a drink named Corn-Bread and Chorizo Stuffing."
+    ],
+    [
+        "Corn-Bread and Chorizo Stuffing",
+        "A dish or a drink named Corn-Bread and Chorizo Stuffing, seen from really close."
+    ],
+    [
+        "Corn-Bread and Chorizo Stuffing",
+        "A dish or a drink named Corn-Bread and Chorizo Stuffing, surounded by different food."
+    ],
+    [
+        "Vegetarian Cassoulet",
+        "A dish or a drink named Vegetarian Cassoulet."
+    ],
+    [
+        "Vegetarian Cassoulet",
+        "A dish or a drink named Vegetarian Cassoulet, seen from far away."
+    ],
+    [
+        "Vegetarian Cassoulet",
+        "A dish or a drink named Vegetarian Cassoulet, surounded by the same food."
+    ],
+    [
+        "Strawberry Yogurt Ice Pops",
+        "A dish or a drink named Strawberry Yogurt Ice Pops."
+    ],
+    [
+        "Strawberry Yogurt Ice Pops",
+        "A dish or a drink named Strawberry Yogurt Ice Pops, seen from really close."
+    ],
+    [
+        "Strawberry Yogurt Ice Pops",
+        "A dish or a drink named Strawberry Yogurt Ice Pops, seen from far away."
+    ],
+    [
+        "Pecorino Toscano Stagionato with Fig Paste",
+        "A dish or a drink named Pecorino Toscano Stagionato with Fig Paste."
+    ],
+    [
+        "Pecorino Toscano Stagionato with Fig Paste",
+        "A dish or a drink named Pecorino Toscano Stagionato with Fig Paste, seen from far away."
+    ],
+    [
+        "Pecorino Toscano Stagionato with Fig Paste",
+        "A dish or a drink named Pecorino Toscano Stagionato with Fig Paste, surounded by different food."
+    ],
+    [
+        "Bouillabaisse, Simplified",
+        "A dish or a drink named Bouillabaisse, Simplified."
+    ],
+    [
+        "Bouillabaisse, Simplified",
+        "A dish or a drink named Bouillabaisse, Simplified, seen from really close."
+    ],
+    [
+        "Bouillabaisse, Simplified",
+        "A dish or a drink named Bouillabaisse, Simplified, surounded by different food."
+    ],
+    [
+        "Braised Chicken with Celery Root and Garlic",
+        "A dish or a drink named Braised Chicken with Celery Root and Garlic."
+    ],
+    [
+        "Braised Chicken with Celery Root and Garlic",
+        "A dish or a drink named Braised Chicken with Celery Root and Garlic, surounded by the same food."
+    ],
+    [
+        "Braised Chicken with Celery Root and Garlic",
+        "A dish or a drink named Braised Chicken with Celery Root and Garlic, seen from really close."
+    ],
+    [
+        "Cornmeal Tamales",
+        "A dish or a drink named Cornmeal Tamales."
+    ],
+    [
+        "Cornmeal Tamales",
+        "A dish or a drink named Cornmeal Tamales, surounded by the same food."
+    ],
+    [
+        "Cornmeal Tamales",
+        "A dish or a drink named Cornmeal Tamales, seen from really close."
+    ],
+    [
+        "Ready for Guests Roasted Pears",
+        "A dish or a drink named Ready for Guests Roasted Pears."
+    ],
+    [
+        "Ready for Guests Roasted Pears",
+        "A dish or a drink named Ready for Guests Roasted Pears, seen from far away."
+    ],
+    [
+        "Ready for Guests Roasted Pears",
+        "A dish or a drink named Ready for Guests Roasted Pears, seen from really close."
+    ],
+    [
+        "Minted Honey Mango Sauce",
+        "A dish or a drink named Minted Honey Mango Sauce."
+    ],
+    [
+        "Minted Honey Mango Sauce",
+        "A dish or a drink named Minted Honey Mango Sauce, seen from really close."
+    ],
+    [
+        "Minted Honey Mango Sauce",
+        "A dish or a drink named Minted Honey Mango Sauce, seen from far away."
+    ],
+    [
+        "Braised Chicken Marsala",
+        "A dish or a drink named Braised Chicken Marsala."
+    ],
+    [
+        "Braised Chicken Marsala",
+        "A dish or a drink named Braised Chicken Marsala, seen from far away."
+    ],
+    [
+        "Braised Chicken Marsala",
+        "A dish or a drink named Braised Chicken Marsala, seen from really close."
+    ],
+    [
+        "Maple Blueberry Parfait",
+        "A dish or a drink named Maple Blueberry Parfait."
+    ],
+    [
+        "Maple Blueberry Parfait",
+        "A dish or a drink named Maple Blueberry Parfait, surounded by different food."
+    ],
+    [
+        "Maple Blueberry Parfait",
+        "A dish or a drink named Maple Blueberry Parfait, seen from really close."
+    ],
+    [
+        "Garlic Herb Bread",
+        "A dish or a drink named Garlic Herb Bread."
+    ],
+    [
+        "Garlic Herb Bread",
+        "A dish or a drink named Garlic Herb Bread, seen from really close."
+    ],
+    [
+        "Garlic Herb Bread",
+        "A dish or a drink named Garlic Herb Bread, surounded by the same food."
+    ],
+    [
+        "Bloody Mary Ice Pops",
+        "A dish or a drink named Bloody Mary Ice Pops."
+    ],
+    [
+        "Bloody Mary Ice Pops",
+        "A dish or a drink named Bloody Mary Ice Pops, surounded by the same food."
+    ],
+    [
+        "Bloody Mary Ice Pops",
+        "A dish or a drink named Bloody Mary Ice Pops, surounded by different food."
+    ],
+    [
+        "Tofu Triangles in Creamy Nut Buttter Sauce with Scallions",
+        "A dish or a drink named Tofu Triangles in Creamy Nut Buttter Sauce with Scallions."
+    ],
+    [
+        "Tofu Triangles in Creamy Nut Buttter Sauce with Scallions",
+        "A dish or a drink named Tofu Triangles in Creamy Nut Buttter Sauce with Scallions, surounded by different food."
+    ],
+    [
+        "Tofu Triangles in Creamy Nut Buttter Sauce with Scallions",
+        "A dish or a drink named Tofu Triangles in Creamy Nut Buttter Sauce with Scallions, seen from really close."
+    ],
+    [
+        "Jumbo Shrimp",
+        "A dish or a drink named Jumbo Shrimp."
+    ],
+    [
+        "Jumbo Shrimp",
+        "A dish or a drink named Jumbo Shrimp, surounded by different food."
+    ],
+    [
+        "Jumbo Shrimp",
+        "A dish or a drink named Jumbo Shrimp, surounded by the same food."
+    ],
+    [
+        "Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley",
+        "A dish or a drink named Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley."
+    ],
+    [
+        "Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley",
+        "A dish or a drink named Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley, surounded by the same food."
+    ],
+    [
+        "Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley",
+        "A dish or a drink named Dean & Deluca's Tuna Sandwich with Carrots, Red Onion, and Parsley, seen from really close."
+    ],
+    [
+        "Napa Valley Basil-Smoked Burgers",
+        "A dish or a drink named Napa Valley Basil-Smoked Burgers."
+    ],
+    [
+        "Napa Valley Basil-Smoked Burgers",
+        "A dish or a drink named Napa Valley Basil-Smoked Burgers, seen from really close."
+    ],
+    [
+        "Napa Valley Basil-Smoked Burgers",
+        "A dish or a drink named Napa Valley Basil-Smoked Burgers, surounded by different food."
+    ],
+    [
+        "Sister Pie Crust",
+        "A dish or a drink named Sister Pie Crust."
+    ],
+    [
+        "Sister Pie Crust",
+        "A dish or a drink named Sister Pie Crust, seen from far away."
+    ],
+    [
+        "Sister Pie Crust",
+        "A dish or a drink named Sister Pie Crust, seen from really close."
+    ],
+    [
+        "Timballo",
+        "A dish or a drink named Timballo."
+    ],
+    [
+        "Timballo",
+        "A dish or a drink named Timballo, surounded by the same food."
+    ],
+    [
+        "Timballo",
+        "A dish or a drink named Timballo, seen from really close."
+    ],
+    [
+        "Bow Tie and Broccoli Salad",
+        "A dish or a drink named Bow Tie and Broccoli Salad."
+    ],
+    [
+        "Bow Tie and Broccoli Salad",
+        "A dish or a drink named Bow Tie and Broccoli Salad, surounded by the same food."
+    ],
+    [
+        "Bow Tie and Broccoli Salad",
+        "A dish or a drink named Bow Tie and Broccoli Salad, seen from far away."
+    ],
+    [
+        "Caviar and Salmon Blini Tortes",
+        "A dish or a drink named Caviar and Salmon Blini Tortes."
+    ],
+    [
+        "Caviar and Salmon Blini Tortes",
+        "A dish or a drink named Caviar and Salmon Blini Tortes, seen from far away."
+    ],
+    [
+        "Caviar and Salmon Blini Tortes",
+        "A dish or a drink named Caviar and Salmon Blini Tortes, surounded by different food."
+    ],
+    [
+        "Winter Squash Soup with Fried Sage Leaves",
+        "A dish or a drink named Winter Squash Soup with Fried Sage Leaves."
+    ],
+    [
+        "Winter Squash Soup with Fried Sage Leaves",
+        "A dish or a drink named Winter Squash Soup with Fried Sage Leaves, surounded by different food."
+    ],
+    [
+        "Winter Squash Soup with Fried Sage Leaves",
+        "A dish or a drink named Winter Squash Soup with Fried Sage Leaves, seen from really close."
+    ],
+    [
+        "Lenin and Lime Gin and Tonic Sorbetto",
+        "A dish or a drink named Lenin and Lime Gin and Tonic Sorbetto."
+    ],
+    [
+        "Lenin and Lime Gin and Tonic Sorbetto",
+        "A dish or a drink named Lenin and Lime Gin and Tonic Sorbetto, surounded by different food."
+    ],
+    [
+        "Lenin and Lime Gin and Tonic Sorbetto",
+        "A dish or a drink named Lenin and Lime Gin and Tonic Sorbetto, surounded by the same food."
+    ],
+    [
+        "Fried Mussels in Ouzo Batter",
+        "A dish or a drink named Fried Mussels in Ouzo Batter."
+    ],
+    [
+        "Fried Mussels in Ouzo Batter",
+        "A dish or a drink named Fried Mussels in Ouzo Batter, surounded by the same food."
+    ],
+    [
+        "Fried Mussels in Ouzo Batter",
+        "A dish or a drink named Fried Mussels in Ouzo Batter, surounded by different food."
+    ],
+    [
+        "Spaghetti with Walnuts and Anchovies",
+        "A dish or a drink named Spaghetti with Walnuts and Anchovies."
+    ],
+    [
+        "Spaghetti with Walnuts and Anchovies",
+        "A dish or a drink named Spaghetti with Walnuts and Anchovies, seen from far away."
+    ],
+    [
+        "Spaghetti with Walnuts and Anchovies",
+        "A dish or a drink named Spaghetti with Walnuts and Anchovies, seen from really close."
+    ],
+    [
+        "Salmon with Agrodolce Sauce",
+        "A dish or a drink named Salmon with Agrodolce Sauce."
+    ],
+    [
+        "Salmon with Agrodolce Sauce",
+        "A dish or a drink named Salmon with Agrodolce Sauce, surounded by the same food."
+    ],
+    [
+        "Salmon with Agrodolce Sauce",
+        "A dish or a drink named Salmon with Agrodolce Sauce, seen from far away."
+    ],
+    [
+        "Spinach and Green Garlic Souffle",
+        "A dish or a drink named Spinach and Green Garlic Souffle."
+    ],
+    [
+        "Spinach and Green Garlic Souffle",
+        "A dish or a drink named Spinach and Green Garlic Souffle, surounded by different food."
+    ],
+    [
+        "Spinach and Green Garlic Souffle",
+        "A dish or a drink named Spinach and Green Garlic Souffle, seen from far away."
+    ],
+    [
+        "Good Gravy Bowl with Broccoli & Seitan",
+        "A dish or a drink named Good Gravy Bowl with Broccoli & Seitan."
+    ],
+    [
+        "Good Gravy Bowl with Broccoli & Seitan",
+        "A dish or a drink named Good Gravy Bowl with Broccoli & Seitan, seen from far away."
+    ],
+    [
+        "Good Gravy Bowl with Broccoli & Seitan",
+        "A dish or a drink named Good Gravy Bowl with Broccoli & Seitan, surounded by different food."
+    ],
+    [
+        "Aromatic Braised Chicken with Fried Onions",
+        "A dish or a drink named Aromatic Braised Chicken with Fried Onions."
+    ],
+    [
+        "Aromatic Braised Chicken with Fried Onions",
+        "A dish or a drink named Aromatic Braised Chicken with Fried Onions, surounded by different food."
+    ],
+    [
+        "Aromatic Braised Chicken with Fried Onions",
+        "A dish or a drink named Aromatic Braised Chicken with Fried Onions, surounded by the same food."
+    ],
+    [
+        "Hoisin-Glazed Meatloaf",
+        "A dish or a drink named Hoisin-Glazed Meatloaf."
+    ],
+    [
+        "Hoisin-Glazed Meatloaf",
+        "A dish or a drink named Hoisin-Glazed Meatloaf, seen from really close."
+    ],
+    [
+        "Hoisin-Glazed Meatloaf",
+        "A dish or a drink named Hoisin-Glazed Meatloaf, surounded by different food."
+    ],
+    [
+        "Stuffed Portobello Mushrooms",
+        "A dish or a drink named Stuffed Portobello Mushrooms."
+    ],
+    [
+        "Stuffed Portobello Mushrooms",
+        "A dish or a drink named Stuffed Portobello Mushrooms, surounded by the same food."
+    ],
+    [
+        "Stuffed Portobello Mushrooms",
+        "A dish or a drink named Stuffed Portobello Mushrooms, surounded by different food."
+    ],
+    [
+        "Chicken Pizza",
+        "A dish or a drink named Chicken Pizza."
+    ],
+    [
+        "Chicken Pizza",
+        "A dish or a drink named Chicken Pizza, seen from far away."
+    ],
+    [
+        "Chicken Pizza",
+        "A dish or a drink named Chicken Pizza, seen from really close."
+    ],
+    [
+        "Zamosc Gefilte Fish",
+        "A dish or a drink named Zamosc Gefilte Fish."
+    ],
+    [
+        "Zamosc Gefilte Fish",
+        "A dish or a drink named Zamosc Gefilte Fish, seen from really close."
+    ],
+    [
+        "Zamosc Gefilte Fish",
+        "A dish or a drink named Zamosc Gefilte Fish, surounded by the same food."
+    ],
+    [
+        "Herb Salt",
+        "A dish or a drink named Herb Salt."
+    ],
+    [
+        "Herb Salt",
+        "A dish or a drink named Herb Salt, surounded by different food."
+    ],
+    [
+        "Herb Salt",
+        "A dish or a drink named Herb Salt, seen from far away."
+    ],
+    [
+        "Baked Crottins with Sauteed Mushrooms",
+        "A dish or a drink named Baked Crottins with Sauteed Mushrooms."
+    ],
+    [
+        "Baked Crottins with Sauteed Mushrooms",
+        "A dish or a drink named Baked Crottins with Sauteed Mushrooms, seen from far away."
+    ],
+    [
+        "Baked Crottins with Sauteed Mushrooms",
+        "A dish or a drink named Baked Crottins with Sauteed Mushrooms, surounded by the same food."
+    ],
+    [
+        "Buttermilk Shoefly Pie",
+        "A dish or a drink named Buttermilk Shoefly Pie."
+    ],
+    [
+        "Buttermilk Shoefly Pie",
+        "A dish or a drink named Buttermilk Shoefly Pie, seen from far away."
+    ],
+    [
+        "Buttermilk Shoefly Pie",
+        "A dish or a drink named Buttermilk Shoefly Pie, seen from really close."
+    ],
+    [
+        "Angry Lobster with Lemon Rice and Crispy Basil",
+        "A dish or a drink named Angry Lobster with Lemon Rice and Crispy Basil."
+    ],
+    [
+        "Angry Lobster with Lemon Rice and Crispy Basil",
+        "A dish or a drink named Angry Lobster with Lemon Rice and Crispy Basil, surounded by different food."
+    ],
+    [
+        "Angry Lobster with Lemon Rice and Crispy Basil",
+        "A dish or a drink named Angry Lobster with Lemon Rice and Crispy Basil, seen from really close."
+    ],
+    [
+        "Salmon with Black Bean Sauce",
+        "A dish or a drink named Salmon with Black Bean Sauce."
+    ],
+    [
+        "Salmon with Black Bean Sauce",
+        "A dish or a drink named Salmon with Black Bean Sauce, seen from far away."
+    ],
+    [
+        "Salmon with Black Bean Sauce",
+        "A dish or a drink named Salmon with Black Bean Sauce, surounded by the same food."
+    ],
+    [
+        "Greek Potato and Almond Dip",
+        "A dish or a drink named Greek Potato and Almond Dip."
+    ],
+    [
+        "Greek Potato and Almond Dip",
+        "A dish or a drink named Greek Potato and Almond Dip, surounded by different food."
+    ],
+    [
+        "Greek Potato and Almond Dip",
+        "A dish or a drink named Greek Potato and Almond Dip, seen from really close."
+    ],
+    [
+        "Homemade Chili Powder",
+        "A dish or a drink named Homemade Chili Powder."
+    ],
+    [
+        "Homemade Chili Powder",
+        "A dish or a drink named Homemade Chili Powder, seen from far away."
+    ],
+    [
+        "Homemade Chili Powder",
+        "A dish or a drink named Homemade Chili Powder, surounded by different food."
+    ],
+    [
+        "Cuban-Style Burgers with Grilled Ham & Cheese",
+        "A dish or a drink named Cuban-Style Burgers with Grilled Ham & Cheese."
+    ],
+    [
+        "Cuban-Style Burgers with Grilled Ham & Cheese",
+        "A dish or a drink named Cuban-Style Burgers with Grilled Ham & Cheese, surounded by different food."
+    ],
+    [
+        "Cuban-Style Burgers with Grilled Ham & Cheese",
+        "A dish or a drink named Cuban-Style Burgers with Grilled Ham & Cheese, seen from really close."
+    ],
+    [
+        "Ipanema Punch",
+        "A dish or a drink named Ipanema Punch."
+    ],
+    [
+        "Ipanema Punch",
+        "A dish or a drink named Ipanema Punch, seen from far away."
+    ],
+    [
+        "Ipanema Punch",
+        "A dish or a drink named Ipanema Punch, surounded by different food."
+    ],
+    [
+        "Orange Pistachio Crescents",
+        "A dish or a drink named Orange Pistachio Crescents."
+    ],
+    [
+        "Orange Pistachio Crescents",
+        "A dish or a drink named Orange Pistachio Crescents, surounded by the same food."
+    ],
+    [
+        "Orange Pistachio Crescents",
+        "A dish or a drink named Orange Pistachio Crescents, seen from really close."
+    ],
+    [
+        "Chocolate Hazelnut Crinkle Cookies",
+        "A dish or a drink named Chocolate Hazelnut Crinkle Cookies."
+    ],
+    [
+        "Chocolate Hazelnut Crinkle Cookies",
+        "A dish or a drink named Chocolate Hazelnut Crinkle Cookies, surounded by the same food."
+    ],
+    [
+        "Chocolate Hazelnut Crinkle Cookies",
+        "A dish or a drink named Chocolate Hazelnut Crinkle Cookies, seen from far away."
+    ],
+    [
+        "Roasted Mission Figs with Honey",
+        "A dish or a drink named Roasted Mission Figs with Honey."
+    ],
+    [
+        "Roasted Mission Figs with Honey",
+        "A dish or a drink named Roasted Mission Figs with Honey, seen from really close."
+    ],
+    [
+        "Roasted Mission Figs with Honey",
+        "A dish or a drink named Roasted Mission Figs with Honey, surounded by the same food."
+    ],
+    [
+        "Cream of Cauliflower Soup",
+        "A dish or a drink named Cream of Cauliflower Soup."
+    ],
+    [
+        "Cream of Cauliflower Soup",
+        "A dish or a drink named Cream of Cauliflower Soup, surounded by different food."
+    ],
+    [
+        "Cream of Cauliflower Soup",
+        "A dish or a drink named Cream of Cauliflower Soup, seen from far away."
+    ],
+    [
+        "Boiled or Panfried Dumpling Dough",
+        "A dish or a drink named Boiled or Panfried Dumpling Dough."
+    ],
+    [
+        "Boiled or Panfried Dumpling Dough",
+        "A dish or a drink named Boiled or Panfried Dumpling Dough, seen from really close."
+    ],
+    [
+        "Boiled or Panfried Dumpling Dough",
+        "A dish or a drink named Boiled or Panfried Dumpling Dough, surounded by different food."
+    ],
+    [
+        "Apple and Smoked-Bacon Salad with Lychees and Chili Nuts",
+        "A dish or a drink named Apple and Smoked-Bacon Salad with Lychees and Chili Nuts."
+    ],
+    [
+        "Apple and Smoked-Bacon Salad with Lychees and Chili Nuts",
+        "A dish or a drink named Apple and Smoked-Bacon Salad with Lychees and Chili Nuts, surounded by the same food."
+    ],
+    [
+        "Apple and Smoked-Bacon Salad with Lychees and Chili Nuts",
+        "A dish or a drink named Apple and Smoked-Bacon Salad with Lychees and Chili Nuts, seen from far away."
+    ],
+    [
+        "Green Posole with Chicken",
+        "A dish or a drink named Green Posole with Chicken."
+    ],
+    [
+        "Green Posole with Chicken",
+        "A dish or a drink named Green Posole with Chicken, seen from really close."
+    ],
+    [
+        "Green Posole with Chicken",
+        "A dish or a drink named Green Posole with Chicken, seen from far away."
+    ],
+    [
+        "Baby Carrot Confit with Orange Juice and Cumin",
+        "A dish or a drink named Baby Carrot Confit with Orange Juice and Cumin."
+    ],
+    [
+        "Baby Carrot Confit with Orange Juice and Cumin",
+        "A dish or a drink named Baby Carrot Confit with Orange Juice and Cumin, seen from far away."
+    ],
+    [
+        "Baby Carrot Confit with Orange Juice and Cumin",
+        "A dish or a drink named Baby Carrot Confit with Orange Juice and Cumin, seen from really close."
+    ],
+    [
+        "Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce",
+        "A dish or a drink named Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce."
+    ],
+    [
+        "Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce",
+        "A dish or a drink named Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce, seen from far away."
+    ],
+    [
+        "Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce",
+        "A dish or a drink named Pan-Roasted Pork Chops with Yellow Pepper Mole Sauce, surounded by different food."
+    ],
+    [
+        "Classic Chocolate Souffle",
+        "A dish or a drink named Classic Chocolate Souffle."
+    ],
+    [
+        "Classic Chocolate Souffle",
+        "A dish or a drink named Classic Chocolate Souffle, seen from far away."
+    ],
+    [
+        "Classic Chocolate Souffle",
+        "A dish or a drink named Classic Chocolate Souffle, surounded by the same food."
+    ],
+    [
+        "Cherries in Almond Syrup Over Greek Yogurt",
+        "A dish or a drink named Cherries in Almond Syrup Over Greek Yogurt."
+    ],
+    [
+        "Cherries in Almond Syrup Over Greek Yogurt",
+        "A dish or a drink named Cherries in Almond Syrup Over Greek Yogurt, surounded by different food."
+    ],
+    [
+        "Cherries in Almond Syrup Over Greek Yogurt",
+        "A dish or a drink named Cherries in Almond Syrup Over Greek Yogurt, seen from really close."
+    ],
+    [
+        "Three-Mushroom Dressing with Prosciutto",
+        "A dish or a drink named Three-Mushroom Dressing with Prosciutto."
+    ],
+    [
+        "Three-Mushroom Dressing with Prosciutto",
+        "A dish or a drink named Three-Mushroom Dressing with Prosciutto, surounded by the same food."
+    ],
+    [
+        "Three-Mushroom Dressing with Prosciutto",
+        "A dish or a drink named Three-Mushroom Dressing with Prosciutto, seen from far away."
+    ],
+    [
+        "BA's Best Apple Cider Doughnuts",
+        "A dish or a drink named BA's Best Apple Cider Doughnuts."
+    ],
+    [
+        "BA's Best Apple Cider Doughnuts",
+        "A dish or a drink named BA's Best Apple Cider Doughnuts, seen from really close."
+    ],
+    [
+        "BA's Best Apple Cider Doughnuts",
+        "A dish or a drink named BA's Best Apple Cider Doughnuts, surounded by the same food."
+    ],
+    [
+        "Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad",
+        "A dish or a drink named Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad."
+    ],
+    [
+        "Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad",
+        "A dish or a drink named Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad, seen from really close."
+    ],
+    [
+        "Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad",
+        "A dish or a drink named Spicy Tomato, Pepper, Cucumber, Mint, and Parsley Salad, seen from far away."
+    ],
+    [
+        "Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce",
+        "A dish or a drink named Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce."
+    ],
+    [
+        "Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce",
+        "A dish or a drink named Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce, surounded by different food."
+    ],
+    [
+        "Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce",
+        "A dish or a drink named Toasted-Coconut Souffles with Ruby-Red Cranberry Sauce, surounded by the same food."
+    ],
+    [
+        "Steak with Olives",
+        "A dish or a drink named Steak with Olives."
+    ],
+    [
+        "Steak with Olives",
+        "A dish or a drink named Steak with Olives, surounded by different food."
+    ],
+    [
+        "Steak with Olives",
+        "A dish or a drink named Steak with Olives, seen from far away."
+    ],
+    [
+        "Espresso Cheesecake",
+        "A dish or a drink named Espresso Cheesecake."
+    ],
+    [
+        "Espresso Cheesecake",
+        "A dish or a drink named Espresso Cheesecake, seen from really close."
+    ],
+    [
+        "Espresso Cheesecake",
+        "A dish or a drink named Espresso Cheesecake, seen from far away."
+    ],
+    [
+        "Ricotta Fritters",
+        "A dish or a drink named Ricotta Fritters."
+    ],
+    [
+        "Ricotta Fritters",
+        "A dish or a drink named Ricotta Fritters, surounded by different food."
+    ],
+    [
+        "Ricotta Fritters",
+        "A dish or a drink named Ricotta Fritters, surounded by the same food."
+    ],
+    [
+        "Brown Sugar-Ginger Cream Cake",
+        "A dish or a drink named Brown Sugar-Ginger Cream Cake."
+    ],
+    [
+        "Brown Sugar-Ginger Cream Cake",
+        "A dish or a drink named Brown Sugar-Ginger Cream Cake, surounded by the same food."
+    ],
+    [
+        "Brown Sugar-Ginger Cream Cake",
+        "A dish or a drink named Brown Sugar-Ginger Cream Cake, surounded by different food."
+    ],
+    [
+        "Warm Onion Tart with Thyme",
+        "A dish or a drink named Warm Onion Tart with Thyme."
+    ],
+    [
+        "Warm Onion Tart with Thyme",
+        "A dish or a drink named Warm Onion Tart with Thyme, seen from really close."
+    ],
+    [
+        "Warm Onion Tart with Thyme",
+        "A dish or a drink named Warm Onion Tart with Thyme, surounded by different food."
+    ],
+    [
+        "Ricotta Gnocchi with Simple Tomato Sauce",
+        "A dish or a drink named Ricotta Gnocchi with Simple Tomato Sauce."
+    ],
+    [
+        "Ricotta Gnocchi with Simple Tomato Sauce",
+        "A dish or a drink named Ricotta Gnocchi with Simple Tomato Sauce, seen from really close."
+    ],
+    [
+        "Ricotta Gnocchi with Simple Tomato Sauce",
+        "A dish or a drink named Ricotta Gnocchi with Simple Tomato Sauce, seen from far away."
+    ],
+    [
+        "Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato",
+        "A dish or a drink named Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato."
+    ],
+    [
+        "Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato",
+        "A dish or a drink named Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato, seen from really close."
+    ],
+    [
+        "Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato",
+        "A dish or a drink named Greek Marinated Fried Chicken - Kotopoulo Tiganito Marinato, seen from far away."
+    ],
+    [
+        "Roasted Pepper Turkey with Orange Liqueur",
+        "A dish or a drink named Roasted Pepper Turkey with Orange Liqueur."
+    ],
+    [
+        "Roasted Pepper Turkey with Orange Liqueur",
+        "A dish or a drink named Roasted Pepper Turkey with Orange Liqueur, seen from really close."
+    ],
+    [
+        "Roasted Pepper Turkey with Orange Liqueur",
+        "A dish or a drink named Roasted Pepper Turkey with Orange Liqueur, surounded by different food."
+    ],
+    [
+        "Classic Manhattan Clam Chowder",
+        "A dish or a drink named Classic Manhattan Clam Chowder."
+    ],
+    [
+        "Classic Manhattan Clam Chowder",
+        "A dish or a drink named Classic Manhattan Clam Chowder, surounded by different food."
+    ],
+    [
+        "Classic Manhattan Clam Chowder",
+        "A dish or a drink named Classic Manhattan Clam Chowder, surounded by the same food."
+    ],
+    [
+        "Malted Chocolate Cake",
+        "A dish or a drink named Malted Chocolate Cake."
+    ],
+    [
+        "Malted Chocolate Cake",
+        "A dish or a drink named Malted Chocolate Cake, seen from really close."
+    ],
+    [
+        "Malted Chocolate Cake",
+        "A dish or a drink named Malted Chocolate Cake, surounded by the same food."
+    ],
+    [
+        "Elvis Presley's Hot Peanut Butter and Banana Sandwich",
+        "A dish or a drink named Elvis Presley's Hot Peanut Butter and Banana Sandwich."
+    ],
+    [
+        "Elvis Presley's Hot Peanut Butter and Banana Sandwich",
+        "A dish or a drink named Elvis Presley's Hot Peanut Butter and Banana Sandwich, surounded by different food."
+    ],
+    [
+        "Elvis Presley's Hot Peanut Butter and Banana Sandwich",
+        "A dish or a drink named Elvis Presley's Hot Peanut Butter and Banana Sandwich, surounded by the same food."
+    ],
+    [
+        "Ma'amoul (Nut-filled Cookies)",
+        "A dish or a drink named Ma'amoul (Nut-filled Cookies)."
+    ],
+    [
+        "Ma'amoul (Nut-filled Cookies)",
+        "A dish or a drink named Ma'amoul (Nut-filled Cookies), seen from far away."
+    ],
+    [
+        "Ma'amoul (Nut-filled Cookies)",
+        "A dish or a drink named Ma'amoul (Nut-filled Cookies), surounded by the same food."
+    ],
+    [
+        "Seared Tuna with Green Beans, Lemon and Wasabi",
+        "A dish or a drink named Seared Tuna with Green Beans, Lemon and Wasabi."
+    ],
+    [
+        "Seared Tuna with Green Beans, Lemon and Wasabi",
+        "A dish or a drink named Seared Tuna with Green Beans, Lemon and Wasabi, seen from really close."
+    ],
+    [
+        "Seared Tuna with Green Beans, Lemon and Wasabi",
+        "A dish or a drink named Seared Tuna with Green Beans, Lemon and Wasabi, surounded by different food."
+    ],
+    [
+        "2-Minute Chocolate Chip and Pecan Cookie",
+        "A dish or a drink named 2-Minute Chocolate Chip and Pecan Cookie."
+    ],
+    [
+        "2-Minute Chocolate Chip and Pecan Cookie",
+        "A dish or a drink named 2-Minute Chocolate Chip and Pecan Cookie, seen from really close."
+    ],
+    [
+        "2-Minute Chocolate Chip and Pecan Cookie",
+        "A dish or a drink named 2-Minute Chocolate Chip and Pecan Cookie, surounded by different food."
+    ],
+    [
+        "Nutter Butter(r) Cookies",
+        "A dish or a drink named Nutter Butter(r) Cookies."
+    ],
+    [
+        "Nutter Butter(r) Cookies",
+        "A dish or a drink named Nutter Butter(r) Cookies, surounded by the same food."
+    ],
+    [
+        "Nutter Butter(r) Cookies",
+        "A dish or a drink named Nutter Butter(r) Cookies, seen from really close."
+    ],
+    [
+        "Savory Parmesan Pain Perdu with Poached Eggs and Greens",
+        "A dish or a drink named Savory Parmesan Pain Perdu with Poached Eggs and Greens."
+    ],
+    [
+        "Savory Parmesan Pain Perdu with Poached Eggs and Greens",
+        "A dish or a drink named Savory Parmesan Pain Perdu with Poached Eggs and Greens, seen from really close."
+    ],
+    [
+        "Savory Parmesan Pain Perdu with Poached Eggs and Greens",
+        "A dish or a drink named Savory Parmesan Pain Perdu with Poached Eggs and Greens, surounded by the same food."
+    ],
+    [
+        "Basic Yogurt Pancakes",
+        "A dish or a drink named Basic Yogurt Pancakes."
+    ],
+    [
+        "Basic Yogurt Pancakes",
+        "A dish or a drink named Basic Yogurt Pancakes, surounded by different food."
+    ],
+    [
+        "Basic Yogurt Pancakes",
+        "A dish or a drink named Basic Yogurt Pancakes, seen from far away."
+    ],
+    [
+        "Avocado Blts on Toasted Oatmeal Bread",
+        "A dish or a drink named Avocado Blts on Toasted Oatmeal Bread."
+    ],
+    [
+        "Avocado Blts on Toasted Oatmeal Bread",
+        "A dish or a drink named Avocado Blts on Toasted Oatmeal Bread, seen from far away."
+    ],
+    [
+        "Avocado Blts on Toasted Oatmeal Bread",
+        "A dish or a drink named Avocado Blts on Toasted Oatmeal Bread, seen from really close."
+    ],
+    [
+        "Pollo al Mattone: Chicken Under a Brick",
+        "A dish or a drink named Pollo al Mattone: Chicken Under a Brick."
+    ],
+    [
+        "Pollo al Mattone: Chicken Under a Brick",
+        "A dish or a drink named Pollo al Mattone: Chicken Under a Brick, surounded by different food."
+    ],
+    [
+        "Pollo al Mattone: Chicken Under a Brick",
+        "A dish or a drink named Pollo al Mattone: Chicken Under a Brick, seen from really close."
+    ],
+    [
+        "Turkey Sweet Potato Shepherd's Pie",
+        "A dish or a drink named Turkey Sweet Potato Shepherd's Pie."
+    ],
+    [
+        "Turkey Sweet Potato Shepherd's Pie",
+        "A dish or a drink named Turkey Sweet Potato Shepherd's Pie, seen from really close."
+    ],
+    [
+        "Turkey Sweet Potato Shepherd's Pie",
+        "A dish or a drink named Turkey Sweet Potato Shepherd's Pie, surounded by different food."
+    ],
+    [
+        "Chocolate-Praline Cake in a Jar",
+        "A dish or a drink named Chocolate-Praline Cake in a Jar."
+    ],
+    [
+        "Chocolate-Praline Cake in a Jar",
+        "A dish or a drink named Chocolate-Praline Cake in a Jar, seen from far away."
+    ],
+    [
+        "Chocolate-Praline Cake in a Jar",
+        "A dish or a drink named Chocolate-Praline Cake in a Jar, surounded by different food."
+    ],
+    [
+        "Lemon (or Lime or Orange) Ricotta Pancakes",
+        "A dish or a drink named Lemon (or Lime or Orange) Ricotta Pancakes."
+    ],
+    [
+        "Lemon (or Lime or Orange) Ricotta Pancakes",
+        "A dish or a drink named Lemon (or Lime or Orange) Ricotta Pancakes, surounded by the same food."
+    ],
+    [
+        "Lemon (or Lime or Orange) Ricotta Pancakes",
+        "A dish or a drink named Lemon (or Lime or Orange) Ricotta Pancakes, surounded by different food."
+    ],
+    [
+        "Cucumber-Aloe Cocktail",
+        "A dish or a drink named Cucumber-Aloe Cocktail."
+    ],
+    [
+        "Cucumber-Aloe Cocktail",
+        "A dish or a drink named Cucumber-Aloe Cocktail, surounded by the same food."
+    ],
+    [
+        "Cucumber-Aloe Cocktail",
+        "A dish or a drink named Cucumber-Aloe Cocktail, seen from far away."
+    ],
+    [
+        "Chicken Canzanese",
+        "A dish or a drink named Chicken Canzanese."
+    ],
+    [
+        "Chicken Canzanese",
+        "A dish or a drink named Chicken Canzanese, seen from far away."
+    ],
+    [
+        "Chicken Canzanese",
+        "A dish or a drink named Chicken Canzanese, seen from really close."
+    ],
+    [
+        "Bumble's Ginger Roulade",
+        "A dish or a drink named Bumble's Ginger Roulade."
+    ],
+    [
+        "Bumble's Ginger Roulade",
+        "A dish or a drink named Bumble's Ginger Roulade, seen from far away."
+    ],
+    [
+        "Bumble's Ginger Roulade",
+        "A dish or a drink named Bumble's Ginger Roulade, surounded by different food."
+    ],
+    [
+        "Hills Family Sugar Cookie Cutouts",
+        "A dish or a drink named Hills Family Sugar Cookie Cutouts."
+    ],
+    [
+        "Hills Family Sugar Cookie Cutouts",
+        "A dish or a drink named Hills Family Sugar Cookie Cutouts, surounded by different food."
+    ],
+    [
+        "Hills Family Sugar Cookie Cutouts",
+        "A dish or a drink named Hills Family Sugar Cookie Cutouts, surounded by the same food."
+    ],
+    [
+        "Gingered Pear and Raspberry Pandowdy",
+        "A dish or a drink named Gingered Pear and Raspberry Pandowdy."
+    ],
+    [
+        "Gingered Pear and Raspberry Pandowdy",
+        "A dish or a drink named Gingered Pear and Raspberry Pandowdy, seen from really close."
+    ],
+    [
+        "Gingered Pear and Raspberry Pandowdy",
+        "A dish or a drink named Gingered Pear and Raspberry Pandowdy, seen from far away."
+    ],
+    [
+        "Salt & Sugar Pickles",
+        "A dish or a drink named Salt & Sugar Pickles."
+    ],
+    [
+        "Salt & Sugar Pickles",
+        "A dish or a drink named Salt & Sugar Pickles, surounded by different food."
+    ],
+    [
+        "Salt & Sugar Pickles",
+        "A dish or a drink named Salt & Sugar Pickles, seen from far away."
+    ],
+    [
+        "Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette",
+        "A dish or a drink named Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette."
+    ],
+    [
+        "Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette",
+        "A dish or a drink named Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette, surounded by different food."
+    ],
+    [
+        "Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette",
+        "A dish or a drink named Frisee with Crisped Salmon Skin and Warm Sherry Vinaigrette, surounded by the same food."
+    ],
+    [
+        "Chocolate-Hazelnut Mousse",
+        "A dish or a drink named Chocolate-Hazelnut Mousse."
+    ],
+    [
+        "Chocolate-Hazelnut Mousse",
+        "A dish or a drink named Chocolate-Hazelnut Mousse, surounded by the same food."
+    ],
+    [
+        "Chocolate-Hazelnut Mousse",
+        "A dish or a drink named Chocolate-Hazelnut Mousse, surounded by different food."
+    ],
+    [
+        "Strawberry Lemonade Smash",
+        "A dish or a drink named Strawberry Lemonade Smash."
+    ],
+    [
+        "Strawberry Lemonade Smash",
+        "A dish or a drink named Strawberry Lemonade Smash, seen from far away."
+    ],
+    [
+        "Strawberry Lemonade Smash",
+        "A dish or a drink named Strawberry Lemonade Smash, surounded by the same food."
+    ],
+    [
+        "Colombian Avocado Salsa",
+        "A dish or a drink named Colombian Avocado Salsa."
+    ],
+    [
+        "Colombian Avocado Salsa",
+        "A dish or a drink named Colombian Avocado Salsa, seen from far away."
+    ],
+    [
+        "Colombian Avocado Salsa",
+        "A dish or a drink named Colombian Avocado Salsa, surounded by different food."
+    ],
+    [
+        "If It Ain't Broke, Don't Fix It Stuffing",
+        "A dish or a drink named If It Ain't Broke, Don't Fix It Stuffing."
+    ],
+    [
+        "If It Ain't Broke, Don't Fix It Stuffing",
+        "A dish or a drink named If It Ain't Broke, Don't Fix It Stuffing, surounded by different food."
+    ],
+    [
+        "If It Ain't Broke, Don't Fix It Stuffing",
+        "A dish or a drink named If It Ain't Broke, Don't Fix It Stuffing, surounded by the same food."
+    ],
+    [
+        "Almond-Apricot Chicken with Mint Pesto",
+        "A dish or a drink named Almond-Apricot Chicken with Mint Pesto."
+    ],
+    [
+        "Almond-Apricot Chicken with Mint Pesto",
+        "A dish or a drink named Almond-Apricot Chicken with Mint Pesto, surounded by different food."
+    ],
+    [
+        "Almond-Apricot Chicken with Mint Pesto",
+        "A dish or a drink named Almond-Apricot Chicken with Mint Pesto, seen from really close."
+    ],
+    [
+        "Braised Bacon Carolina Rice",
+        "A dish or a drink named Braised Bacon Carolina Rice."
+    ],
+    [
+        "Braised Bacon Carolina Rice",
+        "A dish or a drink named Braised Bacon Carolina Rice, surounded by different food."
+    ],
+    [
+        "Braised Bacon Carolina Rice",
+        "A dish or a drink named Braised Bacon Carolina Rice, seen from really close."
+    ],
+    [
+        "Limoncello Tiramisu (Tiramisu al Limoncello)",
+        "A dish or a drink named Limoncello Tiramisu (Tiramisu al Limoncello)."
+    ],
+    [
+        "Limoncello Tiramisu (Tiramisu al Limoncello)",
+        "A dish or a drink named Limoncello Tiramisu (Tiramisu al Limoncello), seen from really close."
+    ],
+    [
+        "Limoncello Tiramisu (Tiramisu al Limoncello)",
+        "A dish or a drink named Limoncello Tiramisu (Tiramisu al Limoncello), seen from far away."
+    ],
+    [
+        "Jacques's French Potato Salad",
+        "A dish or a drink named Jacques's French Potato Salad."
+    ],
+    [
+        "Jacques's French Potato Salad",
+        "A dish or a drink named Jacques's French Potato Salad, surounded by the same food."
+    ],
+    [
+        "Jacques's French Potato Salad",
+        "A dish or a drink named Jacques's French Potato Salad, seen from really close."
+    ],
+    [
+        "Frozen Apricot Souffle",
+        "A dish or a drink named Frozen Apricot Souffle."
+    ],
+    [
+        "Frozen Apricot Souffle",
+        "A dish or a drink named Frozen Apricot Souffle, surounded by different food."
+    ],
+    [
+        "Frozen Apricot Souffle",
+        "A dish or a drink named Frozen Apricot Souffle, seen from really close."
+    ],
+    [
+        "Lemon and Fresh Herb Tabbouleh",
+        "A dish or a drink named Lemon and Fresh Herb Tabbouleh."
+    ],
+    [
+        "Lemon and Fresh Herb Tabbouleh",
+        "A dish or a drink named Lemon and Fresh Herb Tabbouleh, seen from far away."
+    ],
+    [
+        "Lemon and Fresh Herb Tabbouleh",
+        "A dish or a drink named Lemon and Fresh Herb Tabbouleh, surounded by different food."
+    ],
+    [
+        "Butternut Squash and Radicchio Pappardelle",
+        "A dish or a drink named Butternut Squash and Radicchio Pappardelle."
+    ],
+    [
+        "Butternut Squash and Radicchio Pappardelle",
+        "A dish or a drink named Butternut Squash and Radicchio Pappardelle, seen from really close."
+    ],
+    [
+        "Butternut Squash and Radicchio Pappardelle",
+        "A dish or a drink named Butternut Squash and Radicchio Pappardelle, seen from far away."
+    ],
+    [
+        "Matzo Balls",
+        "A dish or a drink named Matzo Balls."
+    ],
+    [
+        "Matzo Balls",
+        "A dish or a drink named Matzo Balls, seen from far away."
+    ],
+    [
+        "Matzo Balls",
+        "A dish or a drink named Matzo Balls, surounded by the same food."
+    ],
+    [
+        "Springtime Pasta Primavera",
+        "A dish or a drink named Springtime Pasta Primavera."
+    ],
+    [
+        "Springtime Pasta Primavera",
+        "A dish or a drink named Springtime Pasta Primavera, seen from far away."
+    ],
+    [
+        "Springtime Pasta Primavera",
+        "A dish or a drink named Springtime Pasta Primavera, seen from really close."
+    ],
+    [
+        "Baked Eggs with Tomato",
+        "A dish or a drink named Baked Eggs with Tomato."
+    ],
+    [
+        "Baked Eggs with Tomato",
+        "A dish or a drink named Baked Eggs with Tomato, seen from far away."
+    ],
+    [
+        "Baked Eggs with Tomato",
+        "A dish or a drink named Baked Eggs with Tomato, surounded by the same food."
+    ],
+    [
+        "Wild Mushroom and Roasted Garlic Sandwich",
+        "A dish or a drink named Wild Mushroom and Roasted Garlic Sandwich."
+    ],
+    [
+        "Wild Mushroom and Roasted Garlic Sandwich",
+        "A dish or a drink named Wild Mushroom and Roasted Garlic Sandwich, seen from far away."
+    ],
+    [
+        "Wild Mushroom and Roasted Garlic Sandwich",
+        "A dish or a drink named Wild Mushroom and Roasted Garlic Sandwich, seen from really close."
+    ],
+    [
+        "Deborah Madison's Roasted Squash, Pear, and Ginger Soup",
+        "A dish or a drink named Deborah Madison's Roasted Squash, Pear, and Ginger Soup."
+    ],
+    [
+        "Deborah Madison's Roasted Squash, Pear, and Ginger Soup",
+        "A dish or a drink named Deborah Madison's Roasted Squash, Pear, and Ginger Soup, seen from far away."
+    ],
+    [
+        "Deborah Madison's Roasted Squash, Pear, and Ginger Soup",
+        "A dish or a drink named Deborah Madison's Roasted Squash, Pear, and Ginger Soup, seen from really close."
+    ],
+    [
+        "Provencal Vegetable Soup (Soupe au Pistou)",
+        "A dish or a drink named Provencal Vegetable Soup (Soupe au Pistou)."
+    ],
+    [
+        "Provencal Vegetable Soup (Soupe au Pistou)",
+        "A dish or a drink named Provencal Vegetable Soup (Soupe au Pistou), surounded by different food."
+    ],
+    [
+        "Provencal Vegetable Soup (Soupe au Pistou)",
+        "A dish or a drink named Provencal Vegetable Soup (Soupe au Pistou), surounded by the same food."
+    ],
+    [
+        "Korova Cookies",
+        "A dish or a drink named Korova Cookies."
+    ],
+    [
+        "Korova Cookies",
+        "A dish or a drink named Korova Cookies, seen from far away."
+    ],
+    [
+        "Korova Cookies",
+        "A dish or a drink named Korova Cookies, surounded by different food."
+    ],
+    [
+        "Jerusalem Artichoke Pickles",
+        "A dish or a drink named Jerusalem Artichoke Pickles."
+    ],
+    [
+        "Jerusalem Artichoke Pickles",
+        "A dish or a drink named Jerusalem Artichoke Pickles, surounded by the same food."
+    ],
+    [
+        "Jerusalem Artichoke Pickles",
+        "A dish or a drink named Jerusalem Artichoke Pickles, seen from far away."
+    ],
+    [
+        "Golden Beet Salad",
+        "A dish or a drink named Golden Beet Salad."
+    ],
+    [
+        "Golden Beet Salad",
+        "A dish or a drink named Golden Beet Salad, surounded by the same food."
+    ],
+    [
+        "Golden Beet Salad",
+        "A dish or a drink named Golden Beet Salad, surounded by different food."
+    ],
+    [
+        "Nepenthe's Triple-Berry Pie",
+        "A dish or a drink named Nepenthe's Triple-Berry Pie."
+    ],
+    [
+        "Nepenthe's Triple-Berry Pie",
+        "A dish or a drink named Nepenthe's Triple-Berry Pie, seen from really close."
+    ],
+    [
+        "Nepenthe's Triple-Berry Pie",
+        "A dish or a drink named Nepenthe's Triple-Berry Pie, surounded by different food."
+    ],
+    [
+        "Turkey Meatballs",
+        "A dish or a drink named Turkey Meatballs."
+    ],
+    [
+        "Turkey Meatballs",
+        "A dish or a drink named Turkey Meatballs, seen from far away."
+    ],
+    [
+        "Turkey Meatballs",
+        "A dish or a drink named Turkey Meatballs, seen from really close."
+    ],
+    [
+        "Brussels Sprouts for People Who Think They Hate Brussels Sprouts",
+        "A dish or a drink named Brussels Sprouts for People Who Think They Hate Brussels Sprouts."
+    ],
+    [
+        "Brussels Sprouts for People Who Think They Hate Brussels Sprouts",
+        "A dish or a drink named Brussels Sprouts for People Who Think They Hate Brussels Sprouts, surounded by different food."
+    ],
+    [
+        "Brussels Sprouts for People Who Think They Hate Brussels Sprouts",
+        "A dish or a drink named Brussels Sprouts for People Who Think They Hate Brussels Sprouts, seen from really close."
+    ],
+    [
+        "Peach Prosecco Spritzers",
+        "A dish or a drink named Peach Prosecco Spritzers."
+    ],
+    [
+        "Peach Prosecco Spritzers",
+        "A dish or a drink named Peach Prosecco Spritzers, surounded by the same food."
+    ],
+    [
+        "Peach Prosecco Spritzers",
+        "A dish or a drink named Peach Prosecco Spritzers, seen from far away."
+    ],
+    [
+        "Stir-Fried Noodles with Fresh and Baked Tofu",
+        "A dish or a drink named Stir-Fried Noodles with Fresh and Baked Tofu."
+    ],
+    [
+        "Stir-Fried Noodles with Fresh and Baked Tofu",
+        "A dish or a drink named Stir-Fried Noodles with Fresh and Baked Tofu, surounded by the same food."
+    ],
+    [
+        "Stir-Fried Noodles with Fresh and Baked Tofu",
+        "A dish or a drink named Stir-Fried Noodles with Fresh and Baked Tofu, seen from really close."
+    ],
+    [
+        "Cheddar Corn Muffins with Jalapeno Butter",
+        "A dish or a drink named Cheddar Corn Muffins with Jalapeno Butter."
+    ],
+    [
+        "Cheddar Corn Muffins with Jalapeno Butter",
+        "A dish or a drink named Cheddar Corn Muffins with Jalapeno Butter, seen from really close."
+    ],
+    [
+        "Cheddar Corn Muffins with Jalapeno Butter",
+        "A dish or a drink named Cheddar Corn Muffins with Jalapeno Butter, surounded by different food."
+    ],
+    [
+        "Buttermilk Fantails",
+        "A dish or a drink named Buttermilk Fantails."
+    ],
+    [
+        "Buttermilk Fantails",
+        "A dish or a drink named Buttermilk Fantails, seen from far away."
+    ],
+    [
+        "Buttermilk Fantails",
+        "A dish or a drink named Buttermilk Fantails, surounded by the same food."
+    ],
+    [
+        "Sage Polenta",
+        "A dish or a drink named Sage Polenta."
+    ],
+    [
+        "Sage Polenta",
+        "A dish or a drink named Sage Polenta, surounded by different food."
+    ],
+    [
+        "Sage Polenta",
+        "A dish or a drink named Sage Polenta, seen from really close."
+    ],
+    [
+        "Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette",
+        "A dish or a drink named Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette."
+    ],
+    [
+        "Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette",
+        "A dish or a drink named Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette, seen from really close."
+    ],
+    [
+        "Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette",
+        "A dish or a drink named Grilled Grass-Fed Rib-Eye Steaks with Balsamic-Caper Vinaigrette, surounded by the same food."
+    ],
+    [
+        "Ecuadoran Tamarillo Salsa",
+        "A dish or a drink named Ecuadoran Tamarillo Salsa."
+    ],
+    [
+        "Ecuadoran Tamarillo Salsa",
+        "A dish or a drink named Ecuadoran Tamarillo Salsa, surounded by the same food."
+    ],
+    [
+        "Ecuadoran Tamarillo Salsa",
+        "A dish or a drink named Ecuadoran Tamarillo Salsa, seen from far away."
+    ],
+    [
+        "Spaghetti Limone Parmeggiano",
+        "A dish or a drink named Spaghetti Limone Parmeggiano."
+    ],
+    [
+        "Spaghetti Limone Parmeggiano",
+        "A dish or a drink named Spaghetti Limone Parmeggiano, surounded by the same food."
+    ],
+    [
+        "Spaghetti Limone Parmeggiano",
+        "A dish or a drink named Spaghetti Limone Parmeggiano, seen from far away."
+    ],
+    [
+        "Pink Grapefruit, Avocado, and Watercress Salad",
+        "A dish or a drink named Pink Grapefruit, Avocado, and Watercress Salad."
+    ],
+    [
+        "Pink Grapefruit, Avocado, and Watercress Salad",
+        "A dish or a drink named Pink Grapefruit, Avocado, and Watercress Salad, surounded by the same food."
+    ],
+    [
+        "Pink Grapefruit, Avocado, and Watercress Salad",
+        "A dish or a drink named Pink Grapefruit, Avocado, and Watercress Salad, seen from far away."
+    ],
+    [
+        "Blisters on My Sisters",
+        "A dish or a drink named Blisters on My Sisters."
+    ],
+    [
+        "Blisters on My Sisters",
+        "A dish or a drink named Blisters on My Sisters, seen from far away."
+    ],
+    [
+        "Blisters on My Sisters",
+        "A dish or a drink named Blisters on My Sisters, surounded by the same food."
+    ],
+    [
+        "Dirty Fried Rice",
+        "A dish or a drink named Dirty Fried Rice."
+    ],
+    [
+        "Dirty Fried Rice",
+        "A dish or a drink named Dirty Fried Rice, seen from far away."
+    ],
+    [
+        "Dirty Fried Rice",
+        "A dish or a drink named Dirty Fried Rice, surounded by different food."
+    ],
+    [
+        "Shrimp, Lobster, and Jicama Salad",
+        "A dish or a drink named Shrimp, Lobster, and Jicama Salad."
+    ],
+    [
+        "Shrimp, Lobster, and Jicama Salad",
+        "A dish or a drink named Shrimp, Lobster, and Jicama Salad, surounded by the same food."
+    ],
+    [
+        "Shrimp, Lobster, and Jicama Salad",
+        "A dish or a drink named Shrimp, Lobster, and Jicama Salad, surounded by different food."
+    ],
+    [
+        "Grilled Cheddar and Bacon with Mango Chutney",
+        "A dish or a drink named Grilled Cheddar and Bacon with Mango Chutney."
+    ],
+    [
+        "Grilled Cheddar and Bacon with Mango Chutney",
+        "A dish or a drink named Grilled Cheddar and Bacon with Mango Chutney, seen from far away."
+    ],
+    [
+        "Grilled Cheddar and Bacon with Mango Chutney",
+        "A dish or a drink named Grilled Cheddar and Bacon with Mango Chutney, surounded by different food."
+    ],
+    [
+        "Asian Noodle Dinner Salad",
+        "A dish or a drink named Asian Noodle Dinner Salad."
+    ],
+    [
+        "Asian Noodle Dinner Salad",
+        "A dish or a drink named Asian Noodle Dinner Salad, surounded by different food."
+    ],
+    [
+        "Asian Noodle Dinner Salad",
+        "A dish or a drink named Asian Noodle Dinner Salad, seen from really close."
+    ],
+    [
+        "Red Velvet Cupcakes with Creamy Vanilla Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Creamy Vanilla Icing."
+    ],
+    [
+        "Red Velvet Cupcakes with Creamy Vanilla Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Creamy Vanilla Icing, surounded by the same food."
+    ],
+    [
+        "Red Velvet Cupcakes with Creamy Vanilla Icing",
+        "A dish or a drink named Red Velvet Cupcakes with Creamy Vanilla Icing, seen from really close."
+    ],
+    [
+        "Mi Tierra Biscochitos",
+        "A dish or a drink named Mi Tierra Biscochitos."
+    ],
+    [
+        "Mi Tierra Biscochitos",
+        "A dish or a drink named Mi Tierra Biscochitos, surounded by the same food."
+    ],
+    [
+        "Mi Tierra Biscochitos",
+        "A dish or a drink named Mi Tierra Biscochitos, seen from far away."
+    ],
+    [
+        "Asparagus Roast Beef Roll-Ups",
+        "A dish or a drink named Asparagus Roast Beef Roll-Ups."
+    ],
+    [
+        "Asparagus Roast Beef Roll-Ups",
+        "A dish or a drink named Asparagus Roast Beef Roll-Ups, seen from far away."
+    ],
+    [
+        "Asparagus Roast Beef Roll-Ups",
+        "A dish or a drink named Asparagus Roast Beef Roll-Ups, surounded by different food."
+    ],
+    [
+        "Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian",
+        "A dish or a drink named Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian."
+    ],
+    [
+        "Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian",
+        "A dish or a drink named Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian, seen from really close."
+    ],
+    [
+        "Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian",
+        "A dish or a drink named Spicy Tomato Sauce from Giada de Laurentiis's Everyday Italian, seen from far away."
+    ],
+    [
+        "Cane Syrup Pecan Pie",
+        "A dish or a drink named Cane Syrup Pecan Pie."
+    ],
+    [
+        "Cane Syrup Pecan Pie",
+        "A dish or a drink named Cane Syrup Pecan Pie, surounded by different food."
+    ],
+    [
+        "Cane Syrup Pecan Pie",
+        "A dish or a drink named Cane Syrup Pecan Pie, seen from really close."
+    ],
+    [
+        "Veal Osso Buco",
+        "A dish or a drink named Veal Osso Buco."
+    ],
+    [
+        "Veal Osso Buco",
+        "A dish or a drink named Veal Osso Buco, seen from really close."
+    ],
+    [
+        "Veal Osso Buco",
+        "A dish or a drink named Veal Osso Buco, surounded by the same food."
+    ],
+    [
+        "Sherry Pim's Cup",
+        "A dish or a drink named Sherry Pim's Cup."
+    ],
+    [
+        "Sherry Pim's Cup",
+        "A dish or a drink named Sherry Pim's Cup, seen from far away."
+    ],
+    [
+        "Sherry Pim's Cup",
+        "A dish or a drink named Sherry Pim's Cup, surounded by different food."
+    ],
+    [
+        "Avocado-Lime Ice Pops",
+        "A dish or a drink named Avocado-Lime Ice Pops."
+    ],
+    [
+        "Avocado-Lime Ice Pops",
+        "A dish or a drink named Avocado-Lime Ice Pops, surounded by the same food."
+    ],
+    [
+        "Avocado-Lime Ice Pops",
+        "A dish or a drink named Avocado-Lime Ice Pops, surounded by different food."
+    ],
+    [
+        "Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad",
+        "A dish or a drink named Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad."
+    ],
+    [
+        "Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad",
+        "A dish or a drink named Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad, surounded by the same food."
+    ],
+    [
+        "Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad",
+        "A dish or a drink named Republic of the Rio Grande Grilled Tuna and Grapefruit Supreme Salad, seen from really close."
+    ],
+    [
+        "Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion",
+        "A dish or a drink named Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion."
+    ],
+    [
+        "Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion",
+        "A dish or a drink named Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion, seen from really close."
+    ],
+    [
+        "Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion",
+        "A dish or a drink named Chipotle-Honey-Glazed Chicken Wings with Toasted Sesame Seeds and Green Onion, surounded by different food."
+    ],
+    [
+        "Ino's Pancetta, Lettuce, and Tomato Sandwich",
+        "A dish or a drink named Ino's Pancetta, Lettuce, and Tomato Sandwich."
+    ],
+    [
+        "Ino's Pancetta, Lettuce, and Tomato Sandwich",
+        "A dish or a drink named Ino's Pancetta, Lettuce, and Tomato Sandwich, surounded by the same food."
+    ],
+    [
+        "Ino's Pancetta, Lettuce, and Tomato Sandwich",
+        "A dish or a drink named Ino's Pancetta, Lettuce, and Tomato Sandwich, surounded by different food."
+    ],
+    [
+        "Goat Cheese Souffle with Thyme",
+        "A dish or a drink named Goat Cheese Souffle with Thyme."
+    ],
+    [
+        "Goat Cheese Souffle with Thyme",
+        "A dish or a drink named Goat Cheese Souffle with Thyme, seen from far away."
+    ],
+    [
+        "Goat Cheese Souffle with Thyme",
+        "A dish or a drink named Goat Cheese Souffle with Thyme, surounded by the same food."
+    ],
+    [
+        "Tomatillo Salsa",
+        "A dish or a drink named Tomatillo Salsa."
+    ],
+    [
+        "Tomatillo Salsa",
+        "A dish or a drink named Tomatillo Salsa, surounded by different food."
+    ],
+    [
+        "Tomatillo Salsa",
+        "A dish or a drink named Tomatillo Salsa, surounded by the same food."
+    ],
+    [
+        "Brownies",
+        "A dish or a drink named Brownies."
+    ],
+    [
+        "Brownies",
+        "A dish or a drink named Brownies, seen from really close."
+    ],
+    [
+        "Brownies",
+        "A dish or a drink named Brownies, surounded by the same food."
+    ],
+    [
+        "Robin's-Egg Place Card",
+        "A dish or a drink named Robin's-Egg Place Card."
+    ],
+    [
+        "Robin's-Egg Place Card",
+        "A dish or a drink named Robin's-Egg Place Card, seen from far away."
+    ],
+    [
+        "Robin's-Egg Place Card",
+        "A dish or a drink named Robin's-Egg Place Card, surounded by the same food."
+    ],
+    [
+        "Giant Chocolate Caramel Cookie Bars",
+        "A dish or a drink named Giant Chocolate Caramel Cookie Bars."
+    ],
+    [
+        "Giant Chocolate Caramel Cookie Bars",
+        "A dish or a drink named Giant Chocolate Caramel Cookie Bars, seen from really close."
+    ],
+    [
+        "Giant Chocolate Caramel Cookie Bars",
+        "A dish or a drink named Giant Chocolate Caramel Cookie Bars, surounded by the same food."
+    ],
+    [
+        "Brown Sugar Shortbread",
+        "A dish or a drink named Brown Sugar Shortbread."
+    ],
+    [
+        "Brown Sugar Shortbread",
+        "A dish or a drink named Brown Sugar Shortbread, seen from far away."
+    ],
+    [
+        "Brown Sugar Shortbread",
+        "A dish or a drink named Brown Sugar Shortbread, seen from really close."
+    ],
+    [
+        "Chocolate Chip Coffee Cake",
+        "A dish or a drink named Chocolate Chip Coffee Cake."
+    ],
+    [
+        "Chocolate Chip Coffee Cake",
+        "A dish or a drink named Chocolate Chip Coffee Cake, surounded by the same food."
+    ],
+    [
+        "Chocolate Chip Coffee Cake",
+        "A dish or a drink named Chocolate Chip Coffee Cake, seen from far away."
+    ],
+    [
+        "Maxine's Turkey Stuffing",
+        "A dish or a drink named Maxine's Turkey Stuffing."
+    ],
+    [
+        "Maxine's Turkey Stuffing",
+        "A dish or a drink named Maxine's Turkey Stuffing, surounded by the same food."
+    ],
+    [
+        "Maxine's Turkey Stuffing",
+        "A dish or a drink named Maxine's Turkey Stuffing, seen from far away."
+    ],
+    [
+        "Orzo with Feta, Tomatoes, and Dill",
+        "A dish or a drink named Orzo with Feta, Tomatoes, and Dill."
+    ],
+    [
+        "Orzo with Feta, Tomatoes, and Dill",
+        "A dish or a drink named Orzo with Feta, Tomatoes, and Dill, seen from far away."
+    ],
+    [
+        "Orzo with Feta, Tomatoes, and Dill",
+        "A dish or a drink named Orzo with Feta, Tomatoes, and Dill, surounded by different food."
+    ],
+    [
+        "Cranberry Crunch Salad",
+        "A dish or a drink named Cranberry Crunch Salad."
+    ],
+    [
+        "Cranberry Crunch Salad",
+        "A dish or a drink named Cranberry Crunch Salad, surounded by different food."
+    ],
+    [
+        "Cranberry Crunch Salad",
+        "A dish or a drink named Cranberry Crunch Salad, seen from far away."
+    ],
+    [
+        "Lemon or Orange Cake (Cake Citron ou Cake Orange)",
+        "A dish or a drink named Lemon or Orange Cake (Cake Citron ou Cake Orange)."
+    ],
+    [
+        "Lemon or Orange Cake (Cake Citron ou Cake Orange)",
+        "A dish or a drink named Lemon or Orange Cake (Cake Citron ou Cake Orange), surounded by the same food."
+    ],
+    [
+        "Lemon or Orange Cake (Cake Citron ou Cake Orange)",
+        "A dish or a drink named Lemon or Orange Cake (Cake Citron ou Cake Orange), seen from far away."
+    ],
+    [
+        "Chicken, Vegetable, and Dumpling Soup",
+        "A dish or a drink named Chicken, Vegetable, and Dumpling Soup."
+    ],
+    [
+        "Chicken, Vegetable, and Dumpling Soup",
+        "A dish or a drink named Chicken, Vegetable, and Dumpling Soup, surounded by the same food."
+    ],
+    [
+        "Chicken, Vegetable, and Dumpling Soup",
+        "A dish or a drink named Chicken, Vegetable, and Dumpling Soup, surounded by different food."
+    ],
+    [
+        "Julia's American-Style Potato Salad",
+        "A dish or a drink named Julia's American-Style Potato Salad."
+    ],
+    [
+        "Julia's American-Style Potato Salad",
+        "A dish or a drink named Julia's American-Style Potato Salad, seen from really close."
+    ],
+    [
+        "Julia's American-Style Potato Salad",
+        "A dish or a drink named Julia's American-Style Potato Salad, surounded by different food."
+    ],
+    [
+        "Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles",
+        "A dish or a drink named Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles."
+    ],
+    [
+        "Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles",
+        "A dish or a drink named Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles, seen from really close."
+    ],
+    [
+        "Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles",
+        "A dish or a drink named Quick Fresh Fruit Sauces for Yogurt, Pancakes, and Waffles, seen from far away."
+    ],
+    [
+        "BLT Salad with Ranch",
+        "A dish or a drink named BLT Salad with Ranch."
+    ],
+    [
+        "BLT Salad with Ranch",
+        "A dish or a drink named BLT Salad with Ranch, seen from far away."
+    ],
+    [
+        "BLT Salad with Ranch",
+        "A dish or a drink named BLT Salad with Ranch, surounded by different food."
+    ],
+    [
+        "Garbanzo Bean Stew with Escarole",
+        "A dish or a drink named Garbanzo Bean Stew with Escarole."
+    ],
+    [
+        "Garbanzo Bean Stew with Escarole",
+        "A dish or a drink named Garbanzo Bean Stew with Escarole, seen from really close."
+    ],
+    [
+        "Garbanzo Bean Stew with Escarole",
+        "A dish or a drink named Garbanzo Bean Stew with Escarole, surounded by different food."
+    ],
+    [
+        "Link Family Crawfish Boil",
+        "A dish or a drink named Link Family Crawfish Boil."
+    ],
+    [
+        "Link Family Crawfish Boil",
+        "A dish or a drink named Link Family Crawfish Boil, seen from far away."
+    ],
+    [
+        "Link Family Crawfish Boil",
+        "A dish or a drink named Link Family Crawfish Boil, surounded by the same food."
+    ],
+    [
+        "Black Bean and Zucchini Chilaquiles",
+        "A dish or a drink named Black Bean and Zucchini Chilaquiles."
+    ],
+    [
+        "Black Bean and Zucchini Chilaquiles",
+        "A dish or a drink named Black Bean and Zucchini Chilaquiles, surounded by different food."
+    ],
+    [
+        "Black Bean and Zucchini Chilaquiles",
+        "A dish or a drink named Black Bean and Zucchini Chilaquiles, surounded by the same food."
+    ]
+]
