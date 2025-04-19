@@ -173,5 +173,6 @@ cython_debug/
 *check_annot*
 *runs
 *wandb
-image_captioning_dataset
+image_captioning_dataset*
+*additional_images*
 *checkpoints
