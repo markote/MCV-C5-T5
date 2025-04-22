@@ -18,8 +18,8 @@ def get_titles_dict(dict_data):
 def prompt_generator(title, number_random_prompts=2):
     numbers = random.sample(range(4), number_random_prompts)
     conditions = [
-        ", surounded by different food",
-        ", surounded by the same food",
+        ", surrounded by different food",
+        ", surrounded by the same food",
         ", seen from far away",
         ", seen from really close",
         ]

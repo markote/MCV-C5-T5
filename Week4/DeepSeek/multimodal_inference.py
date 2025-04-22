@@ -160,7 +160,7 @@ def inference_one_split(dataset, metric, model=None, processor=None, prompt="Say
 def inference(prefix, partitions, metric, config=None, run_name=""):
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_name = f"{run_name}_{run_id}"
-    wandb.init(project="Inference multimodal qwen model", name=run_name, config=config)
+    wandb.init(project="Inference multimodal qwen model new images", name=run_name, config=config)
     
     checkpoint = "Qwen/Qwen2.5-VL-3B-Instruct"
     # default: Load the model on the available device(s)
@@ -175,29 +175,28 @@ def inference(prefix, partitions, metric, config=None, run_name=""):
     # max_pixels = 1280*28*28
     # processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-3B-Instruct", min_pixels=min_pixels, max_pixels=max_pixels)
 
-    #data_train = Data(prefix, partitions['train'])
-    data_valid = Data(prefix, partitions['eval'])
-    data_test = Data(prefix, partitions['test'])
-    inference_one_split(data_train, metric, model=model, processor=processor, prompt=config["prompt"], split="train")
-    inference_one_split(data_valid, metric, model=model, processor=processor, prompt=config["prompt"], split="valid")
-    inference_one_split(data_test, metric, model=model, processor=processor, prompt=config["prompt"], split="test")
+    # data_train = Data(prefix, partitions['train'])
+    # data_valid = Data(prefix, partitions['eval'])
+    # data_test = Data(prefix, partitions['test'])
+    data_new_images = Data(prefix, partitions)
+    inference_one_split(data_new_images, metric, model=model, processor=processor, prompt=config["prompt"], split="train")
+
+    # inference_one_split(data_train, metric, model=model, processor=processor, prompt=config["prompt"], split="train")
+    # inference_one_split(data_valid, metric, model=model, processor=processor, prompt=config["prompt"], split="valid")
+    # inference_one_split(data_test, metric, model=model, processor=processor, prompt=config["prompt"], split="test")
 
     wandb.finish()
 
 
 if __name__ == "__main__":
-    base_path = '/ghome/c5mcv05/image_captioning_dataset/'
-    img_path = f'{base_path}FoodImages/'
-    splits_path = f'{base_path}FilteredDataSplit.npy'
-
     config = {
-        "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages/",
+        "prefix": "/mnt/home/additional_images/", #"/mnt/dataset/image_captioning_dataset/FoodImages/",
         "batch_size": 32,
         "prompt":"This image comes from a web of cooking recipes, guess the title of the recipe based on the image. Only output your guessed title.",
     }
 
     partitions = None
-    with open('./FilteredDataSplit.json', 'r') as f:
+    with open('./NewTrainImages.json', 'r') as f:
         partitions = json.load(f)
 
     bleu = evaluate.load('bleu')
@@ -205,6 +204,6 @@ if __name__ == "__main__":
     rouge = evaluate.load('rouge')
     metric = (bleu, rouge, meteor)
     print("Prefix: ", config["prefix"])
-    run_name=f'Inference multimodal Language Model'
+    run_name=f'Inference New Images Multimodal Language Model'
     inference(config["prefix"], partitions, metric, config=config, run_name=run_name)
 
