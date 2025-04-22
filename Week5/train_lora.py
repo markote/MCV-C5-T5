@@ -548,7 +548,7 @@ if __name__ == "__main__":
     config = {
         "wandb_project": "DF_LORA_ViT_LLaMA",
         "prefix": "/mnt/dataset/image_captioning_dataset/FoodImages",
-        "batch_size": 4,#8
+        "batch_size": 8,
         "optimizer_type": "AdamW",
         "lr": 5e-5,
         "min_lr": 1e-7,
@@ -566,8 +566,8 @@ if __name__ == "__main__":
         "lora_dropout": 0.3,
         "save_cp": False,
         "freeze_vit": True,
-        "llama_size":"3b",
-        "PROMPT" : ''
+        "llama_size":"1b",
+        "PROMPT" : 'One sentence:'
     }
 
     print(config)
