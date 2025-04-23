@@ -20,4 +20,4 @@ The README for Week4 can be found [here](./Week4/README.md)
 
 ## Week 5
 
-The README for Week4 can be found [here](./Week5/README.md)
+The README for Week5 can be found [here](./Week5/README.md)
