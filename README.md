@@ -2,6 +2,14 @@
 
 Repository for Team5 project of C5 course
 
+# Paper Report (final version)
+
+[Here](https://overleaf.cvc.uab.es/project/67e0645885f1f209c7a4cd0f)
+
+# Presentation Slides
+
+[Here](https://docs.google.com/presentation/d/1Tcy1d_QVi3uMworLIYLnNUCKzp78sF_dzzjXez5C8I4/edit?slide=id.g3506011e9cd_0_200#slide=id.g3506011e9cd_0_200)
+
 ## Week 1
 
 The README for Week1 can be found [here](./Week1/README.md)
